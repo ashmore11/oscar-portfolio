@@ -15,8 +15,8 @@ var keystone = require('keystone');
  * and documentation.
  */
 keystone.init({
-	'name': 'node-web-app',
-	'brand': 'Node Web App',
+	'name': 'Oscar Granse',
+	'brand': 'Oscar Granse',
 	
 	'stylus': 'public',
 	'static': 'public',
@@ -58,7 +58,8 @@ keystone.set('routes', require('./server/routes'));
  */
 keystone.set('nav', {
 	'pages': 'pages',
-	'gallery': 'images',
+	'work': 'work',
+	'categories': 'categories',
 	'users': 'users'
 });
 
