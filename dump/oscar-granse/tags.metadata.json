@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":NumberInt(1),"key":{"_id":NumberInt(1)},"name":"_id_","ns":"oscar-granse.tags"},{"v":NumberInt(1),"unique":true,"key":{"slug":NumberInt(1)},"name":"slug_1","ns":"oscar-granse.tags","background":true}]}

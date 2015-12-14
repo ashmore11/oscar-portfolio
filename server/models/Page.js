@@ -1,8 +1,7 @@
 var keystone = require('keystone');
+var types    = keystone.Field.Types;
 
-var Types = keystone.Field.Types;
-
-var Pages = new keystone.List('page', {
+var page = new keystone.List('Page', {
 	map: { name: 'title' },
 	autokey: { 
 		path: 'slug', 
@@ -11,29 +10,29 @@ var Pages = new keystone.List('page', {
 	}
 });
 
-Pages.add({
+page.add({
 	meta:{
-		title: { type: Types.Text },
-		description: { type: Types.Text },
-		keywords: { type: Types.Text },
+		title: { type: types.Text },
+		description: { type: types.Text },
+		keywords: { type: types.Text },
 		og: {
-			title: { type: Types.Text },
-			description: { type: Types.Text },
-			image: { type: Types.Text },
-			url: { type: Types.Url },
-			type: { type: Types.Text }
+			title: { type: types.Text },
+			description: { type: types.Text },
+			image: { type: types.Text },
+			url: { type: types.Url },
+			type: { type: types.Text }
 		}
 	},
 	title: { 
-		type: Types.Text,
+		type: types.Text,
 		required: true
 	},
 	description: {
-		type: Types.Textarea,
+		type: types.Textarea,
 		initial: false,
 		required: false
 	},
 });
 
-Pages.defaultColumns = 'title';
-Pages.register();
+page.defaultColumns = 'title';
+page.register();

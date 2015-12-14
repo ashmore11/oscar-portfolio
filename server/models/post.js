@@ -1,0 +1,61 @@
+var keystone = require('keystone');
+var types    = keystone.Field.Types;
+
+var post = new keystone.List('Post', {
+	map: { name: 'title' },
+	defaultSort: '-createdOn',
+	autokey: { 
+		path: 'slug', 
+		from: 'title', 
+		unique: true 
+	}
+});
+
+post.add({
+	createdOn: {
+		type: Date, 
+		default: Date.now 
+	},
+	state: {
+    type: types.Select,
+    options: ['draft', 'published'],
+    default: 'draft',
+    initial: true,
+    required: true
+  },
+	title: {
+		type: String,
+		required: true,
+		initial: true
+	},
+	description: {
+		type: types.Textarea,
+		required: false,
+		initial: false
+	},
+	tags: { 
+		type: types.Relationship, 
+		ref: 'Tags',
+		many: true
+	},
+	image: {
+		required: false,
+		initial: false,
+		type: types.LocalFile,
+		dest: process.env.PWD + '/public/images/uploads/'
+	},
+	video: {
+		type: types.Url,
+		required: false
+	},
+	extraBits: {
+		type: types.Html,
+		wysiwyg: true,
+		height: 300,
+		required: false,
+		initial: false
+	}
+});
+
+post.defaultColumns = 'title, state, createdOn';
+post.register();

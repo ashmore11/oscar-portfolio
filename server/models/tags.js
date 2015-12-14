@@ -1,13 +1,15 @@
 var keystone = require('keystone');
 
-var Types = keystone.Field.Types;
-
-var Tags = new keystone.List('tags', {
+var tags = new keystone.List('Tags', {
 	map: { name: 'tag' },
-	autokey: { path: 'slug', from: 'tag', unique: true }
+	autokey: {
+		path: 'slug', 
+		from: 'tag', 
+		unique: true 
+	}
 });
 
-Tags.add({
+tags.add({
 	tag: {
 		type: String,
 		initial: true,
@@ -15,5 +17,11 @@ Tags.add({
 	}
 });
 
-Tags.defaultColumns = 'tag';
-Tags.register();
+tags.relationship({
+	path: 'posts', 
+	ref: 'Post', 
+	refPath: 'tags'
+});
+
+tags.defaultColumns = 'tag';
+tags.register();

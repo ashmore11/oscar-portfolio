@@ -1,25 +1,25 @@
 var keystone = require('keystone');
-var Types    = keystone.Field.Types;
+var types    = keystone.Field.Types;
 
 /**
  * User Model
  */
-var User = new keystone.List('User');
+var user = new keystone.List('User');
 
-User.add({
+user.add({
 	name: {
-    type: Types.Name, 
+    type: types.Name, 
     required: true, 
     index: true
   },
 	email: {
-    type: Types.Email,
+    type: types.Email,
     initial: true,
     required: true,
     index: true
   },
 	password: {
-    type: Types.Password,
+    type: types.Password,
     initial: true,
     required: true
   }
@@ -31,16 +31,15 @@ User.add({
   }
 }); 
 
-// Provide access to Keystone
-User.schema.virtual('canAccessKeystone').get(function() {
-
+/**
+ * Provide access to Keystone
+ */
+user.schema.virtual('canAccessKeystone').get(function() {
 	return this.isAdmin;
-
 });
-
 
 /**
  * Registration
  */
-User.defaultColumns = 'name, email, isAdmin';
-User.register();
+user.defaultColumns = 'name, email, isAdmin';
+user.register();
