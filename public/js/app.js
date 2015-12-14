@@ -17157,21 +17157,53 @@
 
 /***/ },
 /* 6 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 
+	var _jquery = __webpack_require__(5);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var Home = function Home() {
-		_classCallCheck(this, Home);
+	var Home = (function () {
+		function Home() {
+			_classCallCheck(this, Home);
 
-		console.log('---[ VIEW HOME ]---');
-	};
+			console.log('---[ VIEW HOME ]---');
+
+			this.$el = (0, _jquery2.default)('#home');
+
+			this.bindEvents();
+		}
+
+		_createClass(Home, [{
+			key: 'bindEvents',
+			value: function bindEvents() {
+
+				this.$el.find('li').on('click', this.liClicked.bind(this));
+			}
+		}, {
+			key: 'liClicked',
+			value: function liClicked(event) {
+
+				var tags = (0, _jquery2.default)(event.currentTarget).data('tags');
+
+				console.log(tags);
+			}
+		}]);
+
+		return Home;
+	})();
 
 	exports.default = Home;
 

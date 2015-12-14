@@ -23,9 +23,10 @@ Work.add({
 		required: false,
 		initial: false
 	},
-	categories: { 
+	tags: { 
 		type: Types.Relationship, 
-		ref: 'categories'
+		ref: 'tags',
+		many: true
 	},
 	image: {
 		require: true,
@@ -46,7 +47,7 @@ Work.add({
 	},
 	published: {
 		type: Types.Boolean,
-		required: true,
+		required: false,
 		initial: false
 	}
 });
