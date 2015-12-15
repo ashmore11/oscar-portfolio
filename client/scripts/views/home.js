@@ -108,10 +108,8 @@ export default class Home {
 			this.showPost();
 
 		} else {
-			
-			this.hidePost();
 
-			this.on('post:hidden', this.renderPost.bind(this));
+			this.hidePost();
 
 		}
 
@@ -140,7 +138,7 @@ export default class Home {
 			ease: Expo.easeInOut,
 			onComplete: () => {
 				this.postOpen = false;
-				this.emit('post:hidden');
+				this.renderPost();
 			}
 		};
 

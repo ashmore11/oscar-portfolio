@@ -17293,8 +17293,6 @@
 				} else {
 
 					this.hidePost();
-
-					this.on('post:hidden', this.renderPost.bind(this));
 				}
 			}
 		}, {
@@ -17324,7 +17322,7 @@
 					ease: Expo.easeInOut,
 					onComplete: function onComplete() {
 						_this3.postOpen = false;
-						_this3.emit('post:hidden');
+						_this3.renderPost();
 					}
 				};
 

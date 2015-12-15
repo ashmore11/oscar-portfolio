@@ -16,7 +16,7 @@
 
 /* line 14 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/rupture/rupture/index.styl */
 
-/* line 60 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/index.styl */
+/* line 1 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/index.styl */
 
 /* line 10 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/index.styl */
 
@@ -36,7 +36,7 @@
 
 /* line 90 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/flex.styl */
 
-/* line 60 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/gradients.styl */
+/* line 1 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/gradients.styl */
 
 /* line 11 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/gradients.styl */
 
@@ -52,7 +52,7 @@
 
 /* line 19 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/image.styl */
 
-/* line 60 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/normalize/index.styl */
+/* line 1 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/normalize/index.styl */
 
 /* line 8 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/normalize/index.styl */
 
@@ -100,7 +100,7 @@
 
 /* line 5 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/reset.styl */
 
-/* line 60 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/text/index.styl */
+/* line 1 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/text/index.styl */
 
 /* line 12 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/text/index.styl */
 
@@ -152,7 +152,7 @@
 
 /* line 31 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/jeet/stylus/jeet/_grid.styl */
 
-/* line 60 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/reset.styl */
+/* line 1 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/reset.styl */
 
 /* line 12 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/reset.styl */
 
@@ -413,9 +413,9 @@ h2 {
 
 /* line 1 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/page.styl */
 
-/* line 60 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/page.styl */
+/* line 1 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/page.styl */
 
-/* line 60 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+/* line 1 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 
 /* line 1 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home {
@@ -482,13 +482,6 @@ h2 {
 /* line 43 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home .posts li {
   display: inline-block;
-  *zoom: 1;
-  float: left;
-  clear: none;
-  text-align: inherit;
-  width: 14.999999999999998%;
-  margin-left: 0%;
-  margin-right: 2%;
   -webkit-transform: translateY(-30px);
   -moz-transform: translateY(-30px);
   -o-transform: translateY(-30px);
@@ -497,13 +490,21 @@ h2 {
   opacity: 0;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
   filter: alpha(opacity=0);
-  -webkit-transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-  -moz-transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-  -o-transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-  -ms-transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-  transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  -webkit-transition: -webkit-filter 1s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  -moz-transition: -webkit-filter 1s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  -o-transition: -webkit-filter 1s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  -ms-transition: -webkit-filter 1s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: -webkit-filter 1s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  cursor: pointer;
   width: 115px;
-  height: 115px;
+  height: 100%;
+  *zoom: 1;
+  float: left;
+  clear: none;
+  text-align: inherit;
+  width: 14.999999999999998%;
+  margin-left: 0%;
+  margin-right: 2%;
 }
 
 /* line 276 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/jeet/stylus/jeet/_grid.styl */
@@ -522,21 +523,51 @@ h2 {
 #home .posts li:last-child {
   margin-right: 0%;
 }
+@media only screen and (max-width: 768px) {
 
-/* line 51 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+/* line 144 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/rupture/rupture/index.styl */
+  #home .posts li {
+    *zoom: 1;
+    float: left;
+    clear: none;
+    text-align: inherit;
+    width: 49%;
+    margin-left: 0%;
+    margin-right: 2%;
+  }
+
+/* line 276 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/jeet/stylus/jeet/_grid.styl */
+  #home .posts li:before,
+  #home .posts li:after {
+    content: '';
+    display: table;
+  }
+
+/* line 280 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/jeet/stylus/jeet/_grid.styl */
+  #home .posts li:after {
+    clear: both;
+  }
+
+/* line 48 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/jeet/stylus/jeet/_grid.styl */
+  #home .posts li:last-child {
+    margin-right: 0%;
+  }
+}
+
+/* line 55 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home .posts li img {
   display: block;
   width: 100%;
   height: 100%;
 }
 
-/* line 55 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+/* line 59 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home .posts li.blur {
   -webkit-filter: blur(2px);
   filter: blur(2px);
 }
 
-/* line 59 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+/* line 63 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home .posts li.active {
   -webkit-box-shadow: 0px 0px 15px 2px rgba(0,0,0,0.2);
   box-shadow: 0px 0px 15px 2px rgba(0,0,0,0.2);
