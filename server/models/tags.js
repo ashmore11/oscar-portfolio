@@ -6,7 +6,8 @@ var tags = new keystone.List('Tags', {
 		path: 'slug', 
 		from: 'tag', 
 		unique: true 
-	}
+	},
+	sortable: true
 });
 
 tags.add({

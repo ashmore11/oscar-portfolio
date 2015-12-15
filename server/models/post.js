@@ -3,12 +3,12 @@ var types    = keystone.Field.Types;
 
 var post = new keystone.List('Post', {
 	map: { name: 'title' },
-	defaultSort: '-createdOn',
 	autokey: { 
 		path: 'slug', 
 		from: 'title', 
 		unique: true 
-	}
+	},
+	sortable: true
 });
 
 post.add({

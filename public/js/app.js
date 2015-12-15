@@ -17171,6 +17171,10 @@
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
+	var _gsap = __webpack_require__(3);
+
+	var _gsap2 = _interopRequireDefault(_gsap);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -17182,31 +17186,134 @@
 			console.log('---[ VIEW HOME ]---');
 
 			this.$el = (0, _jquery2.default)('#home');
-			this.$post = this.$el.find('li a');
+			this.$posts = this.$el.find('ul.posts li a');
+			this.$post = this.$el.find('.post');
+			this.$postVideo = this.$post.find('.video');
+			this.$postTitle = this.$post.find('h1.title');
+			this.$postDesc = this.$post.find('p.description');
+			this.$postExtraBits = this.$post.find('p.extra-bits');
+
+			this.postOpen = false;
 
 			this.bindEvents();
+			this.runIntroAnimation();
 		}
 
 		_createClass(Home, [{
 			key: 'bindEvents',
 			value: function bindEvents() {
 
-				this.$post.on('mouseenter', this.mouseenter.bind(this));
-				this.$post.on('mouseleave', this.mouseleave.bind(this));
+				this.$posts.on('mouseenter', this.mouseenter.bind(this));
+				this.$posts.on('mouseleave', this.mouseleave.bind(this));
+
+				this.$posts.on('click', this.loadPost.bind(this));
+			}
+		}, {
+			key: 'runIntroAnimation',
+			value: function runIntroAnimation() {
+
+				this.$posts.each(function (index, item) {
+
+					var params = {
+						y: 0,
+						opacity: 1,
+						delay: index * 0.085,
+						ease: Power3.easeOut
+					};
+
+					_gsap2.default.to((0, _jquery2.default)(item), 1, params);
+				});
 			}
 		}, {
 			key: 'mouseenter',
 			value: function mouseenter(event) {
 
 				var target = (0, _jquery2.default)(event.currentTarget);
+				var image = target.find('img');
 
-				this.$post.not(target).addClass('blur');
+				target.find('img').attr('src', 'images/uploads/' + image.data('over'));
+
+				this.$posts.not(target).addClass('blur');
+				target.addClass('active');
 			}
 		}, {
 			key: 'mouseleave',
-			value: function mouseleave() {
+			value: function mouseleave(event) {
 
-				this.$post.removeClass('blur');
+				var target = (0, _jquery2.default)(event.currentTarget);
+				var image = target.find('img');
+
+				target.find('img').attr('src', 'images/uploads/' + image.data('out'));
+
+				this.$posts.removeClass('blur active');
+			}
+		}, {
+			key: 'loadPost',
+			value: function loadPost(event) {
+				var _this = this;
+
+				event.preventDefault();
+
+				var target = (0, _jquery2.default)(event.currentTarget);
+				var id = target.attr('id');
+				var host = window.location.origin;
+				var apiUrl = 'keystone/api/posts/' + id;
+
+				_jquery2.default.get(host + '/' + apiUrl, function (data) {
+
+					_this.data = data;
+					_this.renderPost();
+				});
+			}
+		}, {
+			key: 'renderPost',
+			value: function renderPost() {
+
+				if (!this.postOpen) {
+
+					this.$postVideo.find('iframe').attr('src', this.data.fields.video);
+					this.$postTitle.html(this.data.fields.title);
+					this.$postDesc.html(this.data.fields.description);
+					this.$postExtraBits.html(this.data.fields.extraBits);
+
+					this.showPost();
+				} else {
+
+					this.hidePost();
+				}
+			}
+		}, {
+			key: 'showPost',
+			value: function showPost() {
+				var _this2 = this;
+
+				_gsap2.default.set(this.$post, { height: 'auto' });
+
+				var params = {
+					height: 0,
+					ease: Expo.easeInOut,
+					onComplete: function onComplete() {
+						_this2.postOpen = true;
+					}
+				};
+
+				_gsap2.default.from(this.$post, 1, params);
+			}
+		}, {
+			key: 'hidePost',
+			value: function hidePost() {
+				var _this3 = this;
+
+				var params = {
+					height: 0,
+					ease: Expo.easeInOut,
+					onComplete: function onComplete() {
+						_this3.postOpen = false;
+						_this3.renderPost();
+					}
+				};
+
+				_gsap2.default.to(this.$post, 1, params);
 			}
 		}]);
 

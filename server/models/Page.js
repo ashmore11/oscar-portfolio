@@ -27,8 +27,10 @@ page.add({
 		type: types.Text,
 		required: true
 	},
-	description: {
-		type: types.Textarea,
+	content: {
+		type: types.Html,
+		wysiwyg: true,
+		height: 300,
 		initial: false,
 		required: false
 	},

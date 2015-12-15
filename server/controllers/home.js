@@ -9,6 +9,7 @@ exports = module.exports = function(req, res) {
 
 	view.query('page', keystone.list('Page').model.findOne({ slug: 'home' }));
 	view.query('work', keystone.list('Post').model.find().populate('tags'));
+	view.query('tags', keystone.list('Tags').model.find());
 	
 	view.render('home');
 	

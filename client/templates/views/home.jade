@@ -4,7 +4,22 @@ block content
 
 	#home.page
 
-		ul.work
+		ul.tags
+
+			li: a(href="#") All
+
+			each item in tags
+
+				li: a(href="#" data-tag="#{item.slug}") #{item.tag}
+
+		div.post
+			div.video
+				iframe(src="" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen)
+			h1.title
+			p.description
+			p.extra-bits
+
+		ul.posts
 
 			each item in work
 
@@ -18,4 +33,10 @@ block content
 
 				li(data-tags="#{tags}")
 					
-					a(href="#{item.slug}", style="background-image: url('images/uploads/#{item.stillImage.filename}')")
+					a(id="#{item.id}" href="#{item.slug}")
+
+						img(
+							src="images/uploads/#{item.stillImage.filename}"
+							data-over="#{item.gif.filename}"
+							data-out="#{item.stillImage.filename}"
+						)
