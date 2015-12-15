@@ -38,7 +38,13 @@ post.add({
 		ref: 'Tags',
 		many: true
 	},
-	image: {
+	stillImage: {
+		required: false,
+		initial: false,
+		type: types.LocalFile,
+		dest: process.env.PWD + '/public/images/uploads/'
+	},
+	gif: {
 		required: false,
 		initial: false,
 		type: types.LocalFile,

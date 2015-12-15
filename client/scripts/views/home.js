@@ -6,7 +6,8 @@ export default class Home {
 
 		console.log('---[ VIEW HOME ]---');
 
-		this.$el = $('#home');
+		this.$el   = $('#home');
+		this.$post = this.$el.find('li a');
 
 		this.bindEvents();
 	
@@ -14,15 +15,22 @@ export default class Home {
 
 	bindEvents() {
 
-		this.$el.find('li').on('click', this.liClicked.bind(this));
+		this.$post.on('mouseenter', this.mouseenter.bind(this));
+		this.$post.on('mouseleave', this.mouseleave.bind(this));
 
 	}
 
-	liClicked(event) {
+	mouseenter(event) {
 
-		const tags = $(event.currentTarget).data('tags');
+		const target = $(event.currentTarget);
 
-		console.log(tags);
+		this.$post.not(target).addClass('blur');
+
+	}
+
+	mouseleave() {
+
+		this.$post.removeClass('blur');
 
 	}
 

@@ -4,8 +4,6 @@ block content
 
 	#home.page
 
-		h1 #{page.title}
-
 		ul.work
 
 			each item in work
@@ -18,4 +16,6 @@ block content
 
 				- var tags = tags.join().replace(/,/g, ' ');
 
-				li(id="#{item._id}" data-tags="#{tags}") #{item.title}
+				li(data-tags="#{tags}")
+					
+					a(href="#{item.slug}", style="background-image: url('images/uploads/#{item.stillImage.filename}')")

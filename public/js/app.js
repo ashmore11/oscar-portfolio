@@ -17182,6 +17182,7 @@
 			console.log('---[ VIEW HOME ]---');
 
 			this.$el = (0, _jquery2.default)('#home');
+			this.$post = this.$el.find('li a');
 
 			this.bindEvents();
 		}
@@ -17190,15 +17191,22 @@
 			key: 'bindEvents',
 			value: function bindEvents() {
 
-				this.$el.find('li').on('click', this.liClicked.bind(this));
+				this.$post.on('mouseenter', this.mouseenter.bind(this));
+				this.$post.on('mouseleave', this.mouseleave.bind(this));
 			}
 		}, {
-			key: 'liClicked',
-			value: function liClicked(event) {
+			key: 'mouseenter',
+			value: function mouseenter(event) {
 
-				var tags = (0, _jquery2.default)(event.currentTarget).data('tags');
+				var target = (0, _jquery2.default)(event.currentTarget);
 
-				console.log(tags);
+				this.$post.not(target).addClass('blur');
+			}
+		}, {
+			key: 'mouseleave',
+			value: function mouseleave() {
+
+				this.$post.removeClass('blur');
 			}
 		}]);
 
