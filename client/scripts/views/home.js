@@ -12,8 +12,7 @@ export default class Home {
 		Happens(this);
 
 		this.$el            = $('#home');
-		this.$tag           = this.$el.find('.tags li')
-		this.$closePost     = this.$el.find('.close-post')
+		this.$tag           = this.$el.find('.tags li');
 		this.$posts         = this.$el.find('.posts li');
 		this.$post          = this.$el.find('.post');
 		this.$postVideo     = this.$post.find('.video');
@@ -38,6 +37,16 @@ export default class Home {
 
 	}
 
+	unbind() {
+
+		this.$posts.off('mouseenter');
+		this.$posts.off('mouseleave');
+
+		this.$posts.off('click');
+		this.$tag.off('click');
+
+	}
+
 	runIntroAnimation() {
 
 		this.$posts.each(function(index, item) {
@@ -59,10 +68,12 @@ export default class Home {
 
 		const target = $(event.currentTarget);
 		const image  = target.find('img');
+		const src    = `images/uploads/${image.data('over')}`;
 
-		target.find('img').attr('src', `images/uploads/${image.data('over')}`);
+		target.find('img').attr('src', src);
 
 		this.$posts.not(target).addClass('blur');
+
 		target.addClass('active');
 
 	}
@@ -71,8 +82,9 @@ export default class Home {
 
 		const target = $(event.currentTarget);
 		const image  = target.find('img');
+		const src    = `images/uploads/${image.data('out')}`;
 
-		target.find('img').attr('src', `images/uploads/${image.data('out')}`);
+		target.find('img').attr('src', src);
 
 		this.$posts.removeClass('blur active');
 
@@ -82,6 +94,8 @@ export default class Home {
 
 		event.preventDefault();
 
+		this.postClicked = true;
+
 		const target = $(event.currentTarget);
 		const id     = target.attr('id');
 		const host   = window.location.origin;
@@ -90,6 +104,7 @@ export default class Home {
 		$.get(`${host}/${apiUrl}`, data => {
 
 			this.data = data;
+
 			this.renderPost();
 
 		});
@@ -138,7 +153,9 @@ export default class Home {
 			ease: Expo.easeInOut,
 			onComplete: () => {
 				this.postOpen = false;
-				this.renderPost();
+				if(this.postClicked) {
+					this.renderPost();
+				}
 			}
 		};
 
@@ -149,6 +166,10 @@ export default class Home {
 	filterPosts(event) {
 
 		event.preventDefault();
+
+		this.postClicked = false;
+
+		this.hidePost();
 
 		const target = $(event.currentTarget);
 		const tag    = target.data('tag');

@@ -17197,7 +17197,6 @@
 
 			this.$el = (0, _jquery2.default)('#home');
 			this.$tag = this.$el.find('.tags li');
-			this.$closePost = this.$el.find('.close-post');
 			this.$posts = this.$el.find('.posts li');
 			this.$post = this.$el.find('.post');
 			this.$postVideo = this.$post.find('.video');
@@ -17222,6 +17221,16 @@
 				this.$tag.on('click', this.filterPosts.bind(this));
 			}
 		}, {
+			key: 'unbind',
+			value: function unbind() {
+
+				this.$posts.off('mouseenter');
+				this.$posts.off('mouseleave');
+
+				this.$posts.off('click');
+				this.$tag.off('click');
+			}
+		}, {
 			key: 'runIntroAnimation',
 			value: function runIntroAnimation() {
 
@@ -17243,10 +17252,12 @@
 
 				var target = (0, _jquery2.default)(event.currentTarget);
 				var image = target.find('img');
+				var src = 'images/uploads/' + image.data('over');
 
-				target.find('img').attr('src', 'images/uploads/' + image.data('over'));
+				target.find('img').attr('src', src);
 
 				this.$posts.not(target).addClass('blur');
+
 				target.addClass('active');
 			}
 		}, {
@@ -17255,8 +17266,9 @@
 
 				var target = (0, _jquery2.default)(event.currentTarget);
 				var image = target.find('img');
+				var src = 'images/uploads/' + image.data('out');
 
-				target.find('img').attr('src', 'images/uploads/' + image.data('out'));
+				target.find('img').attr('src', src);
 
 				this.$posts.removeClass('blur active');
 			}
@@ -17267,6 +17279,8 @@
 
 				event.preventDefault();
 
+				this.postClicked = true;
+
 				var target = (0, _jquery2.default)(event.currentTarget);
 				var id = target.attr('id');
 				var host = window.location.origin;
@@ -17275,6 +17289,7 @@
 				_jquery2.default.get(host + '/' + apiUrl, function (data) {
 
 					_this.data = data;
+
 					_this.renderPost();
 				});
 			}
@@ -17322,7 +17337,9 @@
 					ease: Expo.easeInOut,
 					onComplete: function onComplete() {
 						_this3.postOpen = false;
-						_this3.renderPost();
+						if (_this3.postClicked) {
+							_this3.renderPost();
+						}
 					}
 				};
 
@@ -17333,6 +17350,10 @@
 			value: function filterPosts(event) {
 
 				event.preventDefault();
+
+				this.postClicked = false;
+
+				this.hidePost();
 
 				var target = (0, _jquery2.default)(event.currentTarget);
 				var tag = target.data('tag');
