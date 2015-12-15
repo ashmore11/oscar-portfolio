@@ -1,5 +1,7 @@
-import $  from 'jquery';
-import TM from 'gsap';
+import Happens from 'happens';
+import _       from 'underscore';
+import $       from 'jquery';
+import TM      from 'gsap';
 
 export default class Home {
 	
@@ -7,13 +9,17 @@ export default class Home {
 
 		console.log('---[ VIEW HOME ]---');
 
+		Happens(this);
+
 		this.$el            = $('#home');
-		this.$posts         = this.$el.find('ul.posts li a');
+		this.$tag           = this.$el.find('.tags li')
+		this.$closePost     = this.$el.find('.close-post')
+		this.$posts         = this.$el.find('.posts li');
 		this.$post          = this.$el.find('.post');
 		this.$postVideo     = this.$post.find('.video');
-		this.$postTitle     = this.$post.find('h1.title');
-		this.$postDesc      = this.$post.find('p.description');
-		this.$postExtraBits = this.$post.find('p.extra-bits');
+		this.$postTitle     = this.$post.find('.title');
+		this.$postDesc      = this.$post.find('.description');
+		this.$postExtraBits = this.$post.find('.extra-bits');
 
 		this.postOpen = false;
 
@@ -28,6 +34,7 @@ export default class Home {
 		this.$posts.on('mouseleave', this.mouseleave.bind(this));
 
 		this.$posts.on('click', this.loadPost.bind(this));
+		this.$tag.on('click', this.filterPosts.bind(this));
 
 	}
 
@@ -82,7 +89,7 @@ export default class Home {
 
 		$.get(`${host}/${apiUrl}`, data => {
 
-			this.data = data
+			this.data = data;
 			this.renderPost();
 
 		});
@@ -103,6 +110,8 @@ export default class Home {
 		} else {
 			
 			this.hidePost();
+
+			this.on('post:hidden', this.renderPost.bind(this));
 
 		}
 
@@ -130,12 +139,42 @@ export default class Home {
 			height: 0,
 			ease: Expo.easeInOut,
 			onComplete: () => {
-				this.postOpen = false; 
-				this.renderPost();
+				this.postOpen = false;
+				this.emit('post:hidden');
 			}
 		};
 
 		TM.to(this.$post, 1, params);
+
+	}
+
+	filterPosts(event) {
+
+		event.preventDefault();
+
+		const target = $(event.currentTarget);
+		const tag    = target.data('tag');
+
+		this.$posts.each(function(index, item) {
+
+			const el   = $(item);
+			const tags = el.data('tags').split(' ');
+
+			if(_.contains(tags, tag)) {
+			
+				el.show();
+			
+			} else if(tag === 'all') {
+			
+				el.show();
+			
+			} else {
+				
+				el.hide();
+
+			}
+
+		});
 
 	}
 

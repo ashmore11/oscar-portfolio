@@ -16,7 +16,7 @@
 
 /* line 14 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/rupture/rupture/index.styl */
 
-/* line 58 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/index.styl */
+/* line 60 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/index.styl */
 
 /* line 10 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/index.styl */
 
@@ -36,7 +36,7 @@
 
 /* line 90 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/flex.styl */
 
-/* line 58 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/gradients.styl */
+/* line 60 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/gradients.styl */
 
 /* line 11 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/gradients.styl */
 
@@ -52,7 +52,7 @@
 
 /* line 19 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/image.styl */
 
-/* line 58 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/normalize/index.styl */
+/* line 60 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/normalize/index.styl */
 
 /* line 8 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/normalize/index.styl */
 
@@ -100,7 +100,7 @@
 
 /* line 5 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/reset.styl */
 
-/* line 58 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/text/index.styl */
+/* line 60 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/text/index.styl */
 
 /* line 12 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/text/index.styl */
 
@@ -152,7 +152,7 @@
 
 /* line 31 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/jeet/stylus/jeet/_grid.styl */
 
-/* line 58 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/reset.styl */
+/* line 60 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/reset.styl */
 
 /* line 12 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/reset.styl */
 
@@ -413,68 +413,73 @@ h2 {
 
 /* line 1 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/page.styl */
 
-/* line 58 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/page.styl */
+/* line 60 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/page.styl */
 
-/* line 58 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+/* line 60 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 
 /* line 1 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home {
+  position: relative;
   max-width: 772px;
   margin: 0 auto;
 }
 
-/* line 5 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+/* line 6 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home .tags {
   text-align: center;
 }
 
-/* line 8 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+/* line 9 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home .tags li {
   display: inline-block;
   margin: 10px 5px 20px 5px;
+  cursor: pointer;
 }
 
-/* line 12 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+/* line 14 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home .post {
+  position: relative;
   height: 0;
   overflow: hidden;
   text-align: center;
   margin-top: 2px;
 }
 
-/* line 18 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+/* line 21 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home .post .video {
   width: 100%;
 }
 
-/* line 21 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+/* line 24 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home .post .video iframe {
   width: 100%;
   height: 430px;
 }
 
-/* line 25 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+/* line 28 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home .post .title {
+  font-size: 12px;
   margin: 10px 0;
 }
 
-/* line 28 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+/* line 32 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home .post .description {
-  margin-bottom: 10px;
+  margin: 0 auto 10px;
+  width: 80%;
 }
 
-/* line 31 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+/* line 36 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home .post .extra-bits {
   margin-bottom: 20px;
 }
 
-/* line 34 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+/* line 39 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home .posts {
   text-align: center;
   margin-top: 10px;
 }
 
-/* line 38 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+/* line 43 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home .posts li {
   display: inline-block;
   *zoom: 1;
@@ -484,6 +489,21 @@ h2 {
   width: 14.999999999999998%;
   margin-left: 0%;
   margin-right: 2%;
+  -webkit-transform: translateY(-30px);
+  -moz-transform: translateY(-30px);
+  -o-transform: translateY(-30px);
+  -ms-transform: translateY(-30px);
+  transform: translateY(-30px);
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  -webkit-transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  -moz-transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  -o-transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  -ms-transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  width: 115px;
+  height: 115px;
 }
 
 /* line 276 : /Users/Scott/Desktop/work/oscar-portfolio/node_modules/jeet/stylus/jeet/_grid.styl */
@@ -503,41 +523,21 @@ h2 {
   margin-right: 0%;
 }
 
-/* line 42 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
-#home .posts li a {
-  display: block;
-  -webkit-transform: translateY(-30px);
-  -moz-transform: translateY(-30px);
-  -o-transform: translateY(-30px);
-  -ms-transform: translateY(-30px);
-  transform: translateY(-30px);
-  opacity: 0;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-  filter: alpha(opacity=0);
-  -webkit-transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-  -moz-transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-  -o-transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-  -ms-transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-  transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-  width: 100%;
-  height: 100%;
-}
-
-/* line 49 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
-#home .posts li a img {
+/* line 51 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+#home .posts li img {
   display: block;
   width: 100%;
   height: 100%;
 }
 
-/* line 53 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
-#home .posts li a.blur {
-  -webkit-filter: blur(6px);
-  filter: blur(6px);
+/* line 55 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+#home .posts li.blur {
+  -webkit-filter: blur(2px);
+  filter: blur(2px);
 }
 
-/* line 57 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
-#home .posts li a.active {
+/* line 59 : /Users/Scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+#home .posts li.active {
   -webkit-box-shadow: 0px 0px 15px 2px rgba(0,0,0,0.2);
   box-shadow: 0px 0px 15px 2px rgba(0,0,0,0.2);
 }

@@ -6,11 +6,11 @@ block content
 
 		ul.tags
 
-			li: a(href="#") All
+			li(data-tag="all") All
 
 			each item in tags
 
-				li: a(href="#" data-tag="#{item.slug}") #{item.tag}
+				li(data-tag="#{item.slug}") #{item.tag}
 
 		div.post
 			div.video
@@ -31,12 +31,10 @@ block content
 
 				- var tags = tags.join().replace(/,/g, ' ');
 
-				li(data-tags="#{tags}")
-					
-					a(id="#{item.id}" href="#{item.slug}")
+				li(id="#{item.id}" data-tags="#{tags}")
 
-						img(
-							src="images/uploads/#{item.stillImage.filename}"
-							data-over="#{item.gif.filename}"
-							data-out="#{item.stillImage.filename}"
-						)
+					img(
+						src="images/uploads/#{item.stillImage.filename}"
+						data-over="#{item.gif.filename}"
+						data-out="#{item.stillImage.filename}"
+					)

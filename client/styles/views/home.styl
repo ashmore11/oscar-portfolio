@@ -1,4 +1,5 @@
 #home
+	position: relative
 	max-width: 772px
 	margin: 0 auto
 	
@@ -8,8 +9,10 @@
 		li
 			display: inline-block
 			margin: 10px 5px 20px 5px
+			cursor: pointer
 			
 	.post
+		position: relative
 		height: 0
 		overflow: hidden
 		text-align: center
@@ -23,10 +26,12 @@
 				height: 430px
 				
 		.title
+			font-size: 12px
 			margin: 10px 0
 			
 		.description
-			margin-bottom: 10px
+			margin: 0 auto 10px
+			width: 80%
 		
 		.extra-bits
 			margin-bottom: 20px
@@ -38,23 +43,20 @@
 		li
 			display: inline-block
 			column(1/6, gutter: 2)
+			transform: translateY(-30px)
+			opacity: 0
+			transition: all 1s $ease-out-quart
+			size(115px,115px)
 			
-			a
+			img
 				display: block
-				transform: translateY(-30px)
-				opacity: 0
-				transition: all 1s $ease-out-quart
-				size(100%,100%)
-				
-				img
-					display: block
-					size(100%,100%)	
-				
-				&.blur
-					-webkit-filter: blur(6px)
-					        filter: blur(6px)
-					        
-				&.active
-					box-shadow: 0px 0px 15px 2px rgba($black, 0.2)
+				size(100%,100%)	
+			
+			&.blur
+				-webkit-filter: blur(2px)
+				        filter: blur(2px)
+				        
+			&.active
+				box-shadow: 0px 0px 15px 2px rgba($black, 0.2)
 
 
