@@ -11,15 +11,17 @@ export default class Home {
 
 		Happens(this);
 
-		this.$el            = $('#home');
-		this.$tag           = this.$el.find('.tags li');
-		this.$posts         = this.$el.find('.posts li');
-		this.$post          = this.$el.find('.post');
-		this.$postVideo     = this.$post.find('.video');
-		this.$postTitle     = this.$post.find('.title');
-		this.$postDesc      = this.$post.find('.description');
-		this.$postExtraBits = this.$post.find('.extra-bits');
+		this.$el              = $('#home');
+		this.$tag             = this.$el.find('.tags li');
+		this.$posts           = this.$el.find('.posts li');
+		this.$post            = this.$el.find('.post');
+		this.$postVideo       = this.$post.find('.video');
+		this.$postOtherVideos = this.$post.find('.other-videos');
+		this.$postTitle       = this.$post.find('.title');
+		this.$postDesc        = this.$post.find('.description');
+		this.$postExtraBits   = this.$post.find('.extra-bits');
 
+		this.postID   = null;
 		this.postOpen = false;
 
 		this.bindEvents();
@@ -105,7 +107,11 @@ export default class Home {
 
 			this.data = data;
 
-			this.renderPost();
+			if(this.postID !== this.data.id) {
+				
+				this.renderPost();
+
+			}
 
 		});
 
@@ -113,16 +119,29 @@ export default class Home {
 
 	renderPost() {
 
+		this.postID = this.data.id;
+
 		if(!this.postOpen) {
 
 			this.$postVideo.find('iframe').attr('src', this.data.fields.video);
+			this.$postOtherVideos.html('');
 			this.$postTitle.html(this.data.fields.title);
 			this.$postDesc.html(this.data.fields.description);
 			this.$postExtraBits.html(this.data.fields.extraBits);
 
-			this.showPost();
+			_.each(this.data.fields.otherVideos, (item, index) => {
+				
+				const html = `<li data-src="${item}">video ${index + 1}</li>`;
+
+				this.$postOtherVideos.append(html);
+
+			});
+
+			this.$postVideo.find('iframe').on('load', this.showPost.bind(this));
 
 		} else {
+
+			this.$postVideo.find('iframe').off('load');
 
 			this.hidePost();
 
@@ -138,7 +157,9 @@ export default class Home {
 			height: 0,
 			ease: Expo.easeInOut,
 			onComplete: () => {
+
 				this.postOpen = true;
+
 			}
 		};
 
@@ -152,10 +173,13 @@ export default class Home {
 			height: 0,
 			ease: Expo.easeInOut,
 			onComplete: () => {
+
 				this.postOpen = false;
+				
 				if(this.postClicked) {
 					this.renderPost();
 				}
+
 			}
 		};
 

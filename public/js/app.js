@@ -17200,10 +17200,12 @@
 			this.$posts = this.$el.find('.posts li');
 			this.$post = this.$el.find('.post');
 			this.$postVideo = this.$post.find('.video');
+			this.$postOtherVideos = this.$post.find('.other-videos');
 			this.$postTitle = this.$post.find('.title');
 			this.$postDesc = this.$post.find('.description');
 			this.$postExtraBits = this.$post.find('.extra-bits');
 
+			this.postID = null;
 			this.postOpen = false;
 
 			this.bindEvents();
@@ -17290,22 +17292,38 @@
 
 					_this.data = data;
 
-					_this.renderPost();
+					if (_this.postID !== _this.data.id) {
+
+						_this.renderPost();
+					}
 				});
 			}
 		}, {
 			key: 'renderPost',
 			value: function renderPost() {
+				var _this2 = this;
+
+				this.postID = this.data.id;
 
 				if (!this.postOpen) {
 
 					this.$postVideo.find('iframe').attr('src', this.data.fields.video);
+					this.$postOtherVideos.html('');
 					this.$postTitle.html(this.data.fields.title);
 					this.$postDesc.html(this.data.fields.description);
 					this.$postExtraBits.html(this.data.fields.extraBits);
 
-					this.showPost();
+					_underscore2.default.each(this.data.fields.otherVideos, function (item, index) {
+
+						var html = '<li data-src="' + item + '">video ' + (index + 1) + '</li>';
+
+						_this2.$postOtherVideos.append(html);
+					});
+
+					this.$postVideo.find('iframe').on('load', this.showPost.bind(this));
 				} else {
+
+					this.$postVideo.find('iframe').off('load');
 
 					this.hidePost();
 				}
@@ -17313,7 +17331,7 @@
 		}, {
 			key: 'showPost',
 			value: function showPost() {
-				var _this2 = this;
+				var _this3 = this;
 
 				_gsap2.default.set(this.$post, { height: 'auto' });
 
@@ -17321,7 +17339,8 @@
 					height: 0,
 					ease: Expo.easeInOut,
 					onComplete: function onComplete() {
-						_this2.postOpen = true;
+
+						_this3.postOpen = true;
 					}
 				};
 
@@ -17330,15 +17349,17 @@
 		}, {
 			key: 'hidePost',
 			value: function hidePost() {
-				var _this3 = this;
+				var _this4 = this;
 
 				var params = {
 					height: 0,
 					ease: Expo.easeInOut,
 					onComplete: function onComplete() {
-						_this3.postOpen = false;
-						if (_this3.postClicked) {
-							_this3.renderPost();
+
+						_this4.postOpen = false;
+
+						if (_this4.postClicked) {
+							_this4.renderPost();
 						}
 					}
 				};

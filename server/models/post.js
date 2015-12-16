@@ -54,6 +54,10 @@ post.add({
 		type: types.Url,
 		required: false
 	},
+	otherVideos: {
+		type: types.TextArray,
+		required: false
+	},
 	extraBits: {
 		type: types.Html,
 		wysiwyg: true,
