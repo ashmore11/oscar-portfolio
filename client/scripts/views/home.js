@@ -107,7 +107,7 @@ export default class Home {
 
 			this.data = data;
 
-			if(this.postID !== this.data.id) {
+			if(this.postID !== data.id) {
 				
 				this.renderPost();
 

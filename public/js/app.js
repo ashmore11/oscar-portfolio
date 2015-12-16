@@ -17292,7 +17292,7 @@
 
 					_this.data = data;
 
-					if (_this.postID !== _this.data.id) {
+					if (_this.postID !== data.id) {
 
 						_this.renderPost();
 					}
