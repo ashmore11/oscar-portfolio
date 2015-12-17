@@ -1,3 +1,6 @@
+import $           from 'jquery';
+import _           from 'underscore';
+import TM          from 'gsap';
 import Navigation  from 'app/utils/navigation';
 import HomeView    from 'app/views/home';
 import ExampleView from 'app/views/example';
@@ -5,6 +8,8 @@ import ExampleView from 'app/views/example';
 class App {
 
 	constructor() {
+
+		this.initGlobals();
 
 		const nav = new Navigation();
 
@@ -15,6 +20,14 @@ class App {
 		});
 
 		nav.init();
+
+	}
+
+	initGlobals() {
+
+		window.$  = $;  // jquery
+		window._  = _;  // underscore
+		window.TM = TM; // TweenMax
 
 	}
 

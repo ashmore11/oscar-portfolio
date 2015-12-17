@@ -1,57 +1,55 @@
 import Happens from 'happens';
-import $       from 'jquery';
-import TM      from 'gsap';
 
 export default class Loader {
-	
-	constructor() {
+  
+  constructor() {
 
-		Happens(this);
+    Happens(this);
 
-		this.$el = $('.loader');
+    this.$el = $('.loader');
 
-		this.loadProgress = 0;
-		this.loadInterval = null;
+    this.loadProgress = 0;
+    this.loadInterval = null;
 
-	}
-	
-	start() {
+  }
+  
+  start() {
 
-		this.$el.css({ width: 0, opacity: 1 });
+    this.$el.css({ width: 0, opacity: 1 });
 
-		this.loadInterval = setInterval( () => {
+    this.loadInterval = setInterval( () => {
 
-			let num = (Math.random() * 20) + 5
+      let num = (Math.random() * 20) + 5
 
-			this.loadProgress += num;
+      this.loadProgress += num;
 
-			TM.to(this.$el, 0.25, { width: this.loadProgress });
+      TM.to(this.$el, 0.15, { width: this.loadProgress });
 
-		}, 250);
+    }, 250);
 
-	}
-	
-	stop() {
+  }
+  
+  stop() {
 
-		clearInterval(this.loadInterval);
-		
-		this.loadInterval = null;
+    clearInterval(this.loadInterval);
+    
+    this.loadInterval = null;
 
-		const params = {
-			width: '100%',
-			ease: Power4.easeOut,
-			onComplete: () => {
+    const params = {
+      width: '100%',
+      ease: Power4.easeOut,
+      onComplete: () => {
 
-				TM.to(this.$el, 0.5, { opacity: 0 });
+        TM.to(this.$el, 0.5, { opacity: 0 });
 
-				this.loadProgress = 0;
-				this.emit('load:complete');
+        this.loadProgress = 0;
+        this.emit('load:complete');
 
-			}
-		};
+      }
+    };
 
-		TM.to(this.$el, 0.5, params);
+    TM.to(this.$el, 0.5, params);
 
-	}
+  }
 
 }

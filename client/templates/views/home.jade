@@ -27,18 +27,20 @@ block content
 
 			each item in work
 
-				- var tags = [];
-				
-				each tag in item.tags
+				if item.state == 'published'
 
-					- tags.push(tag.slug);
+					- var tags = [];
+					
+					each tag in item.tags
 
-				- var tags = tags.join().replace(/,/g, ' ');
+						- tags.push(tag.slug);
 
-				li(id="#{item.id}" data-tags="#{tags}")
+					- var tags = tags.join().replace(/,/g, ' ');
 
-					img(
-						src="images/uploads/#{item.stillImage.filename}"
-						data-over="#{item.gif.filename}"
-						data-out="#{item.stillImage.filename}"
-					)
+					li(id="#{item.id}" data-tags="#{tags}")
+
+						img(
+							src="#{item.image.url}"
+							data-over="#{item.animatedGif.url}"
+							data-out="#{item.image.url}"
+						)

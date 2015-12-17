@@ -16,7 +16,7 @@
 
 /* line 14 : /Users/scott/Desktop/work/oscar-portfolio/node_modules/rupture/rupture/index.styl */
 
-/* line 7 : /Users/scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/index.styl */
+/* line 1 : /Users/scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/index.styl */
 
 /* line 10 : /Users/scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/index.styl */
 
@@ -36,7 +36,7 @@
 
 /* line 90 : /Users/scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/flex.styl */
 
-/* line 7 : /Users/scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/gradients.styl */
+/* line 1 : /Users/scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/gradients.styl */
 
 /* line 11 : /Users/scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/gradients.styl */
 
@@ -52,7 +52,7 @@
 
 /* line 19 : /Users/scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/image.styl */
 
-/* line 7 : /Users/scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/normalize/index.styl */
+/* line 1 : /Users/scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/normalize/index.styl */
 
 /* line 8 : /Users/scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/normalize/index.styl */
 
@@ -100,7 +100,7 @@
 
 /* line 5 : /Users/scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/reset.styl */
 
-/* line 7 : /Users/scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/text/index.styl */
+/* line 1 : /Users/scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/text/index.styl */
 
 /* line 12 : /Users/scott/Desktop/work/oscar-portfolio/node_modules/nib/lib/nib/text/index.styl */
 
@@ -150,9 +150,9 @@
 
 /* line 1 : /Users/scott/Desktop/work/oscar-portfolio/node_modules/jeet/stylus/jeet/_grid.styl */
 
-/* line 7 : /Users/scott/Desktop/work/oscar-portfolio/node_modules/jeet/stylus/jeet/_grid.styl */
+/* line 32 : /Users/scott/Desktop/work/oscar-portfolio/node_modules/jeet/stylus/jeet/_grid.styl */
 
-/* line 32 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/reset.styl */
+/* line 1 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/reset.styl */
 
 /* line 12 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/reset.styl */
 
@@ -359,7 +359,7 @@ h2 {
  * ------------------------
  */
 
-/* line 32 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/utils/variables.styl */
+/* line 5 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/utils/variables.styl */
 
 /* line 32 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/header.styl */
 
@@ -373,9 +373,9 @@ h2 {
   text-align: center;
 }
 
-/* line 14 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/header.styl */
+/* line 15 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/header.styl */
 
-/* line 5 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/footer.styl */
+/* line 1 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/footer.styl */
 
 /* line 1 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/footer.styl */
 #footer {
@@ -385,18 +385,19 @@ h2 {
   width: 100%;
   padding: 5px;
   text-align: center;
+  background-color: #fff;
 }
 
-/* line 7 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/footer.styl */
-
 /* line 8 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/footer.styl */
+
+/* line 9 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/footer.styl */
 #footer ul.footer-links li {
   display: inline-block;
   font-size: 11px;
   line-height: 11px;
 }
 
-/* line 13 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/footer.styl */
+/* line 14 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/footer.styl */
 #footer ul.footer-links li a:hover {
   text-decoration: underline;
 }
@@ -414,9 +415,9 @@ h2 {
 
 /* line 1 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/page.styl */
 
-/* line 5 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/page.styl */
+/* line 95 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/page.styl */
 
-/* line 5 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+/* line 1 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 
 /* line 1 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home {
@@ -537,20 +538,21 @@ h2 {
 /* line 74 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home .posts li {
   display: inline-block;
-  -webkit-transform: translateY(-30px);
-  -moz-transform: translateY(-30px);
-  -o-transform: translateY(-30px);
-  -ms-transform: translateY(-30px);
-  transform: translateY(-30px);
+  -webkit-transform: translateY(-25px);
+  -moz-transform: translateY(-25px);
+  -o-transform: translateY(-25px);
+  -ms-transform: translateY(-25px);
+  transform: translateY(-25px);
   opacity: 0;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
   filter: alpha(opacity=0);
-  -webkit-transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-  -moz-transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-  -o-transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-  -ms-transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-  transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  -webkit-transition: box-shadow 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  -moz-transition: box-shadow 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  -o-transition: box-shadow 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  -ms-transition: box-shadow 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: box-shadow 1s cubic-bezier(0.165, 0.84, 0.44, 1);
   cursor: pointer;
+  margin-bottom: 17px;
   width: 115px;
   height: 100%;
   *zoom: 1;
@@ -574,9 +576,15 @@ h2 {
   clear: both;
 }
 
-/* line 48 : /Users/scott/Desktop/work/oscar-portfolio/node_modules/jeet/stylus/jeet/_grid.styl */
-#home .posts li:last-child {
+/* line 42 : /Users/scott/Desktop/work/oscar-portfolio/node_modules/jeet/stylus/jeet/_grid.styl */
+#home .posts li:nth-child(6n) {
   margin-right: 0%;
+  float: right;
+}
+
+/* line 45 : /Users/scott/Desktop/work/oscar-portfolio/node_modules/jeet/stylus/jeet/_grid.styl */
+#home .posts li:nth-child(6n+1) {
+  clear: both;
 }
 @media only screen and (max-width: 768px) {
 
@@ -603,28 +611,32 @@ h2 {
     clear: both;
   }
 
-/* line 48 : /Users/scott/Desktop/work/oscar-portfolio/node_modules/jeet/stylus/jeet/_grid.styl */
-  #home .posts li:last-child {
+/* line 42 : /Users/scott/Desktop/work/oscar-portfolio/node_modules/jeet/stylus/jeet/_grid.styl */
+  #home .posts li:nth-child(2n) {
     margin-right: 0%;
+    float: right;
+  }
+
+/* line 45 : /Users/scott/Desktop/work/oscar-portfolio/node_modules/jeet/stylus/jeet/_grid.styl */
+  #home .posts li:nth-child(2n+1) {
+    clear: both;
   }
 }
 
-/* line 86 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+/* line 87 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home .posts li img {
   display: block;
   width: 100%;
   height: 100%;
 }
 
-/* line 90 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
-
-/* line 94 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+/* line 91 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home .posts li.active {
   -webkit-box-shadow: 0px 0px 15px 2px rgba(0,0,0,0.3);
   box-shadow: 0px 0px 15px 2px rgba(0,0,0,0.3);
 }
 
-/* line 97 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+/* line 94 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home .posts li.open {
   cursor: default;
 }

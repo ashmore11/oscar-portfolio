@@ -38,17 +38,15 @@ post.add({
 		ref: 'Tags',
 		many: true
 	},
-	stillImage: {
+	image: {
+		type: types.CloudinaryImage,
 		required: false,
-		initial: false,
-		type: types.LocalFile,
-		dest: process.env.PWD + '/public/images/uploads/'
+		initial: false
 	},
-	gif: {
+	animatedGif: {
+		type: types.CloudinaryImage,
 		required: false,
-		initial: false,
-		type: types.LocalFile,
-		dest: process.env.PWD + '/public/images/uploads/'
+		initial: false
 	},
 	video: {
 		type: types.Url,
