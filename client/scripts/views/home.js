@@ -1,31 +1,22 @@
-import Happens from 'happens';
-import _       from 'underscore';
-import $       from 'jquery';
-import TM      from 'gsap';
+import $     from 'jquery';
+import _     from 'underscore';
+import TM    from 'gsap';
+import Posts from 'app/components/posts';
 
 export default class Home {
 	
 	constructor() {
 
-		console.log('---[ VIEW HOME ]---');
+		this.$el    = $('#home');
+		this.$tag   = this.$el.find('.tags li');
+		this.$posts = this.$el.find('.posts li');
 
-		Happens(this);
-
-		this.$el              = $('#home');
-		this.$tag             = this.$el.find('.tags li');
-		this.$posts           = this.$el.find('.posts li');
-		this.$post            = this.$el.find('.post');
-		this.$postVideo       = this.$post.find('.video');
-		this.$postOtherVideos = this.$post.find('.other-videos');
-		this.$postTitle       = this.$post.find('.title');
-		this.$postDesc        = this.$post.find('.description');
-		this.$postExtraBits   = this.$post.find('.extra-bits');
-
-		this.postID   = null;
-		this.postOpen = false;
+		this.postID = null;
 
 		this.bindEvents();
 		this.runIntroAnimation();
+
+		this.posts = new Posts;
 	
 	}
 
@@ -98,102 +89,29 @@ export default class Home {
 
 		this.postClicked = true;
 
+		this.$posts.removeClass('open');
+
 		const target = $(event.currentTarget);
 		const id     = target.attr('id');
 		const host   = window.location.origin;
 		const apiUrl = `keystone/api/posts/${id}`;
+		const post   = `${host}/${apiUrl}`;
 
-		$.get(`${host}/${apiUrl}`, data => {
+		if(this.postID !== id) {
 
-			this.data = data;
+			this.posts.load(post);
 
-			if(this.postID !== data.id) {
-				
-				this.renderPost();
-
-			}
-
-		});
-
-	}
-
-	renderPost() {
-
-		this.postID = this.data.id;
-
-		if(!this.postOpen) {
-
-			this.$postVideo.find('iframe').attr('src', this.data.fields.video);
-			this.$postOtherVideos.html('');
-			this.$postTitle.html(this.data.fields.title);
-			this.$postDesc.html(this.data.fields.description);
-			this.$postExtraBits.html(this.data.fields.extraBits);
-
-			_.each(this.data.fields.otherVideos, (item, index) => {
-				
-				const html = `<li data-src="${item}">video ${index + 1}</li>`;
-
-				this.$postOtherVideos.append(html);
-
-			});
-
-			this.$postVideo.find('iframe').on('load', this.showPost.bind(this));
-
-		} else {
-
-			this.$postVideo.find('iframe').off('load');
-
-			this.hidePost();
+			this.postID = id;
 
 		}
 
-	}
-
-	showPost() {
-
-		TM.set(this.$post, { height: 'auto' });
-
-		const params = {
-			height: 0,
-			ease: Expo.easeInOut,
-			onComplete: () => {
-
-				this.postOpen = true;
-
-			}
-		};
-
-		TM.from(this.$post, 1, params);
-
-	}
-
-	hidePost() {
-
-		const params = {
-			height: 0,
-			ease: Expo.easeInOut,
-			onComplete: () => {
-
-				this.postOpen = false;
-				
-				if(this.postClicked) {
-					this.renderPost();
-				}
-
-			}
-		};
-
-		TM.to(this.$post, 1, params);
+		target.addClass('open');
 
 	}
 
 	filterPosts(event) {
 
 		event.preventDefault();
-
-		this.postClicked = false;
-
-		this.hidePost();
 
 		const target = $(event.currentTarget);
 		const tag    = target.data('tag');

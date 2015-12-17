@@ -4,19 +4,30 @@
 	margin: 0 auto
 	
 	.tags
-		text-align: center
+		relative: left 50%
+		transform: translateX(-50%)
+		display: inline-block
+		margin: 0 auto 20px auto
 		
 		li
 			display: inline-block
-			margin: 10px 5px 20px 5px
+			margin: 0 5px
 			cursor: pointer
+			transition: opacity 0.25s
 			
+			&:hover
+				text-decoration: underline
+	
+	.loader
+		height: 1px
+		width: 0
+		background-color: $black
+
 	.post
 		position: relative
 		height: 0
 		overflow: hidden
 		text-align: center
-		margin-top: 2px
 			
 		.video
 			width: 100%
@@ -64,7 +75,7 @@
 			display: inline-block
 			transform: translateY(-30px)
 			opacity: 0
-			transition: -webkit-filter 1s $ease-out-quart, box-shadow 1s $ease-out-quart
+			transition: all 1s $ease-out-quart
 			cursor: pointer
 			size(115px,100%)
 			column(1/6, gutter: 2)
@@ -77,10 +88,13 @@
 				size(100%,100%)	
 			
 			&.blur
-				-webkit-filter: blur(2px)
-				        filter: blur(2px)
+				// -webkit-filter: blur(2px)
+				//         filter: blur(2px)
 				        
 			&.active
-				box-shadow: 0px 0px 15px 2px rgba($black, 0.2)
+				box-shadow: 0px 0px 15px 2px rgba($black, 0.3)
+			
+			&.open
+				cursor: default
 
 

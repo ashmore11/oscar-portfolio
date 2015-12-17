@@ -56,7 +56,7 @@
 
 	var _home2 = _interopRequireDefault(_home);
 
-	var _example = __webpack_require__(8);
+	var _example = __webpack_require__(10);
 
 	var _example2 = _interopRequireDefault(_example);
 
@@ -17167,21 +17167,21 @@
 		value: true
 	});
 
-	var _happens = __webpack_require__(2);
+	var _jquery = __webpack_require__(5);
 
-	var _happens2 = _interopRequireDefault(_happens);
+	var _jquery2 = _interopRequireDefault(_jquery);
 
 	var _underscore = __webpack_require__(7);
 
 	var _underscore2 = _interopRequireDefault(_underscore);
 
-	var _jquery = __webpack_require__(5);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
 	var _gsap = __webpack_require__(3);
 
 	var _gsap2 = _interopRequireDefault(_gsap);
+
+	var _posts = __webpack_require__(8);
+
+	var _posts2 = _interopRequireDefault(_posts);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -17191,25 +17191,16 @@
 		function Home() {
 			_classCallCheck(this, Home);
 
-			console.log('---[ VIEW HOME ]---');
-
-			(0, _happens2.default)(this);
-
 			this.$el = (0, _jquery2.default)('#home');
 			this.$tag = this.$el.find('.tags li');
 			this.$posts = this.$el.find('.posts li');
-			this.$post = this.$el.find('.post');
-			this.$postVideo = this.$post.find('.video');
-			this.$postOtherVideos = this.$post.find('.other-videos');
-			this.$postTitle = this.$post.find('.title');
-			this.$postDesc = this.$post.find('.description');
-			this.$postExtraBits = this.$post.find('.extra-bits');
 
 			this.postID = null;
-			this.postOpen = false;
 
 			this.bindEvents();
 			this.runIntroAnimation();
+
+			this.posts = new _posts2.default();
 		}
 
 		_createClass(Home, [{
@@ -17277,104 +17268,33 @@
 		}, {
 			key: 'loadPost',
 			value: function loadPost(event) {
-				var _this = this;
 
 				event.preventDefault();
 
 				this.postClicked = true;
 
+				this.$posts.removeClass('open');
+
 				var target = (0, _jquery2.default)(event.currentTarget);
 				var id = target.attr('id');
 				var host = window.location.origin;
 				var apiUrl = 'keystone/api/posts/' + id;
+				var post = host + '/' + apiUrl;
 
-				_jquery2.default.get(host + '/' + apiUrl, function (data) {
+				if (this.postID !== id) {
 
-					_this.data = data;
+					this.posts.load(post);
 
-					if (_this.postID !== data.id) {
-
-						_this.renderPost();
-					}
-				});
-			}
-		}, {
-			key: 'renderPost',
-			value: function renderPost() {
-				var _this2 = this;
-
-				this.postID = this.data.id;
-
-				if (!this.postOpen) {
-
-					this.$postVideo.find('iframe').attr('src', this.data.fields.video);
-					this.$postOtherVideos.html('');
-					this.$postTitle.html(this.data.fields.title);
-					this.$postDesc.html(this.data.fields.description);
-					this.$postExtraBits.html(this.data.fields.extraBits);
-
-					_underscore2.default.each(this.data.fields.otherVideos, function (item, index) {
-
-						var html = '<li data-src="' + item + '">video ' + (index + 1) + '</li>';
-
-						_this2.$postOtherVideos.append(html);
-					});
-
-					this.$postVideo.find('iframe').on('load', this.showPost.bind(this));
-				} else {
-
-					this.$postVideo.find('iframe').off('load');
-
-					this.hidePost();
+					this.postID = id;
 				}
-			}
-		}, {
-			key: 'showPost',
-			value: function showPost() {
-				var _this3 = this;
 
-				_gsap2.default.set(this.$post, { height: 'auto' });
-
-				var params = {
-					height: 0,
-					ease: Expo.easeInOut,
-					onComplete: function onComplete() {
-
-						_this3.postOpen = true;
-					}
-				};
-
-				_gsap2.default.from(this.$post, 1, params);
-			}
-		}, {
-			key: 'hidePost',
-			value: function hidePost() {
-				var _this4 = this;
-
-				var params = {
-					height: 0,
-					ease: Expo.easeInOut,
-					onComplete: function onComplete() {
-
-						_this4.postOpen = false;
-
-						if (_this4.postClicked) {
-							_this4.renderPost();
-						}
-					}
-				};
-
-				_gsap2.default.to(this.$post, 1, params);
+				target.addClass('open');
 			}
 		}, {
 			key: 'filterPosts',
 			value: function filterPosts(event) {
 
 				event.preventDefault();
-
-				this.postClicked = false;
-
-				this.hidePost();
 
 				var target = (0, _jquery2.default)(event.currentTarget);
 				var tag = target.data('tag');
@@ -18959,6 +18879,243 @@
 
 /***/ },
 /* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _happens = __webpack_require__(2);
+
+	var _happens2 = _interopRequireDefault(_happens);
+
+	var _jquery = __webpack_require__(5);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _underscore = __webpack_require__(7);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	var _gsap = __webpack_require__(3);
+
+	var _gsap2 = _interopRequireDefault(_gsap);
+
+	var _loader = __webpack_require__(9);
+
+	var _loader2 = _interopRequireDefault(_loader);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Posts = (function () {
+		function Posts() {
+			_classCallCheck(this, Posts);
+
+			this.$el = (0, _jquery2.default)('.post');
+			this.$postVideo = this.$el.find('.video');
+			this.$postVideoIframe = this.$postVideo.find('iframe');
+			this.$postOtherVideos = this.$el.find('.other-videos');
+			this.$postTitle = this.$el.find('.title');
+			this.$postDesc = this.$el.find('.description');
+			this.$postExtraBits = this.$el.find('.extra-bits');
+
+			this.postOpen = false;
+
+			this.loader = new _loader2.default();
+		}
+
+		_createClass(Posts, [{
+			key: 'load',
+			value: function load(post) {
+				var _this = this;
+
+				_jquery2.default.get(post, function (data) {
+
+					_this.data = data;
+
+					if (!_this.postOpen) {
+
+						_this.render();
+					} else {
+
+						_this.unbindAndHide();
+					}
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+
+				this.loader.start();
+
+				this.$postVideoIframe.attr('src', this.data.fields.video);
+				this.$postOtherVideos.html('');
+				this.$postTitle.html(this.data.fields.title);
+				this.$postDesc.html(this.data.fields.description);
+				this.$postExtraBits.html(this.data.fields.extraBits);
+
+				_underscore2.default.each(this.data.fields.otherVideos, function (item, index) {
+
+					var html = '<li data-src="' + item + '">video ' + (index + 1) + '</li>';
+
+					_this2.$postOtherVideos.append(html);
+				});
+
+				this.loader.on('load:complete', this.show.bind(this));
+
+				this.$postVideoIframe.on('load', function () {
+
+					_this2.loader.stop();
+				});
+			}
+		}, {
+			key: 'unbindAndHide',
+			value: function unbindAndHide() {
+
+				this.$postVideoIframe.off('load');
+
+				this.loader.off('load:complete');
+
+				this.hide();
+			}
+		}, {
+			key: 'show',
+			value: function show() {
+				var _this3 = this;
+
+				_gsap2.default.set(this.$el, { height: 'auto' });
+
+				var params = {
+					height: 0,
+					ease: Expo.easeInOut,
+					onComplete: function onComplete() {
+
+						_this3.postOpen = true;
+					}
+				};
+
+				_gsap2.default.from(this.$el, 1, params);
+			}
+		}, {
+			key: 'hide',
+			value: function hide() {
+				var _this4 = this;
+
+				var params = {
+					height: 0,
+					ease: Expo.easeInOut,
+					onComplete: function onComplete() {
+
+						_this4.postOpen = false;
+
+						_this4.render();
+					}
+				};
+
+				_gsap2.default.to(this.$el, 1, params);
+			}
+		}]);
+
+		return Posts;
+	})();
+
+	exports.default = Posts;
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _happens = __webpack_require__(2);
+
+	var _happens2 = _interopRequireDefault(_happens);
+
+	var _jquery = __webpack_require__(5);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _gsap = __webpack_require__(3);
+
+	var _gsap2 = _interopRequireDefault(_gsap);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Loader = (function () {
+		function Loader() {
+			_classCallCheck(this, Loader);
+
+			(0, _happens2.default)(this);
+
+			this.$el = (0, _jquery2.default)('.loader');
+
+			this.loadProgress = 0;
+			this.loadInterval = null;
+		}
+
+		_createClass(Loader, [{
+			key: 'start',
+			value: function start() {
+				var _this = this;
+
+				this.$el.css({ width: 0, opacity: 1 });
+
+				this.loadInterval = setInterval(function () {
+
+					var num = Math.random() * 20 + 5;
+
+					_this.loadProgress += num;
+
+					_gsap2.default.to(_this.$el, 0.25, { width: _this.loadProgress });
+				}, 250);
+			}
+		}, {
+			key: 'stop',
+			value: function stop() {
+				var _this2 = this;
+
+				clearInterval(this.loadInterval);
+
+				this.loadInterval = null;
+
+				var params = {
+					width: '100%',
+					ease: Power4.easeOut,
+					onComplete: function onComplete() {
+
+						_gsap2.default.to(_this2.$el, 0.5, { opacity: 0 });
+
+						_this2.loadProgress = 0;
+						_this2.emit('load:complete');
+					}
+				};
+
+				_gsap2.default.to(this.$el, 0.5, params);
+			}
+		}]);
+
+		return Loader;
+	})();
+
+	exports.default = Loader;
+
+/***/ },
+/* 10 */
 /***/ function(module, exports) {
 
 	'use strict';
