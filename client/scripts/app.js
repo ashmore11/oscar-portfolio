@@ -1,10 +1,8 @@
-import $           from 'jquery';
-import _           from 'underscore';
-import TM          from 'gsap';
-import Page        from 'page';
-import Navigation  from 'app/utils/navigation';
-import HomeView    from 'app/views/home';
-import ExampleView from 'app/views/example';
+import $    from 'jquery';
+import _    from 'underscore';
+import TM   from 'gsap';
+import Page from 'page';
+import View from 'app/views/home';
 
 class App {
 
@@ -12,23 +10,13 @@ class App {
 
 		this.initGlobals();
 
-		const view = new HomeView;
+		const view = new View;
 
-		Page('*', function(ctx) {
+		// Page(function(ctx) {
 
-      console.log(ctx)
-
-    });
-
-		// const nav = new Navigation();
-
-		// nav.on('url:changed', id => {
-			
-		// 	this.renderView(id);
+		// 	view.loadPost(ctx.pathname);
 
 		// });
-
-		// nav.init();
 
 	}
 
@@ -45,21 +33,6 @@ class App {
 
 	}
 
-	get views() {
-
-		return {
-			home    : HomeView,
-			example : ExampleView,
-		};
-
-	}
-
-	renderView(id) {
-
-		const view = new this.views[id]();
-
-	}
-
 }
 
-const APP = new App();
+const APP = new App;

@@ -39,8 +39,5 @@ block content
 
 					li(id="#{item.id}" data-tags="#{tags}")
 
-						img(
-							src="#{item.image.url}"
-							data-over="#{item.animatedGif.url}"
-							data-out="#{item.image.url}"
-						)
+						img(class="out"  src="#{item.image.url}")
+						img(class="over" src="#{item.animatedGif.url}")

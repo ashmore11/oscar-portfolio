@@ -1,4 +1,4 @@
-import Posts from 'app/components/posts';
+import Post from 'app/components/post';
 
 export default class Home {
   
@@ -13,7 +13,7 @@ export default class Home {
     this.bindEvents();
     this.runIntroAnimation();
 
-    this.posts = new Posts;
+    this.post = new Post;
   
   }
 
@@ -22,7 +22,7 @@ export default class Home {
     this.$posts.on('mouseenter', this.mouseenter.bind(this));
     this.$posts.on('mouseleave', this.mouseleave.bind(this));
 
-    this.$posts.on('click', this.loadPost.bind(this));
+    this.$posts.on('click', this.postClicked.bind(this));
     this.$tag.on('click', this.filterPosts.bind(this));
 
   }
@@ -60,7 +60,7 @@ export default class Home {
     const image  = target.find('img');
     const src    = image.data('over');
 
-    target.find('img').attr('src', src);
+    target.find('img.over').css({ opacity: 1 })
 
     target.addClass('active');
 
@@ -72,13 +72,13 @@ export default class Home {
     const image  = target.find('img');
     const src    = image.data('out');
 
-    target.find('img').attr('src', src);
+    target.find('img.over').css({ opacity: 0 })
 
     this.$posts.removeClass('active');
 
   }
 
-  loadPost(event) {
+  postClicked(event) {
 
     event.preventDefault();
 
@@ -86,21 +86,27 @@ export default class Home {
 
     const target = $(event.currentTarget);
     const id     = target.attr('id');
+
+    this.$posts.removeClass('open');
+    target.addClass('open');
+
+    this.loadPost(id);
+
+  }
+
+  loadPost(id) {
+
     const host   = window.location.origin;
     const apiUrl = `keystone/api/posts/${id}`;
     const post   = `${host}/${apiUrl}`;
 
     if(this.postID !== id) {
 
-      this.posts.load(post);
+      this.post.load(post);
 
       this.postID = id;
 
     }
-
-    this.$posts.removeClass('open');
-    
-    target.addClass('open');
 
   }
 

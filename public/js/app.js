@@ -64,17 +64,9 @@
 
 	var _page2 = _interopRequireDefault(_page);
 
-	var _navigation = __webpack_require__(9);
-
-	var _navigation2 = _interopRequireDefault(_navigation);
-
-	var _home = __webpack_require__(11);
+	var _home = __webpack_require__(9);
 
 	var _home2 = _interopRequireDefault(_home);
-
-	var _example = __webpack_require__(14);
-
-	var _example2 = _interopRequireDefault(_example);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -88,20 +80,11 @@
 
 			var view = new _home2.default();
 
-			(0, _page2.default)('*', function (ctx) {
+			// Page(function(ctx) {
 
-				console.log(ctx);
-			});
-
-			// const nav = new Navigation();
-
-			// nav.on('url:changed', id => {
-
-			// 	this.renderView(id);
+			// 	view.loadPost(ctx.pathname);
 
 			// });
-
-			// nav.init();
 		}
 
 		_createClass(App, [{
@@ -116,21 +99,6 @@
 
 				// TweenMax
 				window.TM = _gsap2.default;
-			}
-		}, {
-			key: 'renderView',
-			value: function renderView(id) {
-
-				var view = new this.views[id]();
-			}
-		}, {
-			key: 'views',
-			get: function get() {
-
-				return {
-					home: _home2.default,
-					example: _example2.default
-				};
 			}
 		}]);
 
@@ -19632,152 +19600,310 @@
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 
-	var _happens = __webpack_require__(10);
+	var _post = __webpack_require__(10);
 
-	var _happens2 = _interopRequireDefault(_happens);
-
-	var _gsap = __webpack_require__(3);
-
-	var _gsap2 = _interopRequireDefault(_gsap);
-
-	var _jquery = __webpack_require__(1);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
+	var _post2 = _interopRequireDefault(_post);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var Navigation = (function () {
-		function Navigation() {
-			_classCallCheck(this, Navigation);
+	var Home = (function () {
+	  function Home() {
+	    _classCallCheck(this, Home);
 
-			(0, _happens2.default)(this);
-		}
+	    this.$el = $('#home');
+	    this.$tag = this.$el.find('.tags li');
+	    this.$posts = this.$el.find('.posts li');
 
-		_createClass(Navigation, [{
-			key: 'init',
-			value: function init() {
+	    this.postID = null;
 
-				this.popEventListnerAdded = false;
+	    this.bindEvents();
+	    this.runIntroAnimation();
 
-				this.$main = (0, _jquery2.default)('#main');
+	    this.post = new _post2.default();
+	  }
 
-				this.id = this.$main[0].children[0].id;
+	  _createClass(Home, [{
+	    key: 'bindEvents',
+	    value: function bindEvents() {
 
-				this.emit('url:changed', this.id);
+	      this.$posts.on('mouseenter', this.mouseenter.bind(this));
+	      this.$posts.on('mouseleave', this.mouseleave.bind(this));
 
-				this.bindEvents();
-			}
-		}, {
-			key: 'bindEvents',
-			value: function bindEvents() {
+	      this.$posts.on('click', this.postClicked.bind(this));
+	      this.$tag.on('click', this.filterPosts.bind(this));
+	    }
+	  }, {
+	    key: 'unbind',
+	    value: function unbind() {
 
-				(0, _jquery2.default)('body').find('a').on('click', this.navigate.bind(this));
-			}
-		}, {
-			key: 'navigate',
-			value: function navigate(event) {
+	      this.$posts.off('mouseenter');
+	      this.$posts.off('mouseleave');
 
-				event.preventDefault();
+	      this.$posts.off('click');
+	      this.$tag.off('click');
+	    }
+	  }, {
+	    key: 'runIntroAnimation',
+	    value: function runIntroAnimation() {
 
-				var target = (0, _jquery2.default)(event.target);
-				var url = target.attr('href');
+	      this.$posts.each(function (index, item) {
 
-				if (url === '/keystone') {
+	        var params = {
+	          y: 0,
+	          opacity: 1,
+	          delay: index * 0.085,
+	          ease: Power3.easeOut
+	        };
 
-					window.location = url;
+	        TM.to($(item), 1, params);
+	      });
+	    }
+	  }, {
+	    key: 'mouseenter',
+	    value: function mouseenter(event) {
 
-					return;
-				} else if (this.url !== url) {
+	      var target = $(event.currentTarget);
+	      var image = target.find('img');
+	      var src = image.data('over');
 
-					this.url = url;
-					this.id = target.text().toLowerCase();
-				} else {
+	      target.find('img.over').css({ opacity: 1 });
 
-					return;
-				}
+	      target.addClass('active');
+	    }
+	  }, {
+	    key: 'mouseleave',
+	    value: function mouseleave(event) {
 
-				this.fadeOut();
-				this.pushState();
+	      var target = $(event.currentTarget);
+	      var image = target.find('img');
+	      var src = image.data('out');
 
-				if (!this.popEventListnerAdded) {
+	      target.find('img.over').css({ opacity: 0 });
 
-					this.popState();
-				}
-			}
-		}, {
-			key: 'fadeOut',
-			value: function fadeOut() {
-				var _this = this;
+	      this.$posts.removeClass('active');
+	    }
+	  }, {
+	    key: 'postClicked',
+	    value: function postClicked(event) {
 
-				var params = {
-					autoAlpha: 0,
-					ease: Power1.easeOut,
-					onComplete: function onComplete() {
-						_this.loadPage();
-					}
-				};
+	      event.preventDefault();
 
-				_gsap2.default.to(this.$main, 0.25, params);
-			}
-		}, {
-			key: 'fadeIn',
-			value: function fadeIn() {
+	      this.postClicked = true;
 
-				var params = {
-					autoAlpha: 1,
-					ease: Power1.easeInOut
-				};
+	      var target = $(event.currentTarget);
+	      var id = target.attr('id');
 
-				_gsap2.default.to(this.$main, 0.25, params);
-			}
-		}, {
-			key: 'loadPage',
-			value: function loadPage() {
-				var _this2 = this;
+	      this.$posts.removeClass('open');
+	      target.addClass('open');
 
-				this.$main.load(this.url + ' .page', null, function () {
+	      this.loadPost(id);
+	    }
+	  }, {
+	    key: 'loadPost',
+	    value: function loadPost(id) {
 
-					_this2.emit('url:changed', _this2.id);
+	      var host = window.location.origin;
+	      var apiUrl = 'keystone/api/posts/' + id;
+	      var post = host + '/' + apiUrl;
 
-					_this2.fadeIn();
-				});
-			}
-		}, {
-			key: 'pushState',
-			value: function pushState() {
+	      if (this.postID !== id) {
 
-				history.pushState(this.url, null, this.url);
-			}
-		}, {
-			key: 'popState',
-			value: function popState() {
-				var _this3 = this;
+	        this.post.load(post);
 
-				(0, _jquery2.default)(window).on('popstate', function (event) {
+	        this.postID = id;
+	      }
+	    }
+	  }, {
+	    key: 'filterPosts',
+	    value: function filterPosts(event) {
 
-					var state = event.originalEvent.state;
+	      event.preventDefault();
 
-					_this3.url = state;
+	      var target = $(event.currentTarget);
+	      var tag = target.data('tag');
 
-					_this3.popEventListnerAdded = true;
+	      this.$posts.each(function (index, item) {
 
-					_this3.fadeOut();
-				});
-			}
-		}]);
+	        var el = $(item);
+	        var tags = el.data('tags').split(' ');
 
-		return Navigation;
+	        if (_.contains(tags, tag)) {
+
+	          el.show();
+	        } else if (tag === 'all') {
+
+	          el.show();
+	        } else {
+
+	          el.hide();
+	        }
+	      });
+	    }
+	  }]);
+
+	  return Home;
 	})();
 
-	exports.default = Navigation;
+	exports.default = Home;
 
 /***/ },
 /* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _happens = __webpack_require__(11);
+
+	var _happens2 = _interopRequireDefault(_happens);
+
+	var _page = __webpack_require__(5);
+
+	var _page2 = _interopRequireDefault(_page);
+
+	var _loader = __webpack_require__(12);
+
+	var _loader2 = _interopRequireDefault(_loader);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Post = (function () {
+		function Post() {
+			_classCallCheck(this, Post);
+
+			this.$el = $('.post');
+			this.$postVideo = this.$el.find('.video');
+			this.$postVideoIframe = this.$postVideo.find('iframe');
+			this.$postOtherVideos = this.$el.find('.other-videos');
+			this.$postTitle = this.$el.find('.title');
+			this.$postDesc = this.$el.find('.description');
+			this.$postExtraBits = this.$el.find('.extra-bits');
+
+			this.postOpen = false;
+
+			this.loader = new _loader2.default();
+		}
+
+		_createClass(Post, [{
+			key: 'load',
+			value: function load(post) {
+				var _this = this;
+
+				$.get(post, function (data) {
+
+					_this.data = data;
+
+					if (!_this.postOpen) {
+
+						_this.render();
+					} else {
+
+						_this.unbind();
+						_this.hide();
+					}
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+
+				(0, _page2.default)(this.data.slug);
+
+				this.loader.start();
+
+				this.$postVideoIframe.attr('src', this.data.fields.video);
+				this.$postOtherVideos.html('');
+				this.$postTitle.html(this.data.fields.title);
+				this.$postDesc.html(this.data.fields.description);
+				this.$postExtraBits.html(this.data.fields.extraBits);
+
+				_.each(this.data.fields.otherVideos, function (item, index) {
+
+					var html = '<li data-src="' + item + '">video ' + (index + 1) + '</li>';
+
+					_this2.$postOtherVideos.append(html);
+				});
+
+				this.bind();
+			}
+		}, {
+			key: 'bind',
+			value: function bind() {
+				var _this3 = this;
+
+				this.loader.on('load:complete', this.show.bind(this));
+
+				this.$postVideoIframe.on('load', function () {
+
+					_this3.loader.stop();
+				});
+			}
+		}, {
+			key: 'unbind',
+			value: function unbind() {
+
+				this.$postVideoIframe.off('load');
+
+				this.loader.off('load:complete');
+			}
+		}, {
+			key: 'show',
+			value: function show() {
+				var _this4 = this;
+
+				TM.set(this.$el, { height: 'auto' });
+
+				var params = {
+					height: 0,
+					ease: Expo.easeInOut,
+					onComplete: function onComplete() {
+
+						_this4.postOpen = true;
+					}
+				};
+
+				TM.from(this.$el, 1, params);
+			}
+		}, {
+			key: 'hide',
+			value: function hide() {
+				var _this5 = this;
+
+				var params = {
+					height: 0,
+					ease: Expo.easeInOut,
+					onComplete: function onComplete() {
+
+						_this5.postOpen = false;
+
+						_this5.render();
+					}
+				};
+
+				TM.to(this.$el, 1, params);
+			}
+		}]);
+
+		return Post;
+	})();
+
+	exports.default = Post;
+
+/***/ },
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
@@ -19875,160 +20001,6 @@
 	}));
 
 /***/ },
-/* 11 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _posts = __webpack_require__(12);
-
-	var _posts2 = _interopRequireDefault(_posts);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var Home = (function () {
-	  function Home() {
-	    _classCallCheck(this, Home);
-
-	    this.$el = $('#home');
-	    this.$tag = this.$el.find('.tags li');
-	    this.$posts = this.$el.find('.posts li');
-
-	    this.postID = null;
-
-	    this.bindEvents();
-	    this.runIntroAnimation();
-
-	    this.posts = new _posts2.default();
-	  }
-
-	  _createClass(Home, [{
-	    key: 'bindEvents',
-	    value: function bindEvents() {
-
-	      this.$posts.on('mouseenter', this.mouseenter.bind(this));
-	      this.$posts.on('mouseleave', this.mouseleave.bind(this));
-
-	      this.$posts.on('click', this.loadPost.bind(this));
-	      this.$tag.on('click', this.filterPosts.bind(this));
-	    }
-	  }, {
-	    key: 'unbind',
-	    value: function unbind() {
-
-	      this.$posts.off('mouseenter');
-	      this.$posts.off('mouseleave');
-
-	      this.$posts.off('click');
-	      this.$tag.off('click');
-	    }
-	  }, {
-	    key: 'runIntroAnimation',
-	    value: function runIntroAnimation() {
-
-	      this.$posts.each(function (index, item) {
-
-	        var params = {
-	          y: 0,
-	          opacity: 1,
-	          delay: index * 0.085,
-	          ease: Power3.easeOut
-	        };
-
-	        TM.to($(item), 1, params);
-	      });
-	    }
-	  }, {
-	    key: 'mouseenter',
-	    value: function mouseenter(event) {
-
-	      var target = $(event.currentTarget);
-	      var image = target.find('img');
-	      var src = image.data('over');
-
-	      target.find('img').attr('src', src);
-
-	      target.addClass('active');
-	    }
-	  }, {
-	    key: 'mouseleave',
-	    value: function mouseleave(event) {
-
-	      var target = $(event.currentTarget);
-	      var image = target.find('img');
-	      var src = image.data('out');
-
-	      target.find('img').attr('src', src);
-
-	      this.$posts.removeClass('active');
-	    }
-	  }, {
-	    key: 'loadPost',
-	    value: function loadPost(event) {
-
-	      event.preventDefault();
-
-	      this.postClicked = true;
-
-	      var target = $(event.currentTarget);
-	      var id = target.attr('id');
-	      var host = window.location.origin;
-	      var apiUrl = 'keystone/api/posts/' + id;
-	      var post = host + '/' + apiUrl;
-
-	      if (this.postID !== id) {
-
-	        this.posts.load(post);
-
-	        this.postID = id;
-	      }
-
-	      this.$posts.removeClass('open');
-
-	      target.addClass('open');
-	    }
-	  }, {
-	    key: 'filterPosts',
-	    value: function filterPosts(event) {
-
-	      event.preventDefault();
-
-	      var target = $(event.currentTarget);
-	      var tag = target.data('tag');
-
-	      this.$posts.each(function (index, item) {
-
-	        var el = $(item);
-	        var tags = el.data('tags').split(' ');
-
-	        if (_.contains(tags, tag)) {
-
-	          el.show();
-	        } else if (tag === 'all') {
-
-	          el.show();
-	        } else {
-
-	          el.hide();
-	        }
-	      });
-	    }
-	  }]);
-
-	  return Home;
-	})();
-
-	exports.default = Home;
-
-/***/ },
 /* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -20037,161 +20009,10 @@
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+		value: true
 	});
 
-	var _happens = __webpack_require__(10);
-
-	var _happens2 = _interopRequireDefault(_happens);
-
-	var _page = __webpack_require__(5);
-
-	var _page2 = _interopRequireDefault(_page);
-
-	var _loader = __webpack_require__(13);
-
-	var _loader2 = _interopRequireDefault(_loader);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var Posts = (function () {
-	  function Posts() {
-	    _classCallCheck(this, Posts);
-
-	    this.$el = $('.post');
-	    this.$postVideo = this.$el.find('.video');
-	    this.$postVideoIframe = this.$postVideo.find('iframe');
-	    this.$postOtherVideos = this.$el.find('.other-videos');
-	    this.$postTitle = this.$el.find('.title');
-	    this.$postDesc = this.$el.find('.description');
-	    this.$postExtraBits = this.$el.find('.extra-bits');
-
-	    this.postOpen = false;
-
-	    this.loader = new _loader2.default();
-	  }
-
-	  _createClass(Posts, [{
-	    key: 'load',
-	    value: function load(post) {
-	      var _this = this;
-
-	      $.get(post, function (data) {
-
-	        _this.data = data;
-
-	        (0, _page2.default)(data.slug);
-
-	        if (!_this.postOpen) {
-
-	          _this.render();
-	        } else {
-
-	          _this.unbind();
-	          _this.hide();
-	        }
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-
-	      this.loader.start();
-
-	      this.$postVideoIframe.attr('src', this.data.fields.video);
-	      this.$postOtherVideos.html('');
-	      this.$postTitle.html(this.data.fields.title);
-	      this.$postDesc.html(this.data.fields.description);
-	      this.$postExtraBits.html(this.data.fields.extraBits);
-
-	      _.each(this.data.fields.otherVideos, function (item, index) {
-
-	        var html = '<li data-src="' + item + '">video ' + (index + 1) + '</li>';
-
-	        _this2.$postOtherVideos.append(html);
-	      });
-
-	      this.bind();
-	    }
-	  }, {
-	    key: 'bind',
-	    value: function bind() {
-	      var _this3 = this;
-
-	      this.loader.on('load:complete', this.show.bind(this));
-
-	      this.$postVideoIframe.on('load', function () {
-
-	        _this3.loader.stop();
-	      });
-	    }
-	  }, {
-	    key: 'unbind',
-	    value: function unbind() {
-
-	      this.$postVideoIframe.off('load');
-
-	      this.loader.off('load:complete');
-	    }
-	  }, {
-	    key: 'show',
-	    value: function show() {
-	      var _this4 = this;
-
-	      TM.set(this.$el, { height: 'auto' });
-
-	      var params = {
-	        height: 0,
-	        ease: Expo.easeInOut,
-	        onComplete: function onComplete() {
-
-	          _this4.postOpen = true;
-	        }
-	      };
-
-	      TM.from(this.$el, 1, params);
-	    }
-	  }, {
-	    key: 'hide',
-	    value: function hide() {
-	      var _this5 = this;
-
-	      var params = {
-	        height: 0,
-	        ease: Expo.easeInOut,
-	        onComplete: function onComplete() {
-
-	          _this5.postOpen = false;
-
-	          _this5.render();
-	        }
-	      };
-
-	      TM.to(this.$el, 1, params);
-	    }
-	  }]);
-
-	  return Posts;
-	})();
-
-	exports.default = Posts;
-
-/***/ },
-/* 13 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _happens = __webpack_require__(10);
+	var _happens = __webpack_require__(11);
 
 	var _happens2 = _interopRequireDefault(_happens);
 
@@ -20200,82 +20021,62 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var Loader = (function () {
-	  function Loader() {
-	    _classCallCheck(this, Loader);
+		function Loader() {
+			_classCallCheck(this, Loader);
 
-	    (0, _happens2.default)(this);
+			(0, _happens2.default)(this);
 
-	    this.$el = $('.loader');
+			this.$el = $('.loader');
 
-	    this.loadProgress = 0;
-	    this.loadInterval = null;
-	  }
+			this.loadProgress = 0;
+			this.loadInterval = null;
+		}
 
-	  _createClass(Loader, [{
-	    key: 'start',
-	    value: function start() {
-	      var _this = this;
+		_createClass(Loader, [{
+			key: 'start',
+			value: function start() {
+				var _this = this;
 
-	      this.$el.css({ width: 0, opacity: 1 });
+				this.$el.css({ width: 0, opacity: 1 });
 
-	      this.loadInterval = setInterval(function () {
+				this.loadInterval = setInterval(function () {
 
-	        var num = Math.random() * 20 + 5;
+					var num = Math.random() * 20 + 5;
 
-	        _this.loadProgress += num;
+					_this.loadProgress += num;
 
-	        TM.to(_this.$el, 0.15, { width: _this.loadProgress });
-	      }, 250);
-	    }
-	  }, {
-	    key: 'stop',
-	    value: function stop() {
-	      var _this2 = this;
+					TM.to(_this.$el, 0.15, { width: _this.loadProgress });
+				}, 250);
+			}
+		}, {
+			key: 'stop',
+			value: function stop() {
+				var _this2 = this;
 
-	      clearInterval(this.loadInterval);
+				clearInterval(this.loadInterval);
 
-	      this.loadInterval = null;
+				this.loadInterval = null;
 
-	      var params = {
-	        width: '100%',
-	        ease: Power4.easeOut,
-	        onComplete: function onComplete() {
+				var params = {
+					width: '100%',
+					ease: Power4.easeOut,
+					onComplete: function onComplete() {
 
-	          TM.to(_this2.$el, 0.5, { opacity: 0 });
+						TM.to(_this2.$el, 0.5, { opacity: 0 });
 
-	          _this2.loadProgress = 0;
-	          _this2.emit('load:complete');
-	        }
-	      };
+						_this2.loadProgress = 0;
+						_this2.emit('load:complete');
+					}
+				};
 
-	      TM.to(this.$el, 0.5, params);
-	    }
-	  }]);
+				TM.to(this.$el, 0.5, params);
+			}
+		}]);
 
-	  return Loader;
+		return Loader;
 	})();
 
 	exports.default = Loader;
-
-/***/ },
-/* 14 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var Example = function Example() {
-		_classCallCheck(this, Example);
-
-		console.log('---[ VIEW EXAMPLE ]---');
-	};
-
-	exports.default = Example;
 
 /***/ }
 /******/ ]);
