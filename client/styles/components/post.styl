@@ -1,0 +1,43 @@
+.post
+  position: relative
+  overflow: hidden
+  text-align: center
+  height: 0
+    
+  .video
+    width: 100%
+    
+    iframe
+      width: 100%
+      height: 430px
+      
+  .other-videos
+    li
+      display: inline-block
+      margin: 10px 6px 0px
+      cursor: pointer
+      
+      &:hover
+        text-decoration: underline
+      
+      &:before
+        content: '|'
+        display: block
+        float: right
+        margin-right: -7px
+        margin-top: -1px
+        
+      &:last-child
+        &:before
+          display: none
+      
+  .title
+    font-size: 12px
+    margin: 10px 0
+    
+  .description
+    margin: 0 auto 10px
+    width: 80%
+  
+  .extra-bits
+    margin-bottom: 20px

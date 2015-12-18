@@ -1,6 +1,7 @@
 import $           from 'jquery';
 import _           from 'underscore';
 import TM          from 'gsap';
+import Page        from 'page';
 import Navigation  from 'app/utils/navigation';
 import HomeView    from 'app/views/home';
 import ExampleView from 'app/views/example';
@@ -11,23 +12,36 @@ class App {
 
 		this.initGlobals();
 
-		const nav = new Navigation();
+		const view = new HomeView;
 
-		nav.on('url:changed', id => {
+		Page('*', function(ctx) {
+
+      console.log(ctx)
+
+    });
+
+		// const nav = new Navigation();
+
+		// nav.on('url:changed', id => {
 			
-			this.renderView(id);
+		// 	this.renderView(id);
 
-		});
+		// });
 
-		nav.init();
+		// nav.init();
 
 	}
 
 	initGlobals() {
 
-		window.$  = $;  // jquery
-		window._  = _;  // underscore
-		window.TM = TM; // TweenMax
+		// jquery
+		window.$  = $;
+
+		// underscore
+		window._  = _;
+		
+		// TweenMax
+		window.TM = TM;
 
 	}
 

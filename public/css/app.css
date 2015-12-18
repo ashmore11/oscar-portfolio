@@ -355,7 +355,7 @@ h2 {
 /* line 21 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/app.styl */
 /**
  * ------------------------
- * Common
+ * Components
  * ------------------------
  */
 
@@ -402,20 +402,90 @@ h2 {
   text-decoration: underline;
 }
 
-/* line 29 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/app.styl */
+/* line 1 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/footer.styl */
+
+/* line 1 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/post.styl */
+
+/* line 1 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/post.styl */
+.post {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  height: 0;
+}
+
+/* line 7 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/post.styl */
+.post .video {
+  width: 100%;
+}
+
+/* line 10 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/post.styl */
+.post .video iframe {
+  width: 100%;
+  height: 430px;
+}
+
+/* line 14 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/post.styl */
+
+/* line 15 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/post.styl */
+.post .other-videos li {
+  display: inline-block;
+  margin: 10px 6px 0px;
+  cursor: pointer;
+}
+
+/* line 20 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/post.styl */
+.post .other-videos li:hover {
+  text-decoration: underline;
+}
+
+/* line 23 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/post.styl */
+.post .other-videos li:before {
+  content: '|';
+  display: block;
+  float: right;
+  margin-right: -7px;
+  margin-top: -1px;
+}
+
+/* line 30 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/post.styl */
+
+/* line 31 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/post.styl */
+.post .other-videos li:last-child:before {
+  display: none;
+}
+
+/* line 34 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/post.styl */
+.post .title {
+  font-size: 12px;
+  margin: 10px 0;
+}
+
+/* line 38 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/post.styl */
+.post .description {
+  margin: 0 auto 10px;
+  width: 80%;
+}
+
+/* line 42 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/post.styl */
+.post .extra-bits {
+  margin-bottom: 20px;
+}
+
+/* line 30 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/app.styl */
 /**
  * ------------------------
  * Views
  * ------------------------
  */
 
-/* line 2 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/footer.styl */
+/* line 2 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/components/post.styl */
 
 /* line 14 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/page.styl */
 
 /* line 1 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/page.styl */
 
-/* line 95 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/page.styl */
+/* line 52 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/page.styl */
 
 /* line 1 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 
@@ -461,81 +531,16 @@ h2 {
   height: 1px;
   width: 0;
   background-color: #000;
+  max-width: 100%;
 }
 
-/* line 26 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
-#home .post {
-  position: relative;
-  height: 0;
-  overflow: hidden;
-  text-align: center;
-}
-
-/* line 32 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
-#home .post .video {
-  width: 100%;
-}
-
-/* line 35 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
-#home .post .video iframe {
-  width: 100%;
-  height: 430px;
-}
-
-/* line 39 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
-
-/* line 40 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
-#home .post .other-videos li {
-  display: inline-block;
-  margin: 10px 6px 0px;
-  cursor: pointer;
-}
-
-/* line 45 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
-#home .post .other-videos li:hover {
-  text-decoration: underline;
-}
-
-/* line 48 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
-#home .post .other-videos li:before {
-  content: '|';
-  display: block;
-  float: right;
-  margin-right: -7px;
-  margin-top: -1px;
-}
-
-/* line 55 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
-
-/* line 56 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
-#home .post .other-videos li:last-child:before {
-  display: none;
-}
-
-/* line 59 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
-#home .post .title {
-  font-size: 12px;
-  margin: 10px 0;
-}
-
-/* line 63 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
-#home .post .description {
-  margin: 0 auto 10px;
-  width: 80%;
-}
-
-/* line 67 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
-#home .post .extra-bits {
-  margin-bottom: 20px;
-}
-
-/* line 70 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+/* line 27 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home .posts {
   text-align: center;
   margin-top: 10px;
 }
 
-/* line 74 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+/* line 31 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home .posts li {
   display: inline-block;
   -webkit-transform: translateY(-25px);
@@ -623,20 +628,20 @@ h2 {
   }
 }
 
-/* line 87 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+/* line 44 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home .posts li img {
   display: block;
   width: 100%;
   height: 100%;
 }
 
-/* line 91 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+/* line 48 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home .posts li.active {
   -webkit-box-shadow: 0px 0px 15px 2px rgba(0,0,0,0.3);
   box-shadow: 0px 0px 15px 2px rgba(0,0,0,0.3);
 }
 
-/* line 94 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
+/* line 51 : /Users/scott/Desktop/work/oscar-portfolio/client/styles/views/home.styl */
 #home .posts li.open {
   cursor: default;
 }

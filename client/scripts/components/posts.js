@@ -1,4 +1,5 @@
 import Happens from 'happens';
+import Page    from 'page';
 import Loader  from 'app/utils/loader';
 
 export default class Posts {
@@ -24,6 +25,8 @@ export default class Posts {
     $.get(post, data => {
 
       this.data = data;
+
+      Page(data.slug);
 
       if(!this.postOpen) {
         

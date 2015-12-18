@@ -9,6 +9,7 @@
     "happens": "^0.6.0",
     "jquery": "^2.1.4",
     "keystone": "git://github.com/keystonejs/keystone.git#master",
+    "page": "^1.6.4",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
@@ -38,7 +39,9 @@
     "rupture": "^0.6.1"
   },
   "babel": {
-    "presets": ["es2015"]
+    "presets": [
+      "es2015"
+    ]
   },
   "engines": {
     "node": ">=0.10.22",
