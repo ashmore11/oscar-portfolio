@@ -13,6 +13,11 @@ class Navigation {
 
 		});
 
+		Page({
+			click: false,
+			dispatch: false,
+		});
+
 	}
 
 	go(id) {

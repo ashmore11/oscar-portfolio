@@ -97,6 +97,7 @@
 				var id = path.split('/')[1];
 
 				if (id) {
+
 					this.post.load(id);
 				}
 			}
@@ -107,7 +108,15 @@
 
 				_navigation2.default.on('route:changed', function (id) {
 
-					_this.post.load(id);
+					if (id !== '/') {
+
+						_this.post.load(id);
+					}
+				});
+
+				this.post.on('load:error', function () {
+
+					_navigation2.default.go('/');
 				});
 			}
 		}, {
@@ -18522,6 +18531,11 @@
 
 				_this.emit('route:changed', ctx.pathname);
 			});
+
+			(0, _page2.default)({
+				click: false,
+				dispatch: false
+			});
 		}
 
 		_createClass(Navigation, [{
@@ -19772,7 +19786,7 @@
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 
 	var _happens = __webpack_require__(6);
@@ -19783,136 +19797,152 @@
 
 	var _loader2 = _interopRequireDefault(_loader);
 
+	var _navigation = __webpack_require__(5);
+
+	var _navigation2 = _interopRequireDefault(_navigation);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var Post = (function () {
-		function Post() {
-			_classCallCheck(this, Post);
+	  function Post() {
+	    _classCallCheck(this, Post);
 
-			this.$el = $('.post');
-			this.$postVideo = this.$el.find('.video');
-			this.$postVideoIframe = this.$postVideo.find('iframe');
-			this.$postOtherVideos = this.$el.find('.other-videos');
-			this.$postTitle = this.$el.find('.title');
-			this.$postDesc = this.$el.find('.description');
-			this.$postExtraBits = this.$el.find('.extra-bits');
+	    (0, _happens2.default)(this);
 
-			this.postID = null;
-			this.postOpen = false;
+	    this.$el = $('.post');
+	    this.$postVideo = this.$el.find('.video');
+	    this.$postVideoIframe = this.$postVideo.find('iframe');
+	    this.$postOtherVideos = this.$el.find('.other-videos');
+	    this.$postTitle = this.$el.find('.title');
+	    this.$postDesc = this.$el.find('.description');
+	    this.$postExtraBits = this.$el.find('.extra-bits');
 
-			this.loader = new _loader2.default();
-		}
+	    this.postID = null;
+	    this.postOpen = false;
 
-		_createClass(Post, [{
-			key: 'load',
-			value: function load(id) {
-				var _this = this;
+	    this.loader = new _loader2.default();
+	  }
 
-				var host = window.location.origin;
-				var post = host + '/api/post/' + id;
+	  _createClass(Post, [{
+	    key: 'load',
+	    value: function load(id) {
+	      var _this = this;
 
-				if (this.postID !== id) {
+	      var host = window.location.origin;
+	      var post = host + '/api/post/' + id;
 
-					$.get(post, function (data) {
+	      if (this.postID !== id) {
 
-						_this.data = data.post;
+	        $.ajax({
+	          url: post,
+	          type: 'GET',
+	          success: function success(data) {
+	            _this.loadSuccess(data);
+	          },
+	          error: function error(data) {
+	            _this.emit('load:error');
+	          }
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'loadSuccess',
+	    value: function loadSuccess(data) {
 
-						if (!_this.postOpen) {
+	      this.data = data.post;
 
-							_this.render();
-						} else {
+	      if (!this.postOpen) {
 
-							_this.unbind();
-							_this.hide();
-						}
-					});
+	        this.render();
+	      } else {
 
-					this.postID = id;
-				}
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var _this2 = this;
+	        this.unbind();
+	        this.hide();
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
 
-				this.loader.start();
+	      this.loader.start();
 
-				this.$postVideoIframe.attr('src', this.data.video);
-				this.$postOtherVideos.html('');
-				this.$postTitle.html(this.data.title);
-				this.$postDesc.html(this.data.description);
-				this.$postExtraBits.html(this.data.extraBits);
+	      this.$postVideoIframe.attr('src', this.data.video);
+	      this.$postOtherVideos.html('');
+	      this.$postTitle.html(this.data.title);
+	      this.$postDesc.html(this.data.description);
+	      this.$postExtraBits.html(this.data.extraBits);
 
-				_.each(this.data.otherVideos, function (item, index) {
+	      _.each(this.data.otherVideos, function (item, index) {
 
-					var html = '<li data-src="' + item + '">video ' + (index + 1) + '</li>';
+	        var html = '<li data-src="' + item + '">video ' + (index + 1) + '</li>';
 
-					_this2.$postOtherVideos.append(html);
-				});
+	        _this2.$postOtherVideos.append(html);
+	      });
 
-				this.bind();
-			}
-		}, {
-			key: 'bind',
-			value: function bind() {
-				var _this3 = this;
+	      this.bind();
+	    }
+	  }, {
+	    key: 'bind',
+	    value: function bind() {
+	      var _this3 = this;
 
-				this.loader.on('load:complete', this.show.bind(this));
+	      this.loader.on('load:complete', this.show.bind(this));
 
-				this.$postVideoIframe.on('load', function () {
+	      this.$postVideoIframe.on('load', function () {
 
-					_this3.loader.stop();
-				});
-			}
-		}, {
-			key: 'unbind',
-			value: function unbind() {
+	        _this3.loader.stop();
+	      });
+	    }
+	  }, {
+	    key: 'unbind',
+	    value: function unbind() {
 
-				this.$postVideoIframe.off('load');
+	      this.$postVideoIframe.off('load');
 
-				this.loader.off('load:complete');
-			}
-		}, {
-			key: 'show',
-			value: function show() {
-				var _this4 = this;
+	      this.loader.off('load:complete');
+	    }
+	  }, {
+	    key: 'show',
+	    value: function show() {
+	      var _this4 = this;
 
-				TM.set(this.$el, { height: 'auto' });
+	      TM.set(this.$el, { height: 'auto' });
 
-				var params = {
-					height: 0,
-					ease: Expo.easeInOut,
-					onComplete: function onComplete() {
+	      var params = {
+	        height: 0,
+	        ease: Expo.easeInOut,
+	        onComplete: function onComplete() {
 
-						_this4.postOpen = true;
-					}
-				};
+	          _this4.postOpen = true;
+	        }
+	      };
 
-				TM.from(this.$el, 1, params);
-			}
-		}, {
-			key: 'hide',
-			value: function hide() {
-				var _this5 = this;
+	      TM.from(this.$el, 1, params);
+	    }
+	  }, {
+	    key: 'hide',
+	    value: function hide() {
+	      var _this5 = this;
 
-				var params = {
-					height: 0,
-					ease: Expo.easeInOut,
-					onComplete: function onComplete() {
+	      var params = {
+	        height: 0,
+	        ease: Expo.easeInOut,
+	        onComplete: function onComplete() {
 
-						_this5.postOpen = false;
+	          _this5.postOpen = false;
 
-						_this5.render();
-					}
-				};
+	          _this5.render();
+	        }
+	      };
 
-				TM.to(this.$el, 1, params);
-			}
-		}]);
+	      TM.to(this.$el, 1, params);
+	    }
+	  }]);
 
-		return Post;
+	  return Post;
 	})();
 
 	exports.default = Post;
@@ -19981,8 +20011,9 @@
 
 						TM.to(_this2.$el, 0.5, { opacity: 0 });
 
-						_this2.loadProgress = 0;
 						_this2.emit('load:complete');
+
+						_this2.loadProgress = 0;
 					}
 				};
 

@@ -1,131 +1,139 @@
-import Happens from 'happens';
-import Loader  from 'app/utils/loader';
+import Happens    from 'happens';
+import Loader     from 'app/utils/loader';
+import Navigation from 'app/utils/navigation';
 
 export default class Post {
 
-	constructor() {
+  constructor() {
 
-		this.$el              = $('.post');
-		this.$postVideo       = this.$el.find('.video');
-		this.$postVideoIframe = this.$postVideo.find('iframe');
-		this.$postOtherVideos = this.$el.find('.other-videos');
-		this.$postTitle       = this.$el.find('.title');
-		this.$postDesc        = this.$el.find('.description');
-		this.$postExtraBits   = this.$el.find('.extra-bits');
+    Happens(this);
 
-		this.postID   = null;
-		this.postOpen = false;
+    this.$el              = $('.post');
+    this.$postVideo       = this.$el.find('.video');
+    this.$postVideoIframe = this.$postVideo.find('iframe');
+    this.$postOtherVideos = this.$el.find('.other-videos');
+    this.$postTitle       = this.$el.find('.title');
+    this.$postDesc        = this.$el.find('.description');
+    this.$postExtraBits   = this.$el.find('.extra-bits');
 
-		this.loader = new Loader;
+    this.postID   = null;
+    this.postOpen = false;
 
-	}
+    this.loader = new Loader;
 
-	load(id) {
+  }
 
-		const host = window.location.origin;
+  load(id) {
+
+    const host = window.location.origin;
     const post = `${host}/api/post/${id}`;
 
     if(this.postID !== id) {
 
-      $.get(post, data => {
-
-				this.data = data.post;
-
-				if(!this.postOpen) {
-					
-					this.render();
-
-				} else {
-
-					this.unbind();
-					this.hide();
-
-				}
-
-			});
-
-      this.postID = id;
+      $.ajax({
+        url: post,
+        type: 'GET',
+        success: data => { this.loadSuccess(data); },
+        error: data => { this.emit('load:error'); }
+      });
 
     }
 
-	}
+  }
 
-	render() {
+  loadSuccess(data) {
 
-		this.loader.start();
+    this.data = data.post;
 
-		this.$postVideoIframe.attr('src', this.data.video);
-		this.$postOtherVideos.html('');
-		this.$postTitle.html(this.data.title);
-		this.$postDesc.html(this.data.description);
-		this.$postExtraBits.html(this.data.extraBits);
+    if(!this.postOpen) {
+      
+      this.render();
 
-		_.each(this.data.otherVideos, (item, index) => {
-			
-			const html = `<li data-src="${item}">video ${index + 1}</li>`;
+    } else {
 
-			this.$postOtherVideos.append(html);
+      this.unbind();
+      this.hide();
 
-		});
+    }
 
-		this.bind();
+  }
 
-	}
+  render() {
 
-	bind() {
+    this.loader.start();
 
-		this.loader.on('load:complete', this.show.bind(this));
+    this.$postVideoIframe.attr('src', this.data.video);
+    this.$postOtherVideos.html('');
+    this.$postTitle.html(this.data.title);
+    this.$postDesc.html(this.data.description);
+    this.$postExtraBits.html(this.data.extraBits);
 
-		this.$postVideoIframe.on('load', () => {
-		
-			this.loader.stop();
+    _.each(this.data.otherVideos, (item, index) => {
+      
+      const html = `<li data-src="${item}">video ${index + 1}</li>`;
 
-		});
-		
-	}
+      this.$postOtherVideos.append(html);
 
-	unbind() {
+    });
 
-		this.$postVideoIframe.off('load');
+    this.bind();
 
-		this.loader.off('load:complete');
+  }
 
-	}
+  bind() {
 
-	show() {
+    this.loader.on('load:complete', this.show.bind(this));
 
-		TM.set(this.$el, { height: 'auto' });
+    this.$postVideoIframe.on('load', () => {
+    
+      this.loader.stop();
 
-		const params = {
-			height: 0,
-			ease: Expo.easeInOut,
-			onComplete: () => {
+    });
+    
+  }
 
-				this.postOpen = true;
+  unbind() {
 
-			}
-		};
+    this.$postVideoIframe.off('load');
 
-		TM.from(this.$el, 1, params);
+    this.loader.off('load:complete');
 
-	}
+  }
 
-	hide() {
+  show() {
 
-		const params = {
-			height: 0,
-			ease: Expo.easeInOut,
-			onComplete: () => {
+    TM.set(this.$el, { height: 'auto' });
 
-				this.postOpen = false;
-				
-				this.render();
+    const params = {
+      height: 0,
+      ease: Expo.easeInOut,
+      onComplete: () => {
 
-			}
-		};
+        this.postOpen = true;
 
-		TM.to(this.$el, 1, params);
+      }
+    };
 
-	}
+    TM.from(this.$el, 1, params);
+
+  }
+
+  hide() {
+
+    const params = {
+      height: 0,
+      ease: Expo.easeInOut,
+      onComplete: () => {
+
+        this.postOpen = false;
+        
+        this.render();
+
+      }
+    };
+
+    TM.to(this.$el, 1, params);
+
+  }
 
 }

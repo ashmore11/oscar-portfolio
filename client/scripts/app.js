@@ -24,7 +24,11 @@ class App {
 		const path = window.location.pathname;
 		const id   = path.split('/')[1];
 
-		if(id) { this.post.load(id); }
+		if(id) {
+
+			this.post.load(id); 
+
+		}
 
 	}
 
@@ -32,8 +36,18 @@ class App {
 
 		Navigation.on('route:changed', id => {
 			
-			this.post.load(id);
+			if(id !== '/') {
+			
+				this.post.load(id);
+
+			}
 		
+		});
+
+		this.post.on('load:error', function() {
+
+			Navigation.go('/');
+
 		});
 
 	}

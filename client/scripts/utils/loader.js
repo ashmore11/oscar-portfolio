@@ -42,8 +42,9 @@ export default class Loader {
 
 				TM.to(this.$el, 0.5, { opacity: 0 });
 
-				this.loadProgress = 0;
 				this.emit('load:complete');
+
+        this.loadProgress = 0;
 
 			}
 		};
