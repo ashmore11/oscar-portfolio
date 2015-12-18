@@ -1,5 +1,4 @@
 import Happens from 'happens';
-import Page    from 'page';
 import Loader  from 'app/utils/loader';
 
 export default class Post {
@@ -14,46 +13,54 @@ export default class Post {
 		this.$postDesc        = this.$el.find('.description');
 		this.$postExtraBits   = this.$el.find('.extra-bits');
 
+		this.postID   = null;
 		this.postOpen = false;
 
 		this.loader = new Loader;
 
 	}
 
-	load(post) {
+	load(id) {
 
-		$.get(post, data => {
+		const host = window.location.origin;
+    const post = `${host}/api/post/${id}`;
 
-			this.data = data;
+    if(this.postID !== id) {
 
-			if(!this.postOpen) {
-				
-				this.render();
+      $.get(post, data => {
 
-			} else {
+				this.data = data.post;
 
-				this.unbind();
-				this.hide();
+				if(!this.postOpen) {
+					
+					this.render();
 
-			}
+				} else {
 
-		});
+					this.unbind();
+					this.hide();
+
+				}
+
+			});
+
+      this.postID = id;
+
+    }
 
 	}
 
 	render() {
 
-		Page(this.data.slug);
-
 		this.loader.start();
 
-		this.$postVideoIframe.attr('src', this.data.fields.video);
+		this.$postVideoIframe.attr('src', this.data.video);
 		this.$postOtherVideos.html('');
-		this.$postTitle.html(this.data.fields.title);
-		this.$postDesc.html(this.data.fields.description);
-		this.$postExtraBits.html(this.data.fields.extraBits);
+		this.$postTitle.html(this.data.title);
+		this.$postDesc.html(this.data.description);
+		this.$postExtraBits.html(this.data.extraBits);
 
-		_.each(this.data.fields.otherVideos, (item, index) => {
+		_.each(this.data.otherVideos, (item, index) => {
 			
 			const html = `<li data-src="${item}">video ${index + 1}</li>`;
 

@@ -60,11 +60,15 @@
 
 	var _gsap2 = _interopRequireDefault(_gsap);
 
-	var _page = __webpack_require__(5);
+	var _navigation = __webpack_require__(5);
 
-	var _page2 = _interopRequireDefault(_page);
+	var _navigation2 = _interopRequireDefault(_navigation);
 
-	var _home = __webpack_require__(9);
+	var _post = __webpack_require__(11);
+
+	var _post2 = _interopRequireDefault(_post);
+
+	var _home = __webpack_require__(13);
 
 	var _home2 = _interopRequireDefault(_home);
 
@@ -78,16 +82,35 @@
 
 			this.initGlobals();
 
-			var view = new _home2.default();
+			this.view = new _home2.default();
+			this.post = new _post2.default();
 
-			// Page(function(ctx) {
-
-			// 	view.loadPost(ctx.pathname);
-
-			// });
+			this.loadInitialPost();
+			this.loadPosts();
 		}
 
 		_createClass(App, [{
+			key: 'loadInitialPost',
+			value: function loadInitialPost() {
+
+				var path = window.location.pathname;
+				var id = path.split('/')[1];
+
+				if (id) {
+					this.post.load(id);
+				}
+			}
+		}, {
+			key: 'loadPosts',
+			value: function loadPosts() {
+				var _this = this;
+
+				_navigation2.default.on('route:changed', function (id) {
+
+					_this.post.load(id);
+				});
+			}
+		}, {
 			key: 'initGlobals',
 			value: function initGlobals() {
 
@@ -18467,6 +18490,155 @@
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _happens = __webpack_require__(6);
+
+	var _happens2 = _interopRequireDefault(_happens);
+
+	var _page = __webpack_require__(7);
+
+	var _page2 = _interopRequireDefault(_page);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Navigation = (function () {
+		function Navigation() {
+			var _this = this;
+
+			_classCallCheck(this, Navigation);
+
+			(0, _happens2.default)(this);
+
+			(0, _page2.default)(function (ctx) {
+
+				_this.emit('route:changed', ctx.pathname);
+			});
+		}
+
+		_createClass(Navigation, [{
+			key: 'go',
+			value: function go(id) {
+
+				(0, _page2.default)(id);
+			}
+		}]);
+
+		return Navigation;
+	})();
+
+	exports.default = new Navigation();
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	(function (global, factory) {
+	   true ? module.exports = factory() :
+	  "function" === typeof define && define.amd ? define(factory) :
+	  global.Happens = factory();
+	}(this, function () {
+
+	  'use strict'
+
+	  /**
+	   * Module constructor
+	   * @param  {Object} target Target object to extends methods and properties into
+	   * @return {Object}        Target after with extended methods and properties
+	   */
+	  function Happens(target){
+	    var nu = this instanceof Happens;
+	    if(target){
+	      if(!nu)
+	        for(var prop in Happens.prototype)
+	          target[prop] = Happens.prototype[prop];
+	      else
+	        throw new Error("You can't pass a target when instantiating with the `new` keyword");
+	    }
+	    else if(!nu)
+	      return new Happens
+	  };
+
+	  /**
+	   * Initializes event
+	   * @param  {String} event Event name to initialize
+	   * @return {Array}        Initialized event pool
+	   */
+	  Happens.prototype.__init = function(event) {
+	    var tmp = this.__listeners || (this.__listeners = []);
+	    return tmp[event] || (tmp[event] = []);
+	  };
+
+	  /**
+	   * Adds listener
+	   * @param  {String}   event Event name
+	   * @param  {Function} fn    Event handler
+	   */
+	  Happens.prototype.on = function(event, fn) {
+	    validate(fn);
+	    this.__init(event).push(fn);
+	  };
+
+	  /**
+	   * Removes listener
+	   * @param  {String}   event Event name
+	   * @param  {Function} fn    Event handler
+	   */
+	  Happens.prototype.off = function(event, fn) {
+	    var pool = this.__init(event);
+	    pool.splice(pool.indexOf(fn), 1);
+	  };
+
+	  /**
+	   * Add listener the fires once and auto-removes itself
+	   * @param  {String}   event Event name
+	   * @param  {Function} fn    Event handler
+	   */
+	  Happens.prototype.once = function(event, fn) {
+	    validate(fn);
+	    var self = this, wrapper = function() {
+	      self.off(event, wrapper);
+	      fn.apply(this, arguments);
+	    };
+	    this.on(event, wrapper );
+	  };
+
+	  /**
+	   * Emit some event
+	   * @param  {String} event Event name -- subsequent params after `event` will
+	   * be passed along to the event's handlers
+	   */
+	  Happens.prototype.emit = function(event /*, arg1, arg2 */ ) {
+	    var i, pool = this.__init(event).slice(0);
+	    for(i in pool)
+	      pool[i].apply(this, [].slice.call(arguments, 1));
+	  };
+
+	  /**
+	   * Validates if a function exists and is an instanceof Function, and throws
+	   * an error if needed
+	   * @param  {Function} fn Function to validate
+	   */
+	  function validate(fn) {
+	    if(!(fn && fn instanceof Function))
+	      throw new Error(fn + ' is not a Function');
+	  }
+
+	  return Happens;
+	}));
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
 	/* WEBPACK VAR INJECTION */(function(process) {  /* globals require, module */
 
 	  'use strict';
@@ -18475,7 +18647,7 @@
 	   * Module dependencies.
 	   */
 
-	  var pathtoRegexp = __webpack_require__(7);
+	  var pathtoRegexp = __webpack_require__(9);
 
 	  /**
 	   * Module exports.
@@ -19087,10 +19259,10 @@
 
 	  page.sameOrigin = sameOrigin;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ },
-/* 6 */
+/* 8 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -19187,10 +19359,10 @@
 
 
 /***/ },
-/* 7 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isarray = __webpack_require__(8)
+	var isarray = __webpack_require__(10)
 
 	/**
 	 * Expose `pathToRegexp`.
@@ -19583,7 +19755,7 @@
 
 
 /***/ },
-/* 8 */
+/* 10 */
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -19592,167 +19764,7 @@
 
 
 /***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _post = __webpack_require__(10);
-
-	var _post2 = _interopRequireDefault(_post);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var Home = (function () {
-	  function Home() {
-	    _classCallCheck(this, Home);
-
-	    this.$el = $('#home');
-	    this.$tag = this.$el.find('.tags li');
-	    this.$posts = this.$el.find('.posts li');
-
-	    this.postID = null;
-
-	    this.bindEvents();
-	    this.runIntroAnimation();
-
-	    this.post = new _post2.default();
-	  }
-
-	  _createClass(Home, [{
-	    key: 'bindEvents',
-	    value: function bindEvents() {
-
-	      this.$posts.on('mouseenter', this.mouseenter.bind(this));
-	      this.$posts.on('mouseleave', this.mouseleave.bind(this));
-
-	      this.$posts.on('click', this.postClicked.bind(this));
-	      this.$tag.on('click', this.filterPosts.bind(this));
-	    }
-	  }, {
-	    key: 'unbind',
-	    value: function unbind() {
-
-	      this.$posts.off('mouseenter');
-	      this.$posts.off('mouseleave');
-
-	      this.$posts.off('click');
-	      this.$tag.off('click');
-	    }
-	  }, {
-	    key: 'runIntroAnimation',
-	    value: function runIntroAnimation() {
-
-	      this.$posts.each(function (index, item) {
-
-	        var params = {
-	          y: 0,
-	          opacity: 1,
-	          delay: index * 0.085,
-	          ease: Power3.easeOut
-	        };
-
-	        TM.to($(item), 1, params);
-	      });
-	    }
-	  }, {
-	    key: 'mouseenter',
-	    value: function mouseenter(event) {
-
-	      var target = $(event.currentTarget);
-	      var image = target.find('img');
-	      var src = image.data('over');
-
-	      target.find('img.over').css({ opacity: 1 });
-
-	      target.addClass('active');
-	    }
-	  }, {
-	    key: 'mouseleave',
-	    value: function mouseleave(event) {
-
-	      var target = $(event.currentTarget);
-	      var image = target.find('img');
-	      var src = image.data('out');
-
-	      target.find('img.over').css({ opacity: 0 });
-
-	      this.$posts.removeClass('active');
-	    }
-	  }, {
-	    key: 'postClicked',
-	    value: function postClicked(event) {
-
-	      event.preventDefault();
-
-	      this.postClicked = true;
-
-	      var target = $(event.currentTarget);
-	      var id = target.attr('id');
-
-	      this.$posts.removeClass('open');
-	      target.addClass('open');
-
-	      this.loadPost(id);
-	    }
-	  }, {
-	    key: 'loadPost',
-	    value: function loadPost(id) {
-
-	      var host = window.location.origin;
-	      var apiUrl = 'keystone/api/posts/' + id;
-	      var post = host + '/' + apiUrl;
-
-	      if (this.postID !== id) {
-
-	        this.post.load(post);
-
-	        this.postID = id;
-	      }
-	    }
-	  }, {
-	    key: 'filterPosts',
-	    value: function filterPosts(event) {
-
-	      event.preventDefault();
-
-	      var target = $(event.currentTarget);
-	      var tag = target.data('tag');
-
-	      this.$posts.each(function (index, item) {
-
-	        var el = $(item);
-	        var tags = el.data('tags').split(' ');
-
-	        if (_.contains(tags, tag)) {
-
-	          el.show();
-	        } else if (tag === 'all') {
-
-	          el.show();
-	        } else {
-
-	          el.hide();
-	        }
-	      });
-	    }
-	  }]);
-
-	  return Home;
-	})();
-
-	exports.default = Home;
-
-/***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19763,13 +19775,9 @@
 		value: true
 	});
 
-	var _happens = __webpack_require__(11);
+	var _happens = __webpack_require__(6);
 
 	var _happens2 = _interopRequireDefault(_happens);
-
-	var _page = __webpack_require__(5);
-
-	var _page2 = _interopRequireDefault(_page);
 
 	var _loader = __webpack_require__(12);
 
@@ -19791,6 +19799,7 @@
 			this.$postDesc = this.$el.find('.description');
 			this.$postExtraBits = this.$el.find('.extra-bits');
 
+			this.postID = null;
 			this.postOpen = false;
 
 			this.loader = new _loader2.default();
@@ -19798,39 +19807,45 @@
 
 		_createClass(Post, [{
 			key: 'load',
-			value: function load(post) {
+			value: function load(id) {
 				var _this = this;
 
-				$.get(post, function (data) {
+				var host = window.location.origin;
+				var post = host + '/api/post/' + id;
 
-					_this.data = data;
+				if (this.postID !== id) {
 
-					if (!_this.postOpen) {
+					$.get(post, function (data) {
 
-						_this.render();
-					} else {
+						_this.data = data.post;
 
-						_this.unbind();
-						_this.hide();
-					}
-				});
+						if (!_this.postOpen) {
+
+							_this.render();
+						} else {
+
+							_this.unbind();
+							_this.hide();
+						}
+					});
+
+					this.postID = id;
+				}
 			}
 		}, {
 			key: 'render',
 			value: function render() {
 				var _this2 = this;
 
-				(0, _page2.default)(this.data.slug);
-
 				this.loader.start();
 
-				this.$postVideoIframe.attr('src', this.data.fields.video);
+				this.$postVideoIframe.attr('src', this.data.video);
 				this.$postOtherVideos.html('');
-				this.$postTitle.html(this.data.fields.title);
-				this.$postDesc.html(this.data.fields.description);
-				this.$postExtraBits.html(this.data.fields.extraBits);
+				this.$postTitle.html(this.data.title);
+				this.$postDesc.html(this.data.description);
+				this.$postExtraBits.html(this.data.extraBits);
 
-				_.each(this.data.fields.otherVideos, function (item, index) {
+				_.each(this.data.otherVideos, function (item, index) {
 
 					var html = '<li data-src="' + item + '">video ' + (index + 1) + '</li>';
 
@@ -19903,104 +19918,6 @@
 	exports.default = Post;
 
 /***/ },
-/* 11 */
-/***/ function(module, exports, __webpack_require__) {
-
-	(function (global, factory) {
-	   true ? module.exports = factory() :
-	  "function" === typeof define && define.amd ? define(factory) :
-	  global.Happens = factory();
-	}(this, function () {
-
-	  'use strict'
-
-	  /**
-	   * Module constructor
-	   * @param  {Object} target Target object to extends methods and properties into
-	   * @return {Object}        Target after with extended methods and properties
-	   */
-	  function Happens(target){
-	    var nu = this instanceof Happens;
-	    if(target){
-	      if(!nu)
-	        for(var prop in Happens.prototype)
-	          target[prop] = Happens.prototype[prop];
-	      else
-	        throw new Error("You can't pass a target when instantiating with the `new` keyword");
-	    }
-	    else if(!nu)
-	      return new Happens
-	  };
-
-	  /**
-	   * Initializes event
-	   * @param  {String} event Event name to initialize
-	   * @return {Array}        Initialized event pool
-	   */
-	  Happens.prototype.__init = function(event) {
-	    var tmp = this.__listeners || (this.__listeners = []);
-	    return tmp[event] || (tmp[event] = []);
-	  };
-
-	  /**
-	   * Adds listener
-	   * @param  {String}   event Event name
-	   * @param  {Function} fn    Event handler
-	   */
-	  Happens.prototype.on = function(event, fn) {
-	    validate(fn);
-	    this.__init(event).push(fn);
-	  };
-
-	  /**
-	   * Removes listener
-	   * @param  {String}   event Event name
-	   * @param  {Function} fn    Event handler
-	   */
-	  Happens.prototype.off = function(event, fn) {
-	    var pool = this.__init(event);
-	    pool.splice(pool.indexOf(fn), 1);
-	  };
-
-	  /**
-	   * Add listener the fires once and auto-removes itself
-	   * @param  {String}   event Event name
-	   * @param  {Function} fn    Event handler
-	   */
-	  Happens.prototype.once = function(event, fn) {
-	    validate(fn);
-	    var self = this, wrapper = function() {
-	      self.off(event, wrapper);
-	      fn.apply(this, arguments);
-	    };
-	    this.on(event, wrapper );
-	  };
-
-	  /**
-	   * Emit some event
-	   * @param  {String} event Event name -- subsequent params after `event` will
-	   * be passed along to the event's handlers
-	   */
-	  Happens.prototype.emit = function(event /*, arg1, arg2 */ ) {
-	    var i, pool = this.__init(event).slice(0);
-	    for(i in pool)
-	      pool[i].apply(this, [].slice.call(arguments, 1));
-	  };
-
-	  /**
-	   * Validates if a function exists and is an instanceof Function, and throws
-	   * an error if needed
-	   * @param  {Function} fn Function to validate
-	   */
-	  function validate(fn) {
-	    if(!(fn && fn instanceof Function))
-	      throw new Error(fn + ' is not a Function');
-	  }
-
-	  return Happens;
-	}));
-
-/***/ },
 /* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -20012,7 +19929,7 @@
 		value: true
 	});
 
-	var _happens = __webpack_require__(11);
+	var _happens = __webpack_require__(6);
 
 	var _happens2 = _interopRequireDefault(_happens);
 
@@ -20077,6 +19994,147 @@
 	})();
 
 	exports.default = Loader;
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _navigation = __webpack_require__(5);
+
+	var _navigation2 = _interopRequireDefault(_navigation);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Home = (function () {
+	  function Home() {
+	    _classCallCheck(this, Home);
+
+	    this.$el = $('#home');
+	    this.$tag = this.$el.find('.tags li');
+	    this.$posts = this.$el.find('.posts li');
+
+	    this.bindEvents();
+	    this.runIntroAnimation();
+	  }
+
+	  _createClass(Home, [{
+	    key: 'bindEvents',
+	    value: function bindEvents() {
+
+	      this.$posts.on('mouseenter', this.mouseenter.bind(this));
+	      this.$posts.on('mouseleave', this.mouseleave.bind(this));
+
+	      this.$posts.on('click', this.postClicked.bind(this));
+	      this.$tag.on('click', this.filterPosts.bind(this));
+	    }
+	  }, {
+	    key: 'unbind',
+	    value: function unbind() {
+
+	      this.$posts.off('mouseenter');
+	      this.$posts.off('mouseleave');
+
+	      this.$posts.off('click');
+	      this.$tag.off('click');
+	    }
+	  }, {
+	    key: 'runIntroAnimation',
+	    value: function runIntroAnimation() {
+
+	      this.$posts.each(function (index, item) {
+
+	        var params = {
+	          y: 0,
+	          opacity: 1,
+	          delay: index * 0.085,
+	          ease: Power3.easeOut
+	        };
+
+	        TM.to($(item), 1, params);
+	      });
+	    }
+	  }, {
+	    key: 'mouseenter',
+	    value: function mouseenter(event) {
+
+	      var target = $(event.currentTarget);
+	      var image = target.find('img');
+	      var src = image.data('over');
+
+	      target.find('img.over').css({ display: 'block' });
+
+	      target.addClass('active');
+	    }
+	  }, {
+	    key: 'mouseleave',
+	    value: function mouseleave(event) {
+
+	      var target = $(event.currentTarget);
+	      var image = target.find('img');
+	      var src = image.data('out');
+
+	      target.find('img.over').css({ display: 'none' });
+
+	      this.$posts.removeClass('active');
+	    }
+	  }, {
+	    key: 'postClicked',
+	    value: function postClicked(event) {
+
+	      event.preventDefault();
+
+	      this.postClicked = true;
+
+	      var target = $(event.currentTarget);
+	      var id = target.attr('id');
+
+	      this.$posts.removeClass('open');
+	      target.addClass('open');
+
+	      _navigation2.default.go(id);
+	    }
+	  }, {
+	    key: 'filterPosts',
+	    value: function filterPosts(event) {
+
+	      event.preventDefault();
+
+	      var target = $(event.currentTarget);
+	      var tag = target.data('tag');
+
+	      this.$posts.each(function (index, item) {
+
+	        var el = $(item);
+	        var tags = el.data('tags').split(' ');
+
+	        if (_.contains(tags, tag)) {
+
+	          el.show();
+	        } else if (tag === 'all') {
+
+	          el.show();
+	        } else {
+
+	          el.hide();
+	        }
+	      });
+	    }
+	  }]);
+
+	  return Home;
+	})();
+
+	exports.default = Home;
 
 /***/ }
 /******/ ]);

@@ -1,8 +1,9 @@
-import $    from 'jquery';
-import _    from 'underscore';
-import TM   from 'gsap';
-import Page from 'page';
-import View from 'app/views/home';
+import $          from 'jquery';
+import _          from 'underscore';
+import TM         from 'gsap';
+import Navigation from 'app/utils/navigation';
+import Post       from 'app/components/post';
+import View       from 'app/views/home';
 
 class App {
 
@@ -10,13 +11,30 @@ class App {
 
 		this.initGlobals();
 
-		const view = new View;
+		this.view = new View;
+		this.post = new Post;
 
-		// Page(function(ctx) {
+		this.loadInitialPost();
+		this.loadPosts();
 
-		// 	view.loadPost(ctx.pathname);
+	}
 
-		// });
+	loadInitialPost() {
+
+		const path = window.location.pathname;
+		const id   = path.split('/')[1];
+
+		if(id) { this.post.load(id); }
+
+	}
+
+	loadPosts() {
+
+		Navigation.on('route:changed', id => {
+			
+			this.post.load(id);
+		
+		});
 
 	}
 

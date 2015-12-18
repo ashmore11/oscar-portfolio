@@ -11,7 +11,8 @@ keystone.pre('routes', middleware.initLocals);
  * Import Route Controllers
  */
 var routes = {
-	controllers: importRoutes('../controllers')
+	controllers: importRoutes('../controllers'),
+  api: importRoutes('../api')
 };
 
 /**
@@ -19,7 +20,13 @@ var routes = {
  */
 exports = module.exports = function(app) {
 	
-	app.get('/',        routes.controllers.home);
-	app.get('/example', routes.controllers.example);
+  // Views
+	app.get('/', routes.controllers.home);
+
+  // API
+  app.get('/api/post/:id', keystone.middleware.api, routes.api.posts.get);
+
+  // Catch All
+  app.get('*', routes.controllers.home);
 	
 };

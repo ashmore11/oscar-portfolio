@@ -1,4 +1,4 @@
-import Post from 'app/components/post';
+import Navigation from 'app/utils/navigation';
 
 export default class Home {
   
@@ -8,12 +8,8 @@ export default class Home {
     this.$tag   = this.$el.find('.tags li');
     this.$posts = this.$el.find('.posts li');
 
-    this.postID = null;
-
     this.bindEvents();
     this.runIntroAnimation();
-
-    this.post = new Post;
   
   }
 
@@ -60,7 +56,7 @@ export default class Home {
     const image  = target.find('img');
     const src    = image.data('over');
 
-    target.find('img.over').css({ opacity: 1 })
+    target.find('img.over').css({ display: 'block' })
 
     target.addClass('active');
 
@@ -72,7 +68,7 @@ export default class Home {
     const image  = target.find('img');
     const src    = image.data('out');
 
-    target.find('img.over').css({ opacity: 0 })
+    target.find('img.over').css({ display: 'none' })
 
     this.$posts.removeClass('active');
 
@@ -90,23 +86,7 @@ export default class Home {
     this.$posts.removeClass('open');
     target.addClass('open');
 
-    this.loadPost(id);
-
-  }
-
-  loadPost(id) {
-
-    const host   = window.location.origin;
-    const apiUrl = `keystone/api/posts/${id}`;
-    const post   = `${host}/${apiUrl}`;
-
-    if(this.postID !== id) {
-
-      this.post.load(post);
-
-      this.postID = id;
-
-    }
+    Navigation.go(id);
 
   }
 

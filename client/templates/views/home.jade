@@ -37,7 +37,7 @@ block content
 
 					- var tags = tags.join().replace(/,/g, ' ');
 
-					li(id="#{item.id}" data-tags="#{tags}")
+					li(id="#{item.slug}" data-tags="#{tags}")
 
 						img(class="out"  src="#{item.image.url}")
 						img(class="over" src="#{item.animatedGif.url}")
