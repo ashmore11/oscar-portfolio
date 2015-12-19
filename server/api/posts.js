@@ -1,13 +1,12 @@
 var keystone = require('keystone');
-
-var Post = keystone.list('Post');
+var Post     = keystone.list('Post');
 
 /**
- * Get Post by ID
+ * Get Post by Slug
  */
 exports.get = function(req, res) {
 
-  Post.model.findOne({ slug: req.params.id }).exec(function(err, item) {
+  Post.model.findOne({ slug: req.params.slug }).exec(function(err, item) {
     
     if(err) {
       return res.apiError('database error', err);

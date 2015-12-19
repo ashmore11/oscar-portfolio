@@ -57,7 +57,7 @@ keystone.set('routes', require('./server/routes'));
  * Configure the navigation bar in Keystone's Admin UI
  */
 keystone.set('nav', {
-	'pages': 'Page',
+	'page': 'Page',
 	'posts': 'Post',
 	'tags' : 'Tags',
 	'users': 'User'

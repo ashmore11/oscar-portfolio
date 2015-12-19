@@ -18532,10 +18532,7 @@
 				_this.emit('route:changed', ctx.pathname);
 			});
 
-			(0, _page2.default)({
-				click: false,
-				dispatch: false
-			});
+			(0, _page2.default)({ click: false });
 		}
 
 		_createClass(Navigation, [{

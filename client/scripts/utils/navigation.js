@@ -13,10 +13,7 @@ class Navigation {
 
 		});
 
-		Page({
-			click: false,
-			dispatch: false,
-		});
+		Page({ click: false });
 
 	}
 

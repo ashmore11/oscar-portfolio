@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":NumberInt(1),"key":{"_id":NumberInt(1)},"name":"_id_","ns":"node-web-app.users"},{"v":NumberInt(1),"key":{"email":NumberInt(1)},"name":"email_1","ns":"node-web-app.users","background":true,"safe":null},{"v":NumberInt(1),"key":{"isAdmin":NumberInt(1)},"name":"isAdmin_1","ns":"node-web-app.users","background":true,"safe":null}]}

@@ -24,7 +24,7 @@ exports = module.exports = function(app) {
 	app.get('/', routes.controllers.home);
 
   // API
-  app.get('/api/post/:id', keystone.middleware.api, routes.api.posts.get);
+  app.get('/api/post/:slug', keystone.middleware.api, routes.api.posts.get);
 
   // Catch All
   app.get('*', routes.controllers.home);

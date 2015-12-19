@@ -7,7 +7,9 @@ var page = new keystone.List('Page', {
 		path: 'slug', 
 		from: 'title', 
 		unique: true 
-	}
+	},
+	nocreate: true,
+	nodelete: true
 });
 
 page.add({
@@ -27,13 +29,11 @@ page.add({
 		type: types.Text,
 		required: true
 	},
-	content: {
-		type: types.Html,
-		wysiwyg: true,
-		height: 300,
-		initial: false,
-		required: false
-	},
+	logo: {
+		type: types.CloudinaryImage,
+		required: true,
+		initial: false
+	}
 });
 
 page.defaultColumns = 'title';

@@ -30,8 +30,7 @@ post.add({
 	},
 	description: {
 		type: types.Textarea,
-		required: false,
-		initial: false
+		required: false
 	},
 	tags: { 
 		type: types.Relationship, 
@@ -40,12 +39,12 @@ post.add({
 	},
 	image: {
 		type: types.CloudinaryImage,
-		required: false,
+		required: true,
 		initial: false
 	},
 	animatedGif: {
 		type: types.CloudinaryImage,
-		required: false,
+		required: true,
 		initial: false
 	},
 	video: {
@@ -60,8 +59,7 @@ post.add({
 		type: types.Html,
 		wysiwyg: true,
 		height: 300,
-		required: false,
-		initial: false
+		required: false
 	}
 });
 
