@@ -33,7 +33,7 @@ Home.prototype.unbind = function() {
 
 Home.prototype.runIntroAnimation = function() {
 
-  this.$posts.each(function(index, item) {
+  _.each(this.$posts, (item, index) => {
 
     const params = {
       y: 0,
@@ -95,7 +95,7 @@ Home.prototype.filterPosts = function(event) {
   const target = $(event.currentTarget);
   const tag    = target.data('tag');
 
-  this.$posts.each(function(index, item) {
+  _.each(this.$posts, (item, index) => {
 
     const el   = $(item);
     const tags = el.data('tags').split(' ');

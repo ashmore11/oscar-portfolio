@@ -15,7 +15,15 @@ function App() {
   this.loadInitialPost();
   this.loadPosts();
 
-}
+};
+
+App.prototype.initGlobals = function() {
+
+  window.$  = $;
+  window._  = _;
+  window.TM = TM;
+
+};
 
 App.prototype.loadInitialPost = function() {
 
@@ -24,7 +32,7 @@ App.prototype.loadInitialPost = function() {
 
   if(id) this.post.load(id);
 
-}
+};
 
 App.prototype.loadPosts = function() {
 
@@ -44,19 +52,6 @@ App.prototype.loadPosts = function() {
 
   });
 
-}
-
-App.prototype.initGlobals = function() {
-
-  // jquery
-  window.$  = $;
-
-  // underscore
-  window._  = _;
-  
-  // TweenMax
-  window.TM = TM;
-
-}
+};
 
 window.APP = new App;

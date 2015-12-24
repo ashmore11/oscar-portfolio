@@ -32,7 +32,7 @@ Post.prototype.load = function(id) {
       url: post,
       type: 'GET',
       success: data => { this.loadSuccess(data); },
-      error: data => { this.emit('load:error'); }
+      error: () => { this.emit('load:error'); }
     });
 
   }

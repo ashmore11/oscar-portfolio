@@ -17,7 +17,7 @@ Loader.prototype.start = function() {
 
   this.loadInterval = setInterval( () => {
 
-    let num = (Math.random() * 20) + 5
+    let num = (Math.random() * 20) + 5;
 
     this.loadProgress += num;
 

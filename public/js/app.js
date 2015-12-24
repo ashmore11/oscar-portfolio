@@ -81,7 +81,14 @@
 
 	  this.loadInitialPost();
 	  this.loadPosts();
-	}
+	};
+
+	App.prototype.initGlobals = function () {
+
+	  window.$ = _jquery2.default;
+	  window._ = _underscore2.default;
+	  window.TM = _gsap2.default;
+	};
 
 	App.prototype.loadInitialPost = function () {
 
@@ -106,18 +113,6 @@
 
 	    _navigation2.default.go('/');
 	  });
-	};
-
-	App.prototype.initGlobals = function () {
-
-	  // jquery
-	  window.$ = _jquery2.default;
-
-	  // underscore
-	  window._ = _underscore2.default;
-
-	  // TweenMax
-	  window.TM = _gsap2.default;
 	};
 
 	window.APP = new App();
@@ -19800,7 +19795,7 @@
 	      success: function success(data) {
 	        _this.loadSuccess(data);
 	      },
-	      error: function error(data) {
+	      error: function error() {
 	        _this.emit('load:error');
 	      }
 	    });
@@ -20008,7 +20003,7 @@
 
 	Home.prototype.runIntroAnimation = function () {
 
-	  this.$posts.each(function (index, item) {
+	  _.each(this.$posts, function (item, index) {
 
 	    var params = {
 	      y: 0,
@@ -20065,7 +20060,7 @@
 	  var target = $(event.currentTarget);
 	  var tag = target.data('tag');
 
-	  this.$posts.each(function (index, item) {
+	  _.each(this.$posts, function (item, index) {
 
 	    var el = $(item);
 	    var tags = el.data('tags').split(' ');
