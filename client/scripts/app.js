@@ -1,6 +1,4 @@
-import $          from 'jquery';
-import _          from 'underscore';
-import TM         from 'gsap';
+import Globals    from 'app/utils/globals';
 import Navigation from 'app/utils/navigation';
 import Post       from 'app/components/post';
 import View       from 'app/views/home';
@@ -19,9 +17,11 @@ function App() {
 
 App.prototype.initGlobals = function() {
 
-  window.$  = $;
-  window._  = _;
-  window.TM = TM;
+  Globals._.each(Globals, (value, key) => {
+
+    window[key] = value;
+
+  });
 
 };
 
@@ -38,11 +38,7 @@ App.prototype.loadPosts = function() {
 
   Navigation.on('route:changed', id => {
     
-    if(id !== '/') {
-    
-      this.post.load(id);
-
-    }
+    if(id !== '/') this.post.load(id);
   
   });
 
