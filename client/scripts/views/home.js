@@ -1,123 +1,121 @@
 import Navigation from 'app/utils/navigation';
 
-export default class Home {
-  
-  constructor() {
+const Home = function() {
 
-    this.$el    = $('#home');
-    this.$tag   = this.$el.find('.tags li');
-    this.$posts = this.$el.find('.posts li');
+  this.$el    = $('#home');
+  this.$tag   = this.$el.find('.tags li');
+  this.$posts = this.$el.find('.posts li');
 
-    this.bindEvents();
-    this.runIntroAnimation();
-  
-  }
+  this.bindEvents();
+  this.runIntroAnimation();
 
-  bindEvents() {
+};
 
-    this.$posts.on('mouseenter', this.mouseenter.bind(this));
-    this.$posts.on('mouseleave', this.mouseleave.bind(this));
+Home.prototype.bindEvents = function() {
 
-    this.$posts.on('click', this.postClicked.bind(this));
-    this.$tag.on('click', this.filterPosts.bind(this));
+  this.$posts.on('mouseenter', this.mouseenter.bind(this));
+  this.$posts.on('mouseleave', this.mouseleave.bind(this));
 
-  }
+  this.$posts.on('click', this.postClicked.bind(this));
+  this.$tag.on('click', this.filterPosts.bind(this));
 
-  unbind() {
+};
 
-    this.$posts.off('mouseenter');
-    this.$posts.off('mouseleave');
+Home.prototype.unbind = function() {
 
-    this.$posts.off('click');
-    this.$tag.off('click');
+  this.$posts.off('mouseenter');
+  this.$posts.off('mouseleave');
 
-  }
+  this.$posts.off('click');
+  this.$tag.off('click');
 
-  runIntroAnimation() {
+};
 
-    this.$posts.each(function(index, item) {
+Home.prototype.runIntroAnimation = function() {
 
-      const params = {
-        y: 0,
-        opacity: 1,
-        delay: index * 0.085,
-        ease: Power3.easeOut
-      };
+  this.$posts.each(function(index, item) {
 
-      TM.to($(item), 1, params);
+    const params = {
+      y: 0,
+      opacity: 1,
+      delay: index * 0.085,
+      ease: Power3.easeOut
+    };
 
-    });
+    TM.to($(item), 1, params);
 
-  }
+  });
 
-  mouseenter(event) {
+};
 
-    const target = $(event.currentTarget);
-    const image  = target.find('img');
-    const src    = image.data('over');
+Home.prototype.mouseenter = function(event) {
 
-    target.find('img.over').css({ display: 'block' })
+  const target = $(event.currentTarget);
+  const image  = target.find('img');
+  const src    = image.data('over');
 
-    target.addClass('active');
+  target.find('img.over').css({ display: 'block' })
 
-  }
+  target.addClass('active');
 
-  mouseleave(event) {
+};
 
-    const target = $(event.currentTarget);
-    const image  = target.find('img');
-    const src    = image.data('out');
+Home.prototype.mouseleave = function(event) {
 
-    target.find('img.over').css({ display: 'none' })
+  const target = $(event.currentTarget);
+  const image  = target.find('img');
+  const src    = image.data('out');
 
-    this.$posts.removeClass('active');
+  target.find('img.over').css({ display: 'none' })
 
-  }
+  this.$posts.removeClass('active');
 
-  postClicked(event) {
+};
 
-    event.preventDefault();
+Home.prototype.postClicked = function(event) {
 
-    this.postClicked = true;
+  event.preventDefault();
 
-    const target = $(event.currentTarget);
-    const id     = target.attr('id');
+  this.postClicked = true;
 
-    this.$posts.removeClass('open');
-    target.addClass('open');
+  const target = $(event.currentTarget);
+  const id     = target.attr('id');
 
-    Navigation.go(id);
+  this.$posts.removeClass('open');
+  target.addClass('open');
 
-  }
+  Navigation.go(id);
 
-  filterPosts(event) {
+};
 
-    event.preventDefault();
+Home.prototype.filterPosts = function(event) {
 
-    const target = $(event.currentTarget);
-    const tag    = target.data('tag');
+  event.preventDefault();
 
-    this.$posts.each(function(index, item) {
+  const target = $(event.currentTarget);
+  const tag    = target.data('tag');
 
-      const el   = $(item);
-      const tags = el.data('tags').split(' ');
+  this.$posts.each(function(index, item) {
 
-      if(_.contains(tags, tag)) {
+    const el   = $(item);
+    const tags = el.data('tags').split(' ');
+
+    if(_.contains(tags, tag)) {
+    
+      el.show();
+    
+    } else if(tag === 'all') {
+    
+      el.show();
+    
+    } else {
       
-        el.show();
-      
-      } else if(tag === 'all') {
-      
-        el.show();
-      
-      } else {
-        
-        el.hide();
+      el.hide();
 
-      }
+    }
 
-    });
+  });
 
-  }
+};
 
-}
+export default Home;

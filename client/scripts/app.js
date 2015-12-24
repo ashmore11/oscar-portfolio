@@ -5,66 +5,58 @@ import Navigation from 'app/utils/navigation';
 import Post       from 'app/components/post';
 import View       from 'app/views/home';
 
-class App {
+const App = function() {
 
-	constructor() {
+  this.initGlobals();
 
-		this.initGlobals();
+  this.view = new View;
+  this.post = new Post;
 
-		this.view = new View;
-		this.post = new Post;
-
-		this.loadInitialPost();
-		this.loadPosts();
-
-	}
-
-	loadInitialPost() {
-
-		const path = window.location.pathname;
-		const id   = path.split('/')[1];
-
-		if(id) {
-
-			this.post.load(id); 
-
-		}
-
-	}
-
-	loadPosts() {
-
-		Navigation.on('route:changed', id => {
-			
-			if(id !== '/') {
-			
-				this.post.load(id);
-
-			}
-		
-		});
-
-		this.post.on('load:error', function() {
-
-			Navigation.go('/');
-
-		});
-
-	}
-
-	initGlobals() {
-
-		// jquery
-		window.$  = $;
-
-		// underscore
-		window._  = _;
-		
-		// TweenMax
-		window.TM = TM;
-
-	}
+  this.loadInitialPost();
+  this.loadPosts();
 
 }
 
-const APP = new App;
+App.prototype.loadInitialPost = function() {
+
+  const path = window.location.pathname;
+  const id   = path.split('/')[1];
+
+  if(id) this.post.load(id);
+
+}
+
+App.prototype.loadPosts = function() {
+
+  Navigation.on('route:changed', id => {
+    
+    if(id !== '/') {
+    
+      this.post.load(id);
+
+    }
+  
+  });
+
+  this.post.on('load:error', function() {
+
+    Navigation.go('/');
+
+  });
+
+}
+
+App.prototype.initGlobals = function() {
+
+  // jquery
+  window.$  = $;
+
+  // underscore
+  window._  = _;
+  
+  // TweenMax
+  window.TM = TM;
+
+}
+
+window.APP = new App;

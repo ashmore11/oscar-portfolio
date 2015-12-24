@@ -1,28 +1,24 @@
 import Happens from 'happens';
 import Page    from 'page';
 
-class Navigation {
+const Navigation = function() {
 
-	constructor() {
+  Happens(this);
 
-		Happens(this);
+  Page(ctx => {
 
-		Page(ctx => {
+    this.emit('route:changed', ctx.pathname);
 
-			this.emit('route:changed', ctx.pathname);
+  });
 
-		});
+  Page({ click: false });
 
-		Page({ click: false });
+};
 
-	}
+Navigation.prototype.go = function(id) {
 
-	go(id) {
+  Page(id);
 
-		Page(id);
-
-	}
-
-}
+};
 
 export default new Navigation;

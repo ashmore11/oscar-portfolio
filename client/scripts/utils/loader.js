@@ -1,56 +1,54 @@
 import Happens from 'happens';
 
-export default class Loader {
-	
-	constructor() {
+const Loader = function() {
 
-		Happens(this);
+  Happens(this);
 
-		this.$el = $('.loader');
+  this.$el = $('.loader');
 
-		this.loadProgress = 0;
-		this.loadInterval = null;
+  this.loadProgress = 0;
+  this.loadInterval = null;
 
-	}
-	
-	start() {
+};
 
-		this.$el.css({ width: 0, opacity: 1 });
+Loader.prototype.start = function() {
 
-		this.loadInterval = setInterval( () => {
+  this.$el.css({ width: 0, opacity: 1 });
 
-			let num = (Math.random() * 20) + 5
+  this.loadInterval = setInterval( () => {
 
-			this.loadProgress += num;
+    let num = (Math.random() * 20) + 5
 
-			TM.to(this.$el, 0.15, { width: this.loadProgress });
+    this.loadProgress += num;
 
-		}, 250);
+    TM.to(this.$el, 0.15, { width: this.loadProgress });
 
-	}
-	
-	stop() {
+  }, 250);
 
-		clearInterval(this.loadInterval);
-		
-		this.loadInterval = null;
+};
 
-		const params = {
-			width: '100%',
-			ease: Power4.easeOut,
-			onComplete: () => {
+Loader.prototype.stop = function() {
 
-				TM.to(this.$el, 0.5, { opacity: 0 });
+  clearInterval(this.loadInterval);
+  
+  this.loadInterval = null;
 
-				this.emit('load:complete');
+  const params = {
+    width: '100%',
+    ease: Power4.easeOut,
+    onComplete: () => {
 
-        this.loadProgress = 0;
+      TM.to(this.$el, 0.5, { opacity: 0 });
 
-			}
-		};
+      this.emit('load:complete');
 
-		TM.to(this.$el, 0.5, params);
+      this.loadProgress = 0;
 
-	}
+    }
+  };
 
-}
+  TM.to(this.$el, 0.5, params);
+
+};
+
+export default Loader;

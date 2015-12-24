@@ -16,9 +16,7 @@ exports.get = function(req, res) {
       return res.apiError('not found');
     }
     
-    var post = {
-      post: item
-    }
+    var post = { post: item };
 
     res.apiResponse(post);
     
