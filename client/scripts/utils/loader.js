@@ -1,6 +1,6 @@
 import Happens from 'happens';
 
-const Loader = function() {
+function Loader() {
 
   Happens(this);
 

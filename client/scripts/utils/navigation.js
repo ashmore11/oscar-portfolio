@@ -1,7 +1,7 @@
 import Happens from 'happens';
 import Page    from 'page';
 
-const Navigation = function() {
+function Navigation() {
 
   Happens(this);
 

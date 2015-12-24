@@ -1,6 +1,6 @@
 import Navigation from 'app/utils/navigation';
 
-const Home = function() {
+function Home() {
 
   this.$el    = $('#home');
   this.$tag   = this.$el.find('.tags li');

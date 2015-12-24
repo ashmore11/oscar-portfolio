@@ -2,7 +2,7 @@ import Happens    from 'happens';
 import Loader     from 'app/utils/loader';
 import Navigation from 'app/utils/navigation';
 
-const Post = function() {
+function Post() {
 
   Happens(this);
 

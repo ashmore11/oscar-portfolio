@@ -72,7 +72,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var App = function App() {
+	function App() {
 
 	  this.initGlobals();
 
@@ -81,7 +81,7 @@
 
 	  this.loadInitialPost();
 	  this.loadPosts();
-	};
+	}
 
 	App.prototype.loadInitialPost = function () {
 
@@ -18498,7 +18498,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Navigation = function Navigation() {
+	function Navigation() {
 	  var _this = this;
 
 	  (0, _happens2.default)(this);
@@ -19768,7 +19768,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Post = function Post() {
+	function Post() {
 
 	  (0, _happens2.default)(this);
 
@@ -19912,7 +19912,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Loader = function Loader() {
+	function Loader() {
 
 	  (0, _happens2.default)(this);
 
@@ -19978,7 +19978,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Home = function Home() {
+	function Home() {
 
 	  this.$el = $('#home');
 	  this.$tag = this.$el.find('.tags li');
