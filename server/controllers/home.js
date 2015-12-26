@@ -8,7 +8,7 @@ exports = module.exports = function(req, res) {
 	locals.section = 'home';
 
 	view.query('page', keystone.list('Page').model.findOne({ slug: 'content' }));
-	view.query('work', keystone.list('Post').model.find().populate('tags'));
+	view.query('posts', keystone.list('Post').model.find().populate('tags'));
 	view.query('tags', keystone.list('Tags').model.find());
 	
 	view.render('home');
