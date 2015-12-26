@@ -19971,29 +19971,46 @@
 
 	var _navigation2 = _interopRequireDefault(_navigation);
 
+	var _baseView = __webpack_require__(14);
+
+	var _baseView2 = _interopRequireDefault(_baseView);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Home = {
+	var Home = Object.create(_baseView2.default);
 
-	  $el: (0, _jquery2.default)('#home'),
-	  $tag: (0, _jquery2.default)('#home').find('.tags li'),
-	  $posts: (0, _jquery2.default)('#home').find('.posts li')
+	Object.defineProperties(Home, {
 
-	};
+	  $el: {
+	    value: (0, _jquery2.default)('#home'),
+	    writable: false
+	  },
+
+	  $tag: {
+	    value: (0, _jquery2.default)('#home').find('.tags li'),
+	    writable: false
+	  },
+
+	  $posts: {
+	    value: (0, _jquery2.default)('#home').find('.posts li'),
+	    writable: false
+	  }
+
+	});
 
 	Home.init = function () {
 
-	  this.bindEvents();
+	  this.bind();
 	  this.runIntroAnimation();
 	};
 
-	Home.bindEvents = function () {
+	Home.bind = function () {
 
-	  this.$posts.on('mouseenter', this.mouseenter.bind(this));
-	  this.$posts.on('mouseleave', this.mouseleave.bind(this));
+	  this.bindEvent(this.$posts, 'mouseeneter', this.mouseeneter);
+	  this.bindEvent(this.$posts, 'mouseleave', this.mouseleave);
 
-	  this.$posts.on('click', this.postClicked.bind(this));
-	  this.$tag.on('click', this.filterPosts.bind(this));
+	  this.bindEvent(this.$posts, 'click', this.postClicked);
+	  this.bindEvent(this.$tag, 'click', this.filterPosts);
 	};
 
 	Home.unbind = function () {
@@ -20083,6 +20100,28 @@
 	};
 
 	exports.default = Home;
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var BaseView = {
+
+	  el: null
+
+	};
+
+	BaseView.bindEvent = function (el, type, func) {
+
+	  el.on(type, func);
+	};
+
+	exports.default = BaseView;
 
 /***/ }
 /******/ ]);

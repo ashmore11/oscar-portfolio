@@ -1,30 +1,44 @@
-import $   from 'jquery';
-import _   from 'underscore';
-import TM  from 'gsap';
-import Nav from 'app/utils/navigation';
+import $        from 'jquery';
+import _        from 'underscore';
+import TM       from 'gsap';
+import Nav      from 'app/utils/navigation';
+import BaseView from 'app/views/baseView';
 
-const Home = {
+const Home = Object.create(BaseView);
 
-  $el    : $('#home'),
-  $tag   : $('#home').find('.tags li'),
-  $posts : $('#home').find('.posts li'),
+Object.defineProperties(Home, {
 
-};
+  $el: {
+    value: $('#home'),
+    writable: false,
+  },
+
+  $tag: {
+    value: $('#home').find('.tags li'),
+    writable: false,
+  },
+
+  $posts: {
+    value: $('#home').find('.posts li'),
+    writable: false,
+  },
+
+});
 
 Home.init = function() {
-
-  this.bindEvents();
+  
+  this.bind();
   this.runIntroAnimation();
 
 };
 
-Home.bindEvents = function() {
+Home.bind = function() {
 
-  this.$posts.on('mouseenter', this.mouseenter.bind(this));
-  this.$posts.on('mouseleave', this.mouseleave.bind(this));
+  this.bindEvent(this.$posts, 'mouseeneter', this.mouseeneter);
+  this.bindEvent(this.$posts, 'mouseleave',  this.mouseleave);
 
-  this.$posts.on('click', this.postClicked.bind(this));
-  this.$tag.on('click', this.filterPosts.bind(this));
+  this.bindEvent(this.$posts, 'click', this.postClicked);
+  this.bindEvent(this.$tag,   'click', this.filterPosts);
 
 };
 
