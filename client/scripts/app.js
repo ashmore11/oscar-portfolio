@@ -3,55 +3,53 @@ import Nav     from 'app/utils/navigation';
 import Post    from 'app/components/post';
 import View    from 'app/views/home';
 
-const App = {
+const App = {};
 
-  init : function() {
+App.init = function() {
 
-    this.initGlobals();
+  this.initGlobals();
 
-    Nav.init();
-    View.init();
-    Post.init();
+  Nav.init();
+  View.init();
+  Post.init();
 
-    this.loadInitialPost();
-    this.loadPosts();
+  this.loadInitialPost();
+  this.loadPosts();
 
-  },
+};
 
-  initGlobals : function() {
+App.initGlobals = function() {
 
-    Globals._.each(Globals, (value, key) => {
+  Globals._.each(Globals, (value, key) => {
 
-      this[key] = value;
+    this[key] = value;
 
-    });
+  });
 
-  },
+};
 
-  loadInitialPost : function() {
+App.loadInitialPost = function() {
 
-    const path = window.location.pathname;
-    const id   = path.split('/')[1];
+  const path = window.location.pathname;
+  const id   = path.split('/')[1];
 
-    if(id) Post.load(id);
+  if(id) Post.load(id);
 
-  },
+};
 
-  loadPosts : function() {
+App.loadPosts = function() {
 
-    Nav.on('route:changed', id => {
-      
-      if(id !== '/') Post.load(id);
+  Nav.on('route:changed', id => {
     
-    });
+    if(id !== '/') Post.load(id);
+  
+  });
 
-    Post.on('load:error', function() {
+  Post.on('load:error', function() {
 
-      Nav.go('/');
+    Nav.go('/');
 
-    });
-
-  },
+  });
 
 };
 

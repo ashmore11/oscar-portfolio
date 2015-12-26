@@ -64,50 +64,48 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var App = {
+	var App = {};
 
-	  init: function init() {
+	App.init = function () {
 
-	    this.initGlobals();
+	  this.initGlobals();
 
-	    _navigation2.default.init();
-	    _home2.default.init();
-	    _post2.default.init();
+	  _navigation2.default.init();
+	  _home2.default.init();
+	  _post2.default.init();
 
-	    this.loadInitialPost();
-	    this.loadPosts();
-	  },
+	  this.loadInitialPost();
+	  this.loadPosts();
+	};
 
-	  initGlobals: function initGlobals() {
-	    var _this = this;
+	App.initGlobals = function () {
+	  var _this = this;
 
-	    _globals2.default._.each(_globals2.default, function (value, key) {
+	  _globals2.default._.each(_globals2.default, function (value, key) {
 
-	      _this[key] = value;
-	    });
-	  },
+	    _this[key] = value;
+	  });
+	};
 
-	  loadInitialPost: function loadInitialPost() {
+	App.loadInitialPost = function () {
 
-	    var path = window.location.pathname;
-	    var id = path.split('/')[1];
+	  var path = window.location.pathname;
+	  var id = path.split('/')[1];
 
-	    if (id) _post2.default.load(id);
-	  },
+	  if (id) _post2.default.load(id);
+	};
 
-	  loadPosts: function loadPosts() {
+	App.loadPosts = function () {
 
-	    _navigation2.default.on('route:changed', function (id) {
+	  _navigation2.default.on('route:changed', function (id) {
 
-	      if (id !== '/') _post2.default.load(id);
-	    });
+	    if (id !== '/') _post2.default.load(id);
+	  });
 
-	    _post2.default.on('load:error', function () {
+	  _post2.default.on('load:error', function () {
 
-	      _navigation2.default.go('/');
-	    });
-	  }
-
+	    _navigation2.default.go('/');
+	  });
 	};
 
 	App.init();
