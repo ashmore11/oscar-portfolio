@@ -69,25 +69,11 @@
 	App.init = function () {
 
 	  _navigation2.default.init();
+
 	  _home2.default.init();
 
 	  _post2.default.init();
 	  _post2.default.load();
-
-	  this.loadPosts();
-	};
-
-	App.loadPosts = function () {
-
-	  _navigation2.default.on('route:changed', function (id) {
-
-	    if (id !== '/') _post2.default.load(id);
-	  });
-
-	  _post2.default.on('load:error', function () {
-
-	    _navigation2.default.go('/');
-	  });
 	};
 
 	App.init();
@@ -19778,9 +19764,9 @@
 
 	var _gsap2 = _interopRequireDefault(_gsap);
 
-	var _happens = __webpack_require__(7);
+	var _navigation = __webpack_require__(6);
 
-	var _happens2 = _interopRequireDefault(_happens);
+	var _navigation2 = _interopRequireDefault(_navigation);
 
 	var _loader = __webpack_require__(13);
 
@@ -19804,9 +19790,9 @@
 
 	Post.init = function () {
 
-	  (0, _happens2.default)(this);
-
 	  _loader2.default.init();
+
+	  _navigation2.default.on('route:changed', this.load.bind(this));
 	};
 
 	Post.load = function (postID) {
@@ -19816,7 +19802,7 @@
 	  var id = postID || window.location.pathname.replace('/', '');
 	  var url = host + '/api/post/' + id;
 
-	  if (this.postID !== id) {
+	  if (this.postID !== id && id.length > 0) {
 
 	    this.postID = id;
 
@@ -19827,7 +19813,7 @@
 	        _this.loadSuccess(data);
 	      },
 	      error: function error() {
-	        _this.emit('load:error');
+	        _navigation2.default.go('/');
 	      }
 	    });
 	  }

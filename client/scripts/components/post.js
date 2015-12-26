@@ -1,7 +1,7 @@
 import $       from 'jquery';
 import _       from 'underscore';
 import TM      from 'gsap';
-import Happens from 'happens';
+import Nav     from 'app/utils/navigation';
 import Loader  from 'app/utils/loader';
 
 const Post = {
@@ -20,9 +20,9 @@ const Post = {
 
 Post.init = function() {
 
-  Happens(this);
-
   Loader.init();
+
+  Nav.on('route:changed', this.load.bind(this));
 
 };
 
@@ -32,7 +32,7 @@ Post.load = function(postID) {
   const id   = postID || window.location.pathname.replace('/', '');
   const url  = `${host}/api/post/${id}`;
 
-  if(this.postID !== id) {
+  if(this.postID !== id && id.length > 0) {
 
     this.postID = id;
 
@@ -40,7 +40,7 @@ Post.load = function(postID) {
       url: url,
       type: 'GET',
       success: data => { this.loadSuccess(data); },
-      error: () => { this.emit('load:error'); }
+      error: () => { Nav.go('/'); }
     });
 
   }
