@@ -7,33 +7,13 @@ const App = {};
 
 App.init = function() {
 
-  this.initGlobals();
-
   Nav.init();
   View.init();
+
   Post.init();
+  Post.load();
 
-  this.loadInitialPost();
   this.loadPosts();
-
-};
-
-App.initGlobals = function() {
-
-  Globals._.each(Globals, (value, key) => {
-
-    this[key] = value;
-
-  });
-
-};
-
-App.loadInitialPost = function() {
-
-  const path = window.location.pathname;
-  const id   = path.split('/')[1];
-
-  if(id) Post.load(id);
 
 };
 

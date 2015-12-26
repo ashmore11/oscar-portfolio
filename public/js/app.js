@@ -68,31 +68,13 @@
 
 	App.init = function () {
 
-	  this.initGlobals();
-
 	  _navigation2.default.init();
 	  _home2.default.init();
+
 	  _post2.default.init();
+	  _post2.default.load();
 
-	  this.loadInitialPost();
 	  this.loadPosts();
-	};
-
-	App.initGlobals = function () {
-	  var _this = this;
-
-	  _globals2.default._.each(_globals2.default, function (value, key) {
-
-	    _this[key] = value;
-	  });
-	};
-
-	App.loadInitialPost = function () {
-
-	  var path = window.location.pathname;
-	  var id = path.split('/')[1];
-
-	  if (id) _post2.default.load(id);
 	};
 
 	App.loadPosts = function () {
@@ -19827,16 +19809,19 @@
 	  _loader2.default.init();
 	};
 
-	Post.load = function (id) {
+	Post.load = function (postID) {
 	  var _this = this;
 
 	  var host = window.location.origin;
-	  var post = host + '/api/post/' + id;
+	  var id = postID || window.location.pathname.replace('/', '');
+	  var url = host + '/api/post/' + id;
 
 	  if (this.postID !== id) {
 
+	    this.postID = id;
+
 	    _jquery2.default.ajax({
-	      url: post,
+	      url: url,
 	      type: 'GET',
 	      success: function success(data) {
 	        _this.loadSuccess(data);

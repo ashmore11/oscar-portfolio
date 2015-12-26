@@ -26,15 +26,18 @@ Post.init = function() {
 
 };
 
-Post.load = function(id) {
+Post.load = function(postID) {
 
   const host = window.location.origin;
-  const post = `${host}/api/post/${id}`;
+  const id   = postID || window.location.pathname.replace('/', '');
+  const url  = `${host}/api/post/${id}`;
 
   if(this.postID !== id) {
 
+    this.postID = id;
+
     $.ajax({
-      url: post,
+      url: url,
       type: 'GET',
       success: data => { this.loadSuccess(data); },
       error: () => { this.emit('load:error'); }
