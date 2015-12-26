@@ -1,17 +1,22 @@
+import $       from 'jquery';
+import TM      from 'gsap';
 import Happens from 'happens';
 
-function Loader() {
+const Loader = {
 
-  Happens(this);
-
-  this.$el = $('.loader');
-
-  this.loadProgress = 0;
-  this.loadInterval = null;
+  $el          : $('.loader'),
+  loadProgress : 0,
+  loadInterval : null,
 
 };
 
-Loader.prototype.start = function() {
+Loader.init = function() {
+
+  Happens(this);
+
+}
+
+Loader.start = function() {
 
   this.$el.css({ width: 0, opacity: 1 });
 
@@ -27,7 +32,7 @@ Loader.prototype.start = function() {
 
 };
 
-Loader.prototype.stop = function() {
+Loader.stop = function() {
 
   clearInterval(this.loadInterval);
   

@@ -1,17 +1,24 @@
-import Navigation from 'app/utils/navigation';
+import $   from 'jquery';
+import _   from 'underscore';
+import TM  from 'gsap';
+import Nav from 'app/utils/navigation';
 
-function Home() {
+const Home = {
 
-  this.$el    = $('#home');
-  this.$tag   = this.$el.find('.tags li');
-  this.$posts = this.$el.find('.posts li');
+  $el    : $('#home'),
+  $tag   : $('#home').find('.tags li'),
+  $posts : $('#home').find('.posts li'),
+
+};
+
+Home.init = function() {
 
   this.bindEvents();
   this.runIntroAnimation();
 
 };
 
-Home.prototype.bindEvents = function() {
+Home.bindEvents = function() {
 
   this.$posts.on('mouseenter', this.mouseenter.bind(this));
   this.$posts.on('mouseleave', this.mouseleave.bind(this));
@@ -21,7 +28,7 @@ Home.prototype.bindEvents = function() {
 
 };
 
-Home.prototype.unbind = function() {
+Home.unbind = function() {
 
   this.$posts.off('mouseenter');
   this.$posts.off('mouseleave');
@@ -31,7 +38,7 @@ Home.prototype.unbind = function() {
 
 };
 
-Home.prototype.runIntroAnimation = function() {
+Home.runIntroAnimation = function() {
 
   _.each(this.$posts, (item, index) => {
 
@@ -48,7 +55,7 @@ Home.prototype.runIntroAnimation = function() {
 
 };
 
-Home.prototype.mouseenter = function(event) {
+Home.mouseenter = function(event) {
 
   const target = $(event.currentTarget);
   const image  = target.find('img');
@@ -60,7 +67,7 @@ Home.prototype.mouseenter = function(event) {
 
 };
 
-Home.prototype.mouseleave = function(event) {
+Home.mouseleave = function(event) {
 
   const target = $(event.currentTarget);
   const image  = target.find('img');
@@ -72,7 +79,7 @@ Home.prototype.mouseleave = function(event) {
 
 };
 
-Home.prototype.postClicked = function(event) {
+Home.postClicked = function(event) {
 
   event.preventDefault();
 
@@ -84,11 +91,11 @@ Home.prototype.postClicked = function(event) {
   this.$posts.removeClass('open');
   target.addClass('open');
 
-  Navigation.go(id);
+  Nav.go(id);
 
 };
 
-Home.prototype.filterPosts = function(event) {
+Home.filterPosts = function(event) {
 
   event.preventDefault();
 

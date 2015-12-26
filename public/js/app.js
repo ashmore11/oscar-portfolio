@@ -64,48 +64,53 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function App() {
+	var App = {
 
-	  this.initGlobals();
+	  init: function init() {
 
-	  this.view = new _home2.default();
-	  this.post = new _post2.default();
+	    this.initGlobals();
 
-	  this.loadInitialPost();
-	  this.loadPosts();
+	    _navigation2.default.init();
+	    _home2.default.init();
+	    _post2.default.init();
+
+	    this.loadInitialPost();
+	    this.loadPosts();
+	  },
+
+	  initGlobals: function initGlobals() {
+	    var _this = this;
+
+	    _globals2.default._.each(_globals2.default, function (value, key) {
+
+	      _this[key] = value;
+	    });
+	  },
+
+	  loadInitialPost: function loadInitialPost() {
+
+	    var path = window.location.pathname;
+	    var id = path.split('/')[1];
+
+	    if (id) _post2.default.load(id);
+	  },
+
+	  loadPosts: function loadPosts() {
+
+	    _navigation2.default.on('route:changed', function (id) {
+
+	      if (id !== '/') _post2.default.load(id);
+	    });
+
+	    _post2.default.on('load:error', function () {
+
+	      _navigation2.default.go('/');
+	    });
+	  }
+
 	};
 
-	App.prototype.initGlobals = function () {
-
-	  _globals2.default._.each(_globals2.default, function (value, key) {
-
-	    window[key] = value;
-	  });
-	};
-
-	App.prototype.loadInitialPost = function () {
-
-	  var path = window.location.pathname;
-	  var id = path.split('/')[1];
-
-	  if (id) this.post.load(id);
-	};
-
-	App.prototype.loadPosts = function () {
-	  var _this = this;
-
-	  _navigation2.default.on('route:changed', function (id) {
-
-	    if (id !== '/') _this.post.load(id);
-	  });
-
-	  this.post.on('load:error', function () {
-
-	    _navigation2.default.go('/');
-	  });
-	};
-
-	window.APP = new App();
+	App.init();
 
 /***/ },
 /* 1 */
@@ -18505,7 +18510,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+		value: true
 	});
 
 	var _happens = __webpack_require__(7);
@@ -18518,25 +18523,32 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function Navigation() {
-	  var _this = this;
+	var Navigation = {};
 
-	  (0, _happens2.default)(this);
+	Navigation.init = function () {
 
-	  (0, _page2.default)(function (ctx) {
+		(0, _happens2.default)(this);
 
-	    _this.emit('route:changed', ctx.pathname);
-	  });
+		this.navigate();
 
-	  (0, _page2.default)({ click: false });
+		(0, _page2.default)({ click: false });
 	};
 
-	Navigation.prototype.go = function (id) {
+	Navigation.navigate = function () {
+		var _this = this;
 
-	  (0, _page2.default)(id);
+		(0, _page2.default)(function (ctx) {
+
+			_this.emit('route:changed', ctx.pathname);
+		});
 	};
 
-	exports.default = new Navigation();
+	Navigation.go = function (id) {
+
+		(0, _page2.default)(id);
+	};
+
+	exports.default = Navigation;
 
 /***/ },
 /* 7 */
@@ -19774,6 +19786,18 @@
 	  value: true
 	});
 
+	var _jquery = __webpack_require__(3);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _underscore = __webpack_require__(2);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	var _gsap = __webpack_require__(4);
+
+	var _gsap2 = _interopRequireDefault(_gsap);
+
 	var _happens = __webpack_require__(7);
 
 	var _happens2 = _interopRequireDefault(_happens);
@@ -19782,31 +19806,30 @@
 
 	var _loader2 = _interopRequireDefault(_loader);
 
-	var _navigation = __webpack_require__(6);
-
-	var _navigation2 = _interopRequireDefault(_navigation);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function Post() {
+	var Post = {
+
+	  $el: (0, _jquery2.default)('.post'),
+	  $postVideo: (0, _jquery2.default)('.post').find('.video'),
+	  $postVideoIframe: (0, _jquery2.default)('.post').find('iframe'),
+	  $postOtherVideos: (0, _jquery2.default)('.post').find('.other-videos'),
+	  $postTitle: (0, _jquery2.default)('.post').find('.title'),
+	  $postDesc: (0, _jquery2.default)('.post').find('.description'),
+	  $postExtraBits: (0, _jquery2.default)('.post').find('.extra-bits'),
+	  postID: null,
+	  postOpen: false
+
+	};
+
+	Post.init = function () {
 
 	  (0, _happens2.default)(this);
 
-	  this.$el = $('.post');
-	  this.$postVideo = this.$el.find('.video');
-	  this.$postVideoIframe = this.$postVideo.find('iframe');
-	  this.$postOtherVideos = this.$el.find('.other-videos');
-	  this.$postTitle = this.$el.find('.title');
-	  this.$postDesc = this.$el.find('.description');
-	  this.$postExtraBits = this.$el.find('.extra-bits');
-
-	  this.postID = null;
-	  this.postOpen = false;
-
-	  this.loader = new _loader2.default();
+	  _loader2.default.init();
 	};
 
-	Post.prototype.load = function (id) {
+	Post.load = function (id) {
 	  var _this = this;
 
 	  var host = window.location.origin;
@@ -19814,7 +19837,7 @@
 
 	  if (this.postID !== id) {
 
-	    $.ajax({
+	    _jquery2.default.ajax({
 	      url: post,
 	      type: 'GET',
 	      success: function success(data) {
@@ -19827,7 +19850,7 @@
 	  }
 	};
 
-	Post.prototype.loadSuccess = function (data) {
+	Post.loadSuccess = function (data) {
 
 	  this.data = data.post;
 
@@ -19841,10 +19864,10 @@
 	  }
 	};
 
-	Post.prototype.render = function () {
+	Post.render = function () {
 	  var _this2 = this;
 
-	  this.loader.start();
+	  _loader2.default.start();
 
 	  this.$postVideoIframe.attr('src', this.data.video);
 	  this.$postOtherVideos.html('');
@@ -19852,7 +19875,7 @@
 	  this.$postDesc.html(this.data.description);
 	  this.$postExtraBits.html(this.data.extraBits);
 
-	  _.each(this.data.otherVideos, function (item, index) {
+	  _underscore2.default.each(this.data.otherVideos, function (item, index) {
 
 	    var html = '<li data-src="' + item + '">video ' + (index + 1) + '</li>';
 
@@ -19862,56 +19885,55 @@
 	  this.bind();
 	};
 
-	Post.prototype.bind = function () {
-	  var _this3 = this;
+	Post.bind = function () {
 
-	  this.loader.on('load:complete', this.show.bind(this));
+	  _loader2.default.on('load:complete', this.show.bind(this));
 
 	  this.$postVideoIframe.on('load', function () {
 
-	    _this3.loader.stop();
+	    _loader2.default.stop();
 	  });
 	};
 
-	Post.prototype.unbind = function () {
+	Post.unbind = function () {
 
 	  this.$postVideoIframe.off('load');
 
-	  this.loader.off('load:complete');
+	  _loader2.default.off('load:complete');
 	};
 
-	Post.prototype.show = function () {
+	Post.show = function () {
+	  var _this3 = this;
+
+	  _gsap2.default.set(this.$el, { height: 'auto' });
+
+	  var params = {
+	    height: 0,
+	    ease: Expo.easeInOut,
+	    onComplete: function onComplete() {
+
+	      _this3.postOpen = true;
+	    }
+	  };
+
+	  _gsap2.default.from(this.$el, 1, params);
+	};
+
+	Post.hide = function () {
 	  var _this4 = this;
 
-	  TM.set(this.$el, { height: 'auto' });
-
 	  var params = {
 	    height: 0,
 	    ease: Expo.easeInOut,
 	    onComplete: function onComplete() {
 
-	      _this4.postOpen = true;
+	      _this4.postOpen = false;
+
+	      _this4.render();
 	    }
 	  };
 
-	  TM.from(this.$el, 1, params);
-	};
-
-	Post.prototype.hide = function () {
-	  var _this5 = this;
-
-	  var params = {
-	    height: 0,
-	    ease: Expo.easeInOut,
-	    onComplete: function onComplete() {
-
-	      _this5.postOpen = false;
-
-	      _this5.render();
-	    }
-	  };
-
-	  TM.to(this.$el, 1, params);
+	  _gsap2.default.to(this.$el, 1, params);
 	};
 
 	exports.default = Post;
@@ -19926,23 +19948,34 @@
 	  value: true
 	});
 
+	var _jquery = __webpack_require__(3);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _gsap = __webpack_require__(4);
+
+	var _gsap2 = _interopRequireDefault(_gsap);
+
 	var _happens = __webpack_require__(7);
 
 	var _happens2 = _interopRequireDefault(_happens);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function Loader() {
+	var Loader = {
 
-	  (0, _happens2.default)(this);
+	  $el: (0, _jquery2.default)('.loader'),
+	  loadProgress: 0,
+	  loadInterval: null
 
-	  this.$el = $('.loader');
-
-	  this.loadProgress = 0;
-	  this.loadInterval = null;
 	};
 
-	Loader.prototype.start = function () {
+	Loader.init = function () {
+
+	  (0, _happens2.default)(this);
+	};
+
+	Loader.start = function () {
 	  var _this = this;
 
 	  this.$el.css({ width: 0, opacity: 1 });
@@ -19953,11 +19986,11 @@
 
 	    _this.loadProgress += num;
 
-	    TM.to(_this.$el, 0.15, { width: _this.loadProgress });
+	    _gsap2.default.to(_this.$el, 0.15, { width: _this.loadProgress });
 	  }, 250);
 	};
 
-	Loader.prototype.stop = function () {
+	Loader.stop = function () {
 	  var _this2 = this;
 
 	  clearInterval(this.loadInterval);
@@ -19969,7 +20002,7 @@
 	    ease: Power4.easeOut,
 	    onComplete: function onComplete() {
 
-	      TM.to(_this2.$el, 0.5, { opacity: 0 });
+	      _gsap2.default.to(_this2.$el, 0.5, { opacity: 0 });
 
 	      _this2.emit('load:complete');
 
@@ -19977,7 +20010,7 @@
 	    }
 	  };
 
-	  TM.to(this.$el, 0.5, params);
+	  _gsap2.default.to(this.$el, 0.5, params);
 	};
 
 	exports.default = Loader;
@@ -19992,23 +20025,39 @@
 	  value: true
 	});
 
+	var _jquery = __webpack_require__(3);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _underscore = __webpack_require__(2);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	var _gsap = __webpack_require__(4);
+
+	var _gsap2 = _interopRequireDefault(_gsap);
+
 	var _navigation = __webpack_require__(6);
 
 	var _navigation2 = _interopRequireDefault(_navigation);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function Home() {
+	var Home = {
 
-	  this.$el = $('#home');
-	  this.$tag = this.$el.find('.tags li');
-	  this.$posts = this.$el.find('.posts li');
+	  $el: (0, _jquery2.default)('#home'),
+	  $tag: (0, _jquery2.default)('#home').find('.tags li'),
+	  $posts: (0, _jquery2.default)('#home').find('.posts li')
+
+	};
+
+	Home.init = function () {
 
 	  this.bindEvents();
 	  this.runIntroAnimation();
 	};
 
-	Home.prototype.bindEvents = function () {
+	Home.bindEvents = function () {
 
 	  this.$posts.on('mouseenter', this.mouseenter.bind(this));
 	  this.$posts.on('mouseleave', this.mouseleave.bind(this));
@@ -20017,7 +20066,7 @@
 	  this.$tag.on('click', this.filterPosts.bind(this));
 	};
 
-	Home.prototype.unbind = function () {
+	Home.unbind = function () {
 
 	  this.$posts.off('mouseenter');
 	  this.$posts.off('mouseleave');
@@ -20026,9 +20075,9 @@
 	  this.$tag.off('click');
 	};
 
-	Home.prototype.runIntroAnimation = function () {
+	Home.runIntroAnimation = function () {
 
-	  _.each(this.$posts, function (item, index) {
+	  _underscore2.default.each(this.$posts, function (item, index) {
 
 	    var params = {
 	      y: 0,
@@ -20037,13 +20086,13 @@
 	      ease: Power3.easeOut
 	    };
 
-	    TM.to($(item), 1, params);
+	    _gsap2.default.to((0, _jquery2.default)(item), 1, params);
 	  });
 	};
 
-	Home.prototype.mouseenter = function (event) {
+	Home.mouseenter = function (event) {
 
-	  var target = $(event.currentTarget);
+	  var target = (0, _jquery2.default)(event.currentTarget);
 	  var image = target.find('img');
 	  var src = image.data('over');
 
@@ -20052,9 +20101,9 @@
 	  target.addClass('active');
 	};
 
-	Home.prototype.mouseleave = function (event) {
+	Home.mouseleave = function (event) {
 
-	  var target = $(event.currentTarget);
+	  var target = (0, _jquery2.default)(event.currentTarget);
 	  var image = target.find('img');
 	  var src = image.data('out');
 
@@ -20063,13 +20112,13 @@
 	  this.$posts.removeClass('active');
 	};
 
-	Home.prototype.postClicked = function (event) {
+	Home.postClicked = function (event) {
 
 	  event.preventDefault();
 
 	  this.postClicked = true;
 
-	  var target = $(event.currentTarget);
+	  var target = (0, _jquery2.default)(event.currentTarget);
 	  var id = target.attr('id');
 
 	  this.$posts.removeClass('open');
@@ -20078,19 +20127,19 @@
 	  _navigation2.default.go(id);
 	};
 
-	Home.prototype.filterPosts = function (event) {
+	Home.filterPosts = function (event) {
 
 	  event.preventDefault();
 
-	  var target = $(event.currentTarget);
+	  var target = (0, _jquery2.default)(event.currentTarget);
 	  var tag = target.data('tag');
 
-	  _.each(this.$posts, function (item, index) {
+	  _underscore2.default.each(this.$posts, function (item, index) {
 
-	    var el = $(item);
+	    var el = (0, _jquery2.default)(item);
 	    var tags = el.data('tags').split(' ');
 
-	    if (_.contains(tags, tag)) {
+	    if (_underscore2.default.contains(tags, tag)) {
 
 	      el.show();
 	    } else if (tag === 'all') {

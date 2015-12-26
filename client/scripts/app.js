@@ -1,53 +1,58 @@
-import Globals    from 'app/utils/globals';
-import Navigation from 'app/utils/navigation';
-import Post       from 'app/components/post';
-import View       from 'app/views/home';
+import Globals from 'app/utils/globals';
+import Nav     from 'app/utils/navigation';
+import Post    from 'app/components/post';
+import View    from 'app/views/home';
 
-function App() {
+const App = {
 
-  this.initGlobals();
+  init : function() {
 
-  this.view = new View;
-  this.post = new Post;
+    this.initGlobals();
 
-  this.loadInitialPost();
-  this.loadPosts();
+    Nav.init();
+    View.init();
+    Post.init();
 
-};
+    this.loadInitialPost();
+    this.loadPosts();
 
-App.prototype.initGlobals = function() {
+  },
 
-  Globals._.each(Globals, (value, key) => {
+  initGlobals : function() {
 
-    window[key] = value;
+    Globals._.each(Globals, (value, key) => {
 
-  });
+      this[key] = value;
 
-};
+    });
 
-App.prototype.loadInitialPost = function() {
+  },
 
-  const path = window.location.pathname;
-  const id   = path.split('/')[1];
+  loadInitialPost : function() {
 
-  if(id) this.post.load(id);
+    const path = window.location.pathname;
+    const id   = path.split('/')[1];
 
-};
+    if(id) Post.load(id);
 
-App.prototype.loadPosts = function() {
+  },
 
-  Navigation.on('route:changed', id => {
+  loadPosts : function() {
+
+    Nav.on('route:changed', id => {
+      
+      if(id !== '/') Post.load(id);
     
-    if(id !== '/') this.post.load(id);
-  
-  });
+    });
 
-  this.post.on('load:error', function() {
+    Post.on('load:error', function() {
 
-    Navigation.go('/');
+      Nav.go('/');
 
-  });
+    });
+
+  },
 
 };
 
-window.APP = new App;
+App.init();
