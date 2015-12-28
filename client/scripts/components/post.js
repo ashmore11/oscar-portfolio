@@ -1,8 +1,8 @@
-import $       from 'jquery';
-import _       from 'underscore';
-import TM      from 'gsap';
-import Nav     from 'app/utils/navigation';
-import Loader  from 'app/utils/loader';
+import $      from 'jquery';
+import _      from 'underscore';
+import TM     from 'gsap';
+import Nav    from 'app/utils/navigation';
+import Loader from 'app/utils/loader';
 
 const Post = {
 

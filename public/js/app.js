@@ -19977,9 +19977,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Home = Object.create(_baseView2.default);
-
-	Object.defineProperties(Home, {
+	var View = Object.create(_baseView2.default, {
 
 	  $el: {
 	    value: (0, _jquery2.default)('#home'),
@@ -19998,46 +19996,30 @@
 
 	});
 
-	Home.init = function () {
+	View.init = function () {
 
 	  this.bind();
 	  this.runIntroAnimation();
 	};
 
-	Home.bind = function () {
+	View.bind = function () {
 
-	  this.bindEvent(this.$posts, 'mouseeneter', this.mouseeneter);
-	  this.bindEvent(this.$posts, 'mouseleave', this.mouseleave);
+	  this.bindEvent(this.$posts, 'mouseenter', this.mouseenter.bind(this));
+	  this.bindEvent(this.$posts, 'mouseleave', this.mouseleave.bind(this));
 
-	  this.bindEvent(this.$posts, 'click', this.postClicked);
-	  this.bindEvent(this.$tag, 'click', this.filterPosts);
+	  this.bindEvent(this.$posts, 'click', this.postClicked.bind(this));
 	};
 
-	Home.unbind = function () {
+	View.unbind = function () {
 
-	  this.$posts.off('mouseenter');
-	  this.$posts.off('mouseleave');
+	  this.disposeEvent(this.$posts, 'mouseenter');
+	  this.disposeEvent(this.$posts, 'mouseleave');
 
-	  this.$posts.off('click');
-	  this.$tag.off('click');
+	  this.disposeEvent(this.$posts, 'click');
+	  this.disposeEvent(this.$tag, 'click');
 	};
 
-	Home.runIntroAnimation = function () {
-
-	  _underscore2.default.each(this.$posts, function (item, index) {
-
-	    var params = {
-	      y: 0,
-	      opacity: 1,
-	      delay: index * 0.085,
-	      ease: Power3.easeOut
-	    };
-
-	    _gsap2.default.to((0, _jquery2.default)(item), 1, params);
-	  });
-	};
-
-	Home.mouseenter = function (event) {
+	View.mouseenter = function (event) {
 
 	  var target = (0, _jquery2.default)(event.currentTarget);
 	  var image = target.find('img');
@@ -20048,7 +20030,7 @@
 	  target.addClass('active');
 	};
 
-	Home.mouseleave = function (event) {
+	View.mouseleave = function (event) {
 
 	  var target = (0, _jquery2.default)(event.currentTarget);
 	  var image = target.find('img');
@@ -20059,7 +20041,7 @@
 	  this.$posts.removeClass('active');
 	};
 
-	Home.postClicked = function (event) {
+	View.postClicked = function (event) {
 
 	  event.preventDefault();
 
@@ -20074,32 +20056,22 @@
 	  _navigation2.default.go(id);
 	};
 
-	Home.filterPosts = function (event) {
-
-	  event.preventDefault();
-
-	  var target = (0, _jquery2.default)(event.currentTarget);
-	  var tag = target.data('tag');
+	View.runIntroAnimation = function () {
 
 	  _underscore2.default.each(this.$posts, function (item, index) {
 
-	    var el = (0, _jquery2.default)(item);
-	    var tags = el.data('tags').split(' ');
+	    var params = {
+	      y: 0,
+	      opacity: 1,
+	      delay: index * 0.085,
+	      ease: Power3.easeOut
+	    };
 
-	    if (_underscore2.default.contains(tags, tag)) {
-
-	      el.show();
-	    } else if (tag === 'all') {
-
-	      el.show();
-	    } else {
-
-	      el.hide();
-	    }
+	    _gsap2.default.to((0, _jquery2.default)(item), 1, params);
 	  });
 	};
 
-	exports.default = Home;
+	exports.default = View;
 
 /***/ },
 /* 14 */
@@ -20112,13 +20084,18 @@
 	});
 	var BaseView = {
 
-	  el: null
+	  $el: null
 
 	};
 
 	BaseView.bindEvent = function (el, type, func) {
 
 	  el.on(type, func);
+	};
+
+	BaseView.disposeEvent = function (el, type) {
+
+	  el.off(type);
 	};
 
 	exports.default = BaseView;

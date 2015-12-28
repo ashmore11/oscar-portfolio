@@ -4,9 +4,7 @@ import TM       from 'gsap';
 import Nav      from 'app/utils/navigation';
 import BaseView from 'app/views/baseView';
 
-const Home = Object.create(BaseView);
-
-Object.defineProperties(Home, {
+const View = Object.create(BaseView, {
 
   $el: {
     value: $('#home'),
@@ -25,34 +23,73 @@ Object.defineProperties(Home, {
 
 });
 
-Home.init = function() {
-  
+View.init = function() {
+
   this.bind();
   this.runIntroAnimation();
 
 };
 
-Home.bind = function() {
+View.bind = function() {
 
-  this.bindEvent(this.$posts, 'mouseeneter', this.mouseeneter);
-  this.bindEvent(this.$posts, 'mouseleave',  this.mouseleave);
+  this.bindEvent(this.$posts, 'mouseenter', this.mouseenter.bind(this));
+  this.bindEvent(this.$posts, 'mouseleave',  this.mouseleave.bind(this));
 
-  this.bindEvent(this.$posts, 'click', this.postClicked);
-  this.bindEvent(this.$tag,   'click', this.filterPosts);
-
-};
-
-Home.unbind = function() {
-
-  this.$posts.off('mouseenter');
-  this.$posts.off('mouseleave');
-
-  this.$posts.off('click');
-  this.$tag.off('click');
+  this.bindEvent(this.$posts, 'click', this.postClicked.bind(this));
 
 };
 
-Home.runIntroAnimation = function() {
+View.unbind = function() {
+
+  this.disposeEvent(this.$posts, 'mouseenter');
+  this.disposeEvent(this.$posts, 'mouseleave');
+
+  this.disposeEvent(this.$posts, 'click');
+  this.disposeEvent(this.$tag, 'click');
+
+};
+
+View.mouseenter = function(event) {
+
+  const target = $(event.currentTarget);
+  const image  = target.find('img');
+  const src    = image.data('over');
+
+  target.find('img.over').css({ display: 'block' })
+
+  target.addClass('active');
+
+};
+
+View.mouseleave = function(event) {
+
+  const target = $(event.currentTarget);
+  const image  = target.find('img');
+  const src    = image.data('out');
+
+  target.find('img.over').css({ display: 'none' })
+
+  this.$posts.removeClass('active');
+
+};
+
+View.postClicked = function(event) {
+
+  event.preventDefault();
+
+  this.postClicked = true;
+
+  const target = $(event.currentTarget);
+  const id     = target.attr('id');
+
+  this.$posts.removeClass('open');
+  target.addClass('open');
+
+  Nav.go(id);
+
+};
+
+View.runIntroAnimation = function() {
 
   _.each(this.$posts, (item, index) => {
 
@@ -69,74 +106,4 @@ Home.runIntroAnimation = function() {
 
 };
 
-Home.mouseenter = function(event) {
-
-  const target = $(event.currentTarget);
-  const image  = target.find('img');
-  const src    = image.data('over');
-
-  target.find('img.over').css({ display: 'block' })
-
-  target.addClass('active');
-
-};
-
-Home.mouseleave = function(event) {
-
-  const target = $(event.currentTarget);
-  const image  = target.find('img');
-  const src    = image.data('out');
-
-  target.find('img.over').css({ display: 'none' })
-
-  this.$posts.removeClass('active');
-
-};
-
-Home.postClicked = function(event) {
-
-  event.preventDefault();
-
-  this.postClicked = true;
-
-  const target = $(event.currentTarget);
-  const id     = target.attr('id');
-
-  this.$posts.removeClass('open');
-  target.addClass('open');
-
-  Nav.go(id);
-
-};
-
-Home.filterPosts = function(event) {
-
-  event.preventDefault();
-
-  const target = $(event.currentTarget);
-  const tag    = target.data('tag');
-
-  _.each(this.$posts, (item, index) => {
-
-    const el   = $(item);
-    const tags = el.data('tags').split(' ');
-
-    if(_.contains(tags, tag)) {
-    
-      el.show();
-    
-    } else if(tag === 'all') {
-    
-      el.show();
-    
-    } else {
-      
-      el.hide();
-
-    }
-
-  });
-
-};
-
-export default Home;
+export default View;
