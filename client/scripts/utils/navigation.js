@@ -1,31 +1,33 @@
 import Happens from 'happens';
 import Page    from 'page';
 
-const Navigation = {};
+const Navigation = {
 
-Navigation.init = function() {
+  init: function() {
 
-	Happens(this);
+  	Happens(this);
 
-  this.navigate();
+    this.navigate();
 
-  Page({ click: false });
+    Page({ click: false });
 
-};
+  },
 
-Navigation.navigate = function() {
+  navigate: function() {
 
-	Page(ctx => {
+  	Page(ctx => {
 
-		this.emit('route:changed', ctx.pathname);
+  		this.emit('route:changed', ctx.pathname);
 
-	});
+  	});
 
-};
+  },
 
-Navigation.go = function(id) {
+  go: function(id) {
 
-	Page(id);
+  	Page(id);
+
+  },
 
 };
 

@@ -81,7 +81,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 
 	var _happens = __webpack_require__(2);
@@ -94,29 +94,31 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Navigation = {};
+	var Navigation = {
 
-	Navigation.init = function () {
+	  init: function init() {
 
-		(0, _happens2.default)(this);
+	    (0, _happens2.default)(this);
 
-		this.navigate();
+	    this.navigate();
 
-		(0, _page2.default)({ click: false });
-	};
+	    (0, _page2.default)({ click: false });
+	  },
 
-	Navigation.navigate = function () {
-		var _this = this;
+	  navigate: function navigate() {
+	    var _this = this;
 
-		(0, _page2.default)(function (ctx) {
+	    (0, _page2.default)(function (ctx) {
 
-			_this.emit('route:changed', ctx.pathname);
-		});
-	};
+	      _this.emit('route:changed', ctx.pathname);
+	    });
+	  },
 
-	Navigation.go = function (id) {
+	  go: function go(id) {
 
-		(0, _page2.default)(id);
+	    (0, _page2.default)(id);
+	  }
+
 	};
 
 	exports.default = Navigation;
