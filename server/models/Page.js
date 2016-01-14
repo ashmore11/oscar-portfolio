@@ -8,8 +8,6 @@ var page = new keystone.List('Page', {
 		from: 'title', 
 		unique: true 
 	},
-	nocreate: true,
-	nodelete: true
 });
 
 page.add({
