@@ -1,0 +1,4 @@
+{
+  "verbose": true,
+  "ignore": ["gulp", "client", "node_modules", "public"]
+}

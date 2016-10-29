@@ -48,7 +48,7 @@
     "npm": ">=3.10.0"
   },
   "scripts": {
-    "start": "node keystone.js"
+    "start": "nodemon keystone.js --config nodemon.json"
   },
   "main": "keystone.js"
 }
