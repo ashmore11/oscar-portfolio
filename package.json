@@ -7,6 +7,7 @@
     "dotenv": "^1.1.0",
     "gsap": "^1.18.0",
     "happens": "^0.6.0",
+    "jade": "^1.11.0",
     "jquery": "^2.1.4",
     "keystone": "git://github.com/keystonejs/keystone.git#master",
     "page": "^1.6.4",
