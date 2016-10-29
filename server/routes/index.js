@@ -2,32 +2,25 @@ var keystone     = require('keystone');
 var middleware   = require('./middleware');
 var importRoutes = keystone.importer(__dirname);
 
-/**
- * Common Middleware
- */
-keystone.pre('routes', middleware.initLocals);
-
-/**
- * Import Route Controllers
- */
-var routes = {
-	controllers: importRoutes('../controllers'),
-  api: importRoutes('../api')
-};
+const api = importRoutes('../api')
 
 /**
  * Setup Route Bindings
  */
 exports = module.exports = function(app) {
+  // API
+  app.get('/api/post/:slug', keystone.middleware.api, api.posts.getPostById);
+  app.get('/api/posts', keystone.middleware.api, api.posts.getAllPosts);
 	
   // Views
-	app.get('/', routes.controllers.home);
-
-  // API
-  app.get('/api/post/:slug', keystone.middleware.api, routes.api.posts.getPostById);
-  app.get('/api/posts', keystone.middleware.api, routes.api.posts.getAllPosts);
+	app.get('/', function(req, res) {
+    var view = new keystone.View(req, res);
+    view.render('index');
+  });
 
   // Catch All
-  app.get('*', routes.controllers.home);
-	
+  app.get('*', function(req, res) {
+    var view = new keystone.View(req, res);
+    view.render('errors/404');
+  });	
 };
