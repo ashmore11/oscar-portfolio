@@ -1,0 +1,74 @@
+@import "~gridle/sass/gridle/_gridle.scss";
+
+// Utils
+$retina: "only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx)";
+
+// Colors
+$color-white: #ffffff;
+
+$color-black: #000000;
+$color-light-black: #231f20;
+$color-lighter-black: #282627;
+
+$color-grey: #acacac;
+$color-light-grey: #eaeaea;
+$color-dark-grey: #6c6869;
+
+$color-green: #c5e86c;
+$color-dark-green: #363329;
+$color-light-green: #e3f4be;
+
+$color-copy: #242021;
+
+// Heights
+$header-height: 70;
+$subnav-height: 50;
+
+// Z-Index
+// Usage z-index: map-get($zindex, modules);
+$zindex: (
+  modal     : 9000,
+  overlay   : 8000,
+  dropdown  : 7000,
+  subnav    : 5000,
+  footer    : 4000,
+  main      : 3000,
+  header    : 2000,
+  modules   : 1000,
+  null      : 0,
+  minus     : -1
+);
+
+// Grid
+$settings: (
+  context: 12,
+  column-width: null,
+  gutter-width: 40px,
+  gutter-height: 0,
+  gutter-top: 0,
+  gutter-bottom: 0,
+  gutter-left: 10px,
+  gutter-right: 10px,
+  direction: ltr,
+  dir-attribute: false,
+  states-classes: false,
+  name-multiplicator: 1,
+  classes-prefix: ""
+);
+
+@include gridle_setup($settings);
+
+@include gridle_register_state( sm , (
+    min-width : 768px
+) );
+@include gridle_register_state( md, (
+    min-width : 1024px
+) );
+@include gridle_register_state( lg, (
+    min-width : 1200px
+) );
+@include gridle_register_state( retina, (
+    query : $retina
+) );
+
+@include gridle_init();

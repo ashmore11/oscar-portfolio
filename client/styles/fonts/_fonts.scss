@@ -1,0 +1,10 @@
+@import '~sass-font-face/_font-face';
+
+$font-regular: 'Gotham-Light';
+
+@font-face {
+  font-family: 'Gotham-Light';
+  src: url('fonts/Gotham-Light.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

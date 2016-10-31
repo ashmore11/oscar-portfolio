@@ -1,0 +1,7 @@
+.Home {
+  @include gridle(12);
+  
+  button {
+    display: block;
+  }
+}
