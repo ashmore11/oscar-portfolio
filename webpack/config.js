@@ -7,7 +7,7 @@ const plugins = require('./plugins');
 const resolve = require('./resolve');
 const validate = require('webpack-validator');
 
-const DEV = process.env.NODE_ENV === 'dev';
+const DEV = process.env.NODE_ENV === 'development';
 const PATHS = {
   src: path.resolve(process.env.PWD, 'client'),
   dist: path.resolve(process.env.PWD, 'dist'),

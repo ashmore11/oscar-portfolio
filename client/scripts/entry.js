@@ -1,5 +1,16 @@
-import Main from 'app/Main';
+const React = require('react');
 
-document.addEventListener('DOMContentLoaded', () => {
-  window.main = new Main(document.querySelector('#main'));
-});
+const { html, head, meta, body, div, script } = React.DOM;
+
+module.exports = () => (
+  html(null,
+    head(null,
+      meta({ charSet: 'utf-8' })
+    ),
+    body(null,
+      div({ id: 'main' }),
+      script({ src: '/scripts/vendors.js' }),
+      script({ src: '/scripts/bundle.js' })
+    )
+  )
+);

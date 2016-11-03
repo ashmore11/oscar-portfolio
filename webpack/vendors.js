@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const DEV = process.env.NODE_ENV === 'dev';
+const DEV = process.env.NODE_ENV === 'development';
 
 const config = {
   debug: DEV,

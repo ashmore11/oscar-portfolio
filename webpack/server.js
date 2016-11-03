@@ -11,7 +11,6 @@ const compiler = webpack(config);
 app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath,
   contentBase: config.output.path,
-  proxy: { '*': 'http://localhost:3000' },
   historyApiFallback: true,
   noInfo: true,
   hot: true,
@@ -24,4 +23,4 @@ app.get('*', (request, response) => {
   response.sendFile(`${dist}/index.html`);
 });
 
-app.listen(3001);
+app.listen(3000);

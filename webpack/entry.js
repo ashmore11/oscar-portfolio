@@ -5,10 +5,10 @@ const src = path.resolve(process.env.PWD, 'client');
 
 const entry = [
   'babel-polyfill',
-  `${src}/scripts/entry.js`,
+  `${src}/scripts/Main.js`,
 ];
 
-if (process.env.NODE_ENV === 'dev') {
+if (process.env.NODE_ENV === 'development') {
   const hotQuery = querystring.stringify({
     path: '/__webpack_hmr',
     timeout: 20000,

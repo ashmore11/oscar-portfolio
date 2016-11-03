@@ -8,12 +8,13 @@
   },
   "main": "keystone.js",
   "scripts": {
-    "start": "nodemon keystone.js --config nodemon.json",
+    "start": "node keystone.js",
     "dev:server": "node webpack/server.js",
     "vendors": "webpack --config=webpack/vendors.js",
-    "dev": "NODE_ENV=dev npm run vendors && NODE_ENV=dev npm run dev:server",
+    "dev": "NODE_ENV=development npm run vendors && NODE_ENV=development npm start",
     "prod": "NODE_ENV=production npm run vendors && NODE_ENV=production npm run build",
     "build": "webpack --config=webpack/config.js -p",
+    "build:dev": "webpack --config=webpack/config.js -d",
     "dump_db": "mongodump --host localhost:27017 -o dump",
     "restore_db": "mongorestore --db oscar-granse dump/oscar-granse"
   },
@@ -26,7 +27,6 @@
     "react": "^15.3.1",
     "react-document-meta": "^2.0.3",
     "react-dom": "^15.3.1",
-    "react-helmet": "^3.1.0",
     "react-redux": "^4.4.5",
     "react-router": "^4.0.0-alpha.3",
     "redux": "^3.6.0",
