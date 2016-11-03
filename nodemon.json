@@ -1,4 +1,8 @@
 {
-  "verbose": true,
-  "ignore": ["node_modules", "dist"]
+  "ignore": [
+    "node_modules",
+    "dist",
+    "src",
+    "webpack"
+  ]
 }

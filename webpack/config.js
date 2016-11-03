@@ -1,5 +1,6 @@
 const path = require('path');
 const autoprefixer = require('autoprefixer');
+const validate = require('webpack-validator');
 const browsers = require('../package.json').config.browsers;
 const entry = require('./entry');
 const loaders = require('./loaders');
@@ -28,4 +29,4 @@ const config = {
   resolve,
 };
 
-module.exports = config;
+module.exports = validate(config);

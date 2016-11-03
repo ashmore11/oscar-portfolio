@@ -8,7 +8,7 @@
   },
   "main": "keystone.js",
   "scripts": {
-    "start": "node keystone.js",
+    "start": "nodemon keystone.js --config nodemon.json",
     "dev": "NODE_ENV=development npm start",
     "prod": "NODE_ENV=production npm run vendors && NODE_ENV=production npm run build",
     "vendors": "NODE_ENV=development webpack --config=webpack/vendors.js",
@@ -62,6 +62,7 @@
     "morgan": "^1.7.0",
     "multer": "^0.1.8",
     "node-sass": "^3.9.3",
+    "nodemon": "^1.11.0",
     "normalize.css": "^4.2.0",
     "postcss-loader": "^0.13.0",
     "progress-bar-webpack-plugin": "^1.9.0",
