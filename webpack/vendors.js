@@ -26,7 +26,7 @@ const config = {
     new webpack.DllPlugin({
       name: '[name]',
       path: path.resolve(process.env.PWD, 'dist/scripts', '[name].manifest.json'),
-      context: path.resolve(process.env.PWD, 'client'),
+      context: path.resolve(process.env.PWD, 'src'),
     }),
   ],
 };

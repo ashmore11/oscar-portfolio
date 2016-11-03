@@ -1,7 +1,7 @@
 const path = require('path');
 
 const PATHS = {
-  src: path.resolve(process.env.PWD, 'client'),
+  src: path.resolve(process.env.PWD, 'src'),
   dist: path.resolve(process.env.PWD, 'dist'),
 };
 

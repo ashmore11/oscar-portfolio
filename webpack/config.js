@@ -5,11 +5,10 @@ const entry = require('./entry');
 const loaders = require('./loaders');
 const plugins = require('./plugins');
 const resolve = require('./resolve');
-const validate = require('webpack-validator');
 
 const DEV = process.env.NODE_ENV === 'development';
 const PATHS = {
-  src: path.resolve(process.env.PWD, 'client'),
+  src: path.resolve(process.env.PWD, 'src'),
   dist: path.resolve(process.env.PWD, 'dist'),
 };
 
@@ -29,4 +28,4 @@ const config = {
   resolve,
 };
 
-module.exports = validate(config);
+module.exports = config;

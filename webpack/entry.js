@@ -1,11 +1,11 @@
 const path = require('path');
 const querystring = require('querystring');
 
-const src = path.resolve(process.env.PWD, 'client');
+const src = path.resolve(process.env.PWD, 'src');
 
 const entry = [
   'babel-polyfill',
-  `${src}/scripts/Main.js`,
+  `${src}/scripts/entry.js`,
 ];
 
 if (process.env.NODE_ENV === 'development') {
@@ -13,7 +13,7 @@ if (process.env.NODE_ENV === 'development') {
     path: '/__webpack_hmr',
     timeout: 20000,
     reload: true,
-    noInfo: true,
+    noInfo: false,
   });
 
   entry.push(...[

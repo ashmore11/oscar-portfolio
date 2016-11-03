@@ -1,15 +1,32 @@
-require('dotenv').config();
+require('dotenv').load();
 
-const path = require('path');
 const keystone = require('keystone');
+const serve = require('serve-static');
+const body = require('body-parser');
+const cookieParser = require('cookie-parser');
+const multer = require('multer');
 const webpack = require('webpack');
-const devMiddleware = require('webpack-dev-middleware');
-const hotMiddleware = require('webpack-hot-middleware');
-const React = require('react');
-const ReactDOMServer = require('react-dom/server');
-const Root = require('./client/scripts/entry.js');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
 const config = require('./webpack/config.js');
+const express = require('express');
+
+const app = express();
 const compiler = webpack(config);
+
+app.use(webpackDevMiddleware(compiler, {
+  publicPath: config.output.publicPath,
+  contentBase: config.output.path,
+  historyApiFallback: true,
+  noInfo: true,
+  hot: true,
+}));
+
+app.use(webpackHotMiddleware(compiler));
+app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(body.urlencoded({ extended: true }));
+app.use(body.json());
+app.use(multer());
 
 keystone.init({
   name: 'Oscar Granse',
@@ -21,9 +38,12 @@ keystone.init({
   session: true,
   auth: true,
   'user model': 'User',
+  'cookie secret': process.env.COOKIE_SECRET,
 });
 
 keystone.import('./server/models');
+
+app.use(serve('./dist'));
 
 keystone.set('locals', {
   _: require('underscore'),
@@ -38,39 +58,9 @@ keystone.set('nav', {
   users: 'User',
 });
 
-// if (process.env.NODE_ENV === 'development') {
-//   keystone.pre('routes', devMiddleware(compiler, {
-//     publicPath: config.output.publicPath,
-//     contentBase: config.output.path,
-//     historyApiFallback: true,
-//     noInfo: true,
-//     hot: true,
-//   }));
-
-//   keystone.pre('routes', hotMiddleware(compiler));
-// }
-
-keystone.set('routes', (app) => {
-  app.get('*', (req, res) => {
-    res.sendFile(`${path.resolve(process.env.PWD, 'dist')}/index.html`);
-  });
+app.get('/', (req, res) => {
+  res.send('hello world');
 });
 
-// keystone.start();
-keystone.start({
-  onMount() {
-    const app = keystone.app;
-    const express = require('express');
-
-    app.use(devMiddleware(compiler, {
-      publicPath: config.output.publicPath,
-      contentBase: config.output.path,
-      historyApiFallback: true,
-      noInfo: true,
-      hot: true,
-    }));
-
-    app.use(hotMiddleware(compiler));
-    app.use(express.static(path.resolve(process.env.PWD, 'dist')));
-  },
-});
+keystone.app = app;
+keystone.start();

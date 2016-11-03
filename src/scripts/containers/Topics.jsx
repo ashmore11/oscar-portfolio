@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Match, Link } from 'react-router';
 
-import Topic from './Topic';
+import Topic from 'containers/Topic';
 
 export default function Topics({ pathname }) {
   return (

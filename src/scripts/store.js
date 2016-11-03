@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 
-import count from './reducers/count';
+import count from 'reducers/count';
 
 const reducer = combineReducers({
   count,

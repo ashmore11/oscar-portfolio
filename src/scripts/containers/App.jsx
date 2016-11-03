@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Match, Miss } from 'react-router';
 
-import MainHeader from '../components/MainHeader';
+import MainHeader from 'components/MainHeader';
 
-import Home from './Home';
-import About from './about';
-import Topics from './Topics';
-import NotFound from './NotFound';
+import Home from 'containers/Home';
+import About from 'containers/about';
+import Topics from 'containers/Topics';
+import NotFound from 'containers/NotFound';
 
 import 'styles/main';
 
