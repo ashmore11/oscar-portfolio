@@ -4,13 +4,13 @@
  * technique to insert data into any List you have defined.
  */
 exports.create = {
-	User: [{
+  User: [{
     name: {
       first: 'Admin',
-      last: 'User'
+      last: 'User',
     },
-    email: 'dev.scottashmore@gmail.com', 
-    password: 'admin', 
+    email: 'dev.scottashmore@gmail.com',
+    password: 'admin',
     isAdmin: true,
-  }]
+  }],
 };

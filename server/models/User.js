@@ -1,42 +1,40 @@
-var keystone = require('keystone');
-var types    = keystone.Field.Types;
+const keystone = require('keystone');
+const types = keystone.Field.Types;
 
 /**
  * User Model
  */
-var user = new keystone.List('User');
+const user = new keystone.List('User');
 
 user.add({
-	name: {
-    type: types.Name, 
-    required: true, 
-    index: true
+  name: {
+    type: types.Name,
+    required: true,
+    index: true,
   },
-	email: {
+  email: {
     type: types.Email,
     initial: true,
     required: true,
-    index: true
+    index: true,
   },
-	password: {
+  password: {
     type: types.Password,
     initial: true,
-    required: true
-  }
+    required: true,
+  },
 }, 'Permissions', {
-	isAdmin: {
+  isAdmin: {
     type: Boolean,
     label: 'Can access Keystone',
-    index: true
-  }
-}); 
+    index: true,
+  },
+});
 
 /**
  * Provide access to Keystone
  */
-user.schema.virtual('canAccessKeystone').get(function() {
-	return this.isAdmin;
-});
+user.schema.virtual('canAccessKeystone').get(() => this.isAdmin);
 
 /**
  * Registration
