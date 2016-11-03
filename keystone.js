@@ -1,7 +1,6 @@
 require('dotenv').load();
 
 const keystone = require('keystone');
-const serve = require('serve-static');
 const body = require('body-parser');
 const cookieParser = require('cookie-parser');
 const multer = require('multer');
@@ -10,6 +9,8 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const config = require('./webpack/config.js');
 const express = require('express');
+const compression = require('compression');
+const morgan = require('morgan');
 
 const app = express();
 const compiler = webpack(config);
@@ -43,8 +44,6 @@ keystone.init({
 
 keystone.import('./server/models');
 
-app.use(serve('./dist'));
-
 keystone.set('locals', {
   _: require('underscore'),
   env: keystone.get('env'),
@@ -58,9 +57,28 @@ keystone.set('nav', {
   users: 'User',
 });
 
-app.get('/', (req, res) => {
-  res.send('hello world');
+keystone.initDatabaseConfig();
+keystone.initExpressSession();
+
+app.use(compression());
+app.use('/keystone', keystone.Admin.Server.createStaticRouter(keystone));
+app.use(express.static('./dist'));
+
+app.use(keystone.expressSession);
+app.use(keystone.session.persist);
+app.use(require('connect-flash')());
+
+app.use(morgan('tiny'));
+app.use('/keystone', keystone.Admin.Server.createDynamicRouter(keystone));
+
+app.use((req, res) => {
+  res.redirect('/keystone');
 });
 
-keystone.app = app;
-keystone.start();
+keystone.openDatabaseConnection(() => {
+  const server = app.listen(process.env.PORT || 3002, () => {
+    console.log('-------------------------------');
+    console.log('Express server ready on port %d', server.address().port);
+    console.log('-------------------------------');
+  });
+});
