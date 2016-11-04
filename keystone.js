@@ -1,6 +1,7 @@
 require('babel-register');
 require('dotenv').load();
 
+const path = require('path');
 const keystone = require('keystone');
 const body = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -28,14 +29,14 @@ app.use(webpackDevMiddleware(compiler, {
 app.use(webpackHotMiddleware(compiler));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(body.urlencoded({ extended: true }));
-app.use(express.static('./dist'));
+app.use(express.static(path.resolve(process.env.PWD, 'dist')));
 app.use(body.json());
 app.use(multer());
 
 keystone.init({
   name: 'Oscar Granse',
   brand: 'Oscar Granse',
-  static: './dist',
+  static: 'dist',
   favicon: 'dist/favicon.ico',
   updates: 'server/updates',
   'auto update': true,

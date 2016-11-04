@@ -8,17 +8,17 @@ import App from '../../src/scripts/containers/App';
 import count from '../../src/scripts/reducers/count';
 import posts from '../../src/scripts/reducers/posts';
 
-function renderFullPage(html, preloadedState) {
+function renderFullPage(html, finalState) {
   return `
     <!doctype html>
     <html>
       <head>
-        <title>Redux Universal Example</title>
+        <title>Oscar Portfolio</title>
       </head>
       <body>
         <div id="main">${html}</div>
         <script>
-          window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}
+          window.__PRELOADED_STATE__ = ${JSON.stringify(finalState)}
         </script>
         <script src="/scripts/vendors.js"></script>
         <script src="/scripts/bundle.js"></script>
@@ -41,10 +41,7 @@ module.exports = function handleRender(req, res) {
       posts,
     });
 
-    const store = createStore(
-      reducer,
-      preloadedState
-    );
+    const store = createStore(reducer, preloadedState);
 
     const html = renderToString(
       <Provider store={store}>

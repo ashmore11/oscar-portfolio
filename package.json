@@ -8,7 +8,7 @@
   },
   "main": "keystone.js",
   "scripts": {
-    "start": "nodemon keystone.js --config nodemon.json",
+    "start": "nodemon --config nodemon.json keystone.js",
     "dev": "NODE_ENV=development npm start",
     "prod": "NODE_ENV=production npm run vendors && NODE_ENV=production npm run build",
     "vendors": "NODE_ENV=development webpack --config=webpack/vendors.js",
