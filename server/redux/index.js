@@ -3,7 +3,6 @@ import React from 'react';
 import { createStore, combineReducers } from 'redux';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
-import { ServerRouter, createServerRenderContext } from 'react-router';
 
 import App from '../../src/scripts/containers/App';
 import count from '../../src/scripts/reducers/count';
@@ -17,18 +16,18 @@ function renderFullPage(html, preloadedState) {
         <title>Redux Universal Example</title>
       </head>
       <body>
-        <div id="root">${html}</div>
+        <div id="main">${html}</div>
         <script>
           window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}
         </script>
-        <script src="/static/vendors.js"></script>
-        <script src="/static/bundle.js"></script>
+        <script src="/scripts/vendors.js"></script>
+        <script src="/scripts/bundle.js"></script>
       </body>
     </html>
   `;
 }
 
-exports = module.exports = function handleRender(req, res) {
+module.exports = function handleRender(req, res) {
   const Post = keystone.list('Post');
 
   Post.model.find().exec((err, item) => {
@@ -47,16 +46,9 @@ exports = module.exports = function handleRender(req, res) {
       preloadedState
     );
 
-    const context = createServerRenderContext();
-
     const html = renderToString(
       <Provider store={store}>
-        <ServerRouter
-          location={req.url}
-          context={context}
-        >
-          <App />
-        </ServerRouter>
+        <App />
       </Provider>
     );
 

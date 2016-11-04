@@ -28,10 +28,6 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
 
-    // fetch('api/posts').then(response => response.json()).then(data => {
-    //   console.log(data);
-    // });
-
     this.buttonClicked = ::this.buttonClicked;
   }
 
