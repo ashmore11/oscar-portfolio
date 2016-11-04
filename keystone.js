@@ -44,13 +44,13 @@ keystone.init({
 
 keystone.import('./server/models');
 
-// keystone.set('routes', require('./server/routes'));
+keystone.set('routes', require('./server/routes'));
 
-const importRoutes = keystone.importer(__dirname);
-const api = importRoutes('./server/api');
+// const importRoutes = keystone.importer(__dirname);
+// const api = importRoutes('./server/api');
 
-app.get('/api/post/:slug', keystone.middleware.api, api.posts.getPostById);
-app.get('/api/posts', keystone.middleware.api, api.posts.getAllPosts);
+// app.get('/api/post/:slug', keystone.middleware.api, api.posts.getPostById);
+// app.get('/api/posts', keystone.middleware.api, api.posts.getAllPosts);
 
 keystone.set('locals', {
   _: require('underscore'),
@@ -81,6 +81,6 @@ app.use('/keystone', keystone.Admin.Server.createDynamicRouter(keystone));
 
 keystone.openDatabaseConnection(() => {
   const server = app.listen(process.env.PORT || 3002, () => {
-    console.log('Express server ready on port %d', server.address().port);
+    console.log(`\n\n Express server ready on port ${server.address().port} \n`);
   });
 });
