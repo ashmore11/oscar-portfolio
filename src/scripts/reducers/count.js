@@ -1,8 +1,6 @@
-import { INCREMENT, DECREMENT } from 'app/constants';
+import { INCREMENT, DECREMENT } from '../constants';
 
-const initialState = 0;
-
-const count = (state = initialState, action) => {
+const count = (state = 0, action) => {
   switch (action.type) {
     case INCREMENT:
       return state + 1;

@@ -3,12 +3,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import store from 'app/store';
+import store from './store';
 
-import App from 'containers/App';
+import App from './containers/App';
 
 export default class Main {
   constructor(rootElement) {
+    window.store = store;
     ReactDOM.render(
       <AppContainer>
         <Provider store={store} key="provider">

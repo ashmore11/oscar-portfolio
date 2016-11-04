@@ -16,17 +16,6 @@ const plugins = [
       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
     },
   }),
-  new HtmlWebpackPlugin({
-    template: `${PATHS.src}/index.html`,
-    hash: true,
-  }),
-  new AddAssetHtmlPlugin({
-    filepath: `${PATHS.dist}/scripts/vendors.js`,
-    outputPath: 'scripts',
-    includeSourcemap: false,
-    publicPath: '/scripts/',
-    hash: true,
-  }),
   new webpack.DllReferencePlugin({
     context: PATHS.src,
     manifest: require(`${PATHS.dist}/scripts/vendors.manifest.json`),
