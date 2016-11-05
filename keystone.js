@@ -1,4 +1,5 @@
 require('babel-register');
+require('babel-polyfill');
 require('dotenv').load();
 
 const path = require('path');
@@ -44,6 +45,7 @@ keystone.init({
   auth: true,
   'user model': 'User',
   'cookie secret': process.env.COOKIE_SECRET,
+  'admin path': 'admin',
 });
 
 keystone.import('./server/models');
@@ -65,14 +67,14 @@ keystone.initDatabaseConfig();
 keystone.initExpressSession();
 
 app.use(compression());
-app.use('/keystone', keystone.Admin.Server.createStaticRouter(keystone));
+app.use('/admin', keystone.Admin.Server.createStaticRouter(keystone));
 
 app.use(keystone.expressSession);
 app.use(keystone.session.persist);
 app.use(require('connect-flash')());
 
 app.use(morgan('tiny'));
-app.use('/keystone', keystone.Admin.Server.createDynamicRouter(keystone));
+app.use('/admin', keystone.Admin.Server.createDynamicRouter(keystone));
 
 app.use(handleRender);
 

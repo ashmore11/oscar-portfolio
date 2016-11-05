@@ -3,9 +3,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import store from './store';
+import store from 'app/store';
 
-import App from './containers/App';
+import App from 'containers/App';
 
 export default class Main {
   constructor(rootElement) {

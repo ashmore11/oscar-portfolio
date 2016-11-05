@@ -39,6 +39,7 @@
     "babel-loader": "^6.2.5",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
+    "babel-plugin-transform-regenerator": "^6.16.1",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-react": "^6.11.1",
     "babel-preset-react-hmre": "^1.1.1",
@@ -89,7 +90,8 @@
     "plugins": [
       "react-hot-loader/babel",
       "transform-object-rest-spread",
-      "transform-decorators-legacy"
+      "transform-decorators-legacy",
+      "transform-regenerator"
     ]
   },
   "eslintConfig": {

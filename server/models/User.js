@@ -34,7 +34,9 @@ user.add({
 /**
  * Provide access to Keystone
  */
-user.schema.virtual('canAccessKeystone').get(() => this.isAdmin);
+user.schema.virtual('canAccessKeystone').get(function () { // eslint-disable-line func-names
+  return this.isAdmin;
+});
 
 /**
  * Registration

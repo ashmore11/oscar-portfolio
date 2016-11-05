@@ -1,14 +1,11 @@
 import keystone from 'keystone';
-import React from 'react';
 import { createStore, combineReducers } from 'redux';
-import { renderToString } from 'react-dom/server';
-import { Provider } from 'react-redux';
 
-import App from '../../src/scripts/containers/App';
 import count from '../../src/scripts/reducers/count';
 import posts from '../../src/scripts/reducers/posts';
+import tags from '../../src/scripts/reducers/tags';
 
-function renderFullPage(html, finalState) {
+function renderFullPage(preloadedState) {
   return `
     <!doctype html>
     <html>
@@ -16,9 +13,9 @@ function renderFullPage(html, finalState) {
         <title>Oscar Portfolio</title>
       </head>
       <body>
-        <div id="main">${html}</div>
+        <div id="main"></div>
         <script>
-          window.__PRELOADED_STATE__ = ${JSON.stringify(finalState)}
+          window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}
         </script>
         <script src="/scripts/vendors.js"></script>
         <script src="/scripts/bundle.js"></script>
@@ -27,30 +24,24 @@ function renderFullPage(html, finalState) {
   `;
 }
 
-module.exports = function handleRender(req, res) {
+module.exports = async function handleRender(req, res) {
   const Post = keystone.list('Post');
+  const Tags = keystone.list('Tags');
 
-  Post.model.find().exec((err, item) => {
-    const preloadedState = {
-      count: 10,
-      posts: item,
-    };
-
-    const reducer = combineReducers({
-      count,
-      posts,
-    });
-
-    const store = createStore(reducer, preloadedState);
-
-    const html = renderToString(
-      <Provider store={store}>
-        <App />
-      </Provider>
-    );
-
-    const finalState = store.getState();
-
-    res.send(renderFullPage(html, finalState));
+  const reducer = combineReducers({
+    count,
+    posts,
+    tags,
   });
+
+  const initialState = {
+    count: 10,
+    posts: await Post.model.find().exec(),
+    tags: await Tags.model.find().exec(),
+  };
+
+  const store = createStore(reducer, initialState);
+  const preloadedState = store.getState();
+
+  res.send(renderFullPage(preloadedState));
 };

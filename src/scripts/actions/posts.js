@@ -1,5 +1,5 @@
-import { GET_POST_BY_ID } from '../constants';
+import { GET_POST_BY_ID } from 'app/constants';
 
-export function increment() {
+export function getPostById() {
   return { type: GET_POST_BY_ID };
 }
