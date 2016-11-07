@@ -1,7 +1,6 @@
 import keystone from 'keystone';
 import { createStore, combineReducers } from 'redux';
 
-import count from '../../src/scripts/reducers/count';
 import posts from '../../src/scripts/reducers/posts';
 import tags from '../../src/scripts/reducers/tags';
 
@@ -29,13 +28,11 @@ module.exports = async function handleRender(req, res) {
   const Tags = keystone.list('Tags');
 
   const reducer = combineReducers({
-    count,
     posts,
     tags,
   });
 
   const initialState = {
-    count: 10,
     posts: await Post.model.find().exec(),
     tags: await Tags.model.find().exec(),
   };
