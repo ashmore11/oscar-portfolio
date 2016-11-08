@@ -14,7 +14,7 @@ const mapStateToProps = (state) => ({
 function Home({ posts, tags }) {
   return (
     <div className="Home">
-      <Match pattern={'/work/:postId'} component={Post} />
+      <Match pattern={'/:postId'} component={Post} />
 
       <Tags tags={tags} />
       <PostList posts={posts} />
