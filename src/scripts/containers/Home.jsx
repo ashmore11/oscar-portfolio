@@ -1,43 +1,30 @@
-import React, { PropTypes, Component } from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Match } from 'react-router';
+
+import Tags from 'components/Tags';
+import PostList from 'components/PostList';
+import Post from 'components/Post';
 
 const mapStateToProps = (state) => ({
   posts: state.posts,
   tags: state.tags,
 });
 
-@connect(mapStateToProps)
+function Home({ posts, tags }) {
+  return (
+    <div className="Home">
+      <Match pattern={'/work/:postId'} component={Post} />
 
-export default class Home extends Component {
-  static propTypes = {
-    posts: PropTypes.array.isRequired,
-    tags: PropTypes.array.isRequired,
-  };
-
-  constructor(props) {
-    super(props);
-
-    this.tagClicked = ::this.tagClicked;
-  }
-
-  tagClicked(event) {
-    console.log(event);
-  }
-
-  render() {
-    const { posts, tags } = this.props;
-    return (
-      <div className="Home">
-        <h2>Home</h2>
-        <h3>TAGS</h3>
-        <ul>{tags.map(tag => (
-          <li key={tag._id} onClick={this.tagClicked}>{tag.tag}</li>
-        ))}</ul>
-        <h3>POSTS</h3>
-        <ul>{posts.map(post => (
-          <li key={post._id}>{post.title}</li>
-        ))}</ul>
-      </div>
-    );
-  }
+      <Tags tags={tags} />
+      <PostList posts={posts} />
+    </div>
+  );
 }
+
+Home.propTypes = {
+  posts: PropTypes.array.isRequired,
+  tags: PropTypes.array.isRequired,
+};
+
+export default connect(mapStateToProps)(Home);

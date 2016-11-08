@@ -33,7 +33,7 @@ module.exports = async function handleRender(req, res) {
   });
 
   const initialState = {
-    posts: await Post.model.find().exec(),
+    posts: await Post.model.find({ state: 'published' }).exec(),
     tags: await Tags.model.find().exec(),
   };
 
