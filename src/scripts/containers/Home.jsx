@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Match, Redirect } from 'react-router';
 
-import Tags from 'components/Tags';
+import TagList from 'components/TagList';
 import PostList from 'components/PostList';
 import Post from 'components/Post';
 
@@ -16,14 +16,14 @@ function Home({ posts, tags }) {
     <div className="Home">
       <Match pattern="/:postId" render={(matchProps) => {
         const post = posts.find(p => p.slug === matchProps.params.postId);
-        if (post) {
-          return <Post post={post} />;
+        if (!post) {
+          return <Redirect to="/" />;
         }
-        return <Redirect to="/" />;
+        return <Post post={post} />;
       }}
       />
 
-      <Tags tags={tags} />
+      <TagList tags={tags} />
       <PostList posts={posts} />
     </div>
   );

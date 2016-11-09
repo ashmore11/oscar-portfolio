@@ -1,22 +1,20 @@
-import React, { PropTypes, Component } from 'react';
+import React, { PropTypes } from 'react';
 
-export default class Post extends Component {
-  static propTypes = {
-    post: PropTypes.object.isRequired,
-  };
-
-  constructor(props) {
-    super(props);
-
-    console.log(this.props);
-  }
-
-  render() {
-    const { post } = this.props;
-    return (
-      <div className="Post">
-        <img src={post.image.url} alt="" />
+export default function Post({ post }) {
+  return (
+    <div className="Post">
+      <div className="Post-video">
+        <iframe src={post.video} frameBorder="0" allowFullScreen />
       </div>
-    );
-  }
+      <div className="Post-info">
+        <h1>{post.title}</h1>
+        <p dangerouslySetInnerHTML={{ __html: post.description }} />
+        <p dangerouslySetInnerHTML={{ __html: post.extraBits }} />
+      </div>
+    </div>
+  );
 }
+
+Post.propTypes = {
+  post: PropTypes.object.isRequired,
+};
