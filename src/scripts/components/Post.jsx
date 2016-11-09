@@ -1,11 +1,4 @@
 import React, { PropTypes, Component } from 'react';
-import { connect } from 'react-redux';
-
-const mapStateToProps = (state, props) => ({
-  post: state.posts.find(post => post.slug === props.params.postId),
-});
-
-@connect(mapStateToProps)
 
 export default class Post extends Component {
   static propTypes = {
@@ -15,14 +8,14 @@ export default class Post extends Component {
   constructor(props) {
     super(props);
 
-    console.log(this.props.post);
+    console.log(this.props);
   }
 
   render() {
     const { post } = this.props;
     return (
       <div className="Post">
-        <h2>Post: {post.title}</h2>
+        <img src={post.image.url} alt="" />
       </div>
     );
   }

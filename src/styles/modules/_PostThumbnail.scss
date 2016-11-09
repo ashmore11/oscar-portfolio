@@ -1,0 +1,30 @@
+.PostThumbnail {
+  position: relative;
+  width: 115px;
+  height: 115px;
+
+  &.is-active {
+    .PostThumbnail--static {
+      opacity: 0;
+    }
+    .PostThumbnail--animated {
+      opacity: 1;
+    }
+  }
+}
+
+.PostThumbnail img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.PostThumbnail--static {
+  opacity: 1;
+}
+
+.PostThumbnail--animated {
+  opacity: 0;
+}

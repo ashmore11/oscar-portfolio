@@ -1,18 +1,25 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
-export default function Posts({ posts }) {
+import PostThumbnail from 'components/PostThumbnail';
+
+export default function PostList({ posts }) {
   return (
-    <div className="Posts">
-      <ul>{posts.map(({ _id, slug, title }) => (
-        <li key={_id} className="Post">
-          <Link to={`/${slug}`}>{title}</Link>
+    <ul className="PostList">
+      {posts.map(({ _id, slug, image, animatedGif }) => (
+        <li key={_id} className="PostList-item">
+          <Link to={`/${slug}`}>
+            <PostThumbnail
+              staticImage={image.url}
+              animatedImage={animatedGif.url}
+            />
+          </Link>
         </li>
-      ))}</ul>
-    </div>
+      ))}
+    </ul>
   );
 }
 
-Posts.propTypes = {
+PostList.propTypes = {
   posts: PropTypes.array.isRequired,
 };

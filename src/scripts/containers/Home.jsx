@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Match } from 'react-router';
+import { Match, Redirect } from 'react-router';
 
 import Tags from 'components/Tags';
 import PostList from 'components/PostList';
@@ -14,7 +14,14 @@ const mapStateToProps = (state) => ({
 function Home({ posts, tags }) {
   return (
     <div className="Home">
-      <Match pattern={'/:postId'} component={Post} />
+      <Match pattern="/:postId" render={(matchProps) => {
+        const post = posts.find(p => p.slug === matchProps.params.postId);
+        if (post) {
+          return <Post post={post} />;
+        }
+        return <Redirect to="/" />;
+      }}
+      />
 
       <Tags tags={tags} />
       <PostList posts={posts} />
