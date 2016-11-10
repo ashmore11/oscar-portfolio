@@ -3,12 +3,14 @@ import thunk from 'redux-thunk';
 
 import posts from 'reducers/posts';
 import tags from 'reducers/tags';
+import navigation from 'reducers/navigation';
 
 const preloadedState = window.__PRELOADED_STATE__;
 
 const reducer = combineReducers({
   posts,
   tags,
+  navigation,
 });
 
 const store = createStore(

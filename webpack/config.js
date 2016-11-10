@@ -9,7 +9,7 @@ const resolve = require('./resolve');
 
 const DEV = process.env.NODE_ENV === 'development';
 const PATHS = {
-  src: path.resolve(process.env.PWD, 'src'),
+  src: path.resolve(process.env.PWD, 'client'),
   dist: path.resolve(process.env.PWD, 'dist'),
 };
 

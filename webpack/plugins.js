@@ -1,11 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 
 const PATHS = {
-  src: path.resolve(process.env.PWD, 'src'),
+  src: path.resolve(process.env.PWD, 'client'),
   dist: path.resolve(process.env.PWD, 'dist'),
 };
 

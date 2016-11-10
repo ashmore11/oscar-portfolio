@@ -24,7 +24,7 @@ function Home({ posts, tags }) {
       />
 
       <TagList tags={tags} />
-      <PostList posts={posts} />
+      <PostList />
     </div>
   );
 }

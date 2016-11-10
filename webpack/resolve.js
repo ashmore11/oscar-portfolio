@@ -1,6 +1,6 @@
 const path = require('path');
 
-const src = path.resolve(process.env.PWD, 'src');
+const src = path.resolve(process.env.PWD, 'client');
 
 const resolve = {
   extensions: [

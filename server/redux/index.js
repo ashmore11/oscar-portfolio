@@ -1,8 +1,9 @@
 import keystone from 'keystone';
 import { createStore, combineReducers } from 'redux';
 
-import posts from '../../src/scripts/reducers/posts';
-import tags from '../../src/scripts/reducers/tags';
+import posts from '../../client/scripts/reducers/posts';
+import tags from '../../client/scripts/reducers/tags';
+import navigation from '../../client/scripts/reducers/navigation';
 
 function renderFullPage(preloadedState) {
   return `
@@ -30,6 +31,7 @@ module.exports = async function handleRender(req, res) {
   const reducer = combineReducers({
     posts,
     tags,
+    navigation,
   });
 
   const initialState = {
