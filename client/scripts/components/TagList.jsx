@@ -8,7 +8,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onSetActiveTag: (tag) => {
+  onSetActiveTag(tag) {
     dispatch(setActiveTag(tag));
   },
 });
