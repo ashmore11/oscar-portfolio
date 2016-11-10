@@ -1,8 +1,11 @@
-const keystone = require('keystone');
+import keystone from 'keystone';
+
 const types = keystone.Field.Types;
 
 const post = new keystone.List('Post', {
-  map: { name: 'title' },
+  map: {
+    name: 'title',
+  },
   autokey: {
     path: 'slug',
     from: 'title',

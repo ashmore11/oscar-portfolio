@@ -1,4 +1,4 @@
-const keystone = require('keystone');
+import keystone from 'keystone';
 
 const tags = new keystone.List('Tags', {
   map: {
