@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":NumberInt(1),"key":{"_id":NumberInt(1)},"name":"_id_","ns":"node-web-app.images"},{"v":NumberInt(1),"unique":true,"key":{"slug":NumberInt(1)},"name":"slug_1","ns":"node-web-app.images","background":true,"safe":null}]}
