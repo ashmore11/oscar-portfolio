@@ -19,6 +19,9 @@ const handleRender = require('./server/redux');
 const app = express();
 const compiler = webpack(config);
 
+app.set('view engine', 'ejs');
+app.set('views', path.resolve(process.env.PWD, 'client/templates'));
+
 app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath,
   contentBase: config.output.path,

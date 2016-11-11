@@ -19,6 +19,7 @@
   "dependencies": {
     "babel-polyfill": "^6.13.0",
     "dotenv": "^1.1.0",
+    "ejs-locals": "^1.0.2",
     "gsap": "^1.18.0",
     "jade": "^1.11.0",
     "keystone": "git://github.com/keystonejs/keystone.git#master",
