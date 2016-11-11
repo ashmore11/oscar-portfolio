@@ -1,4 +1,4 @@
-import { GET_TAG_BY_SLUG } from 'app/constants';
+import { GET_TAG_BY_SLUG } from '../constants';
 
 export function getTagBySlug() {
   return { type: GET_TAG_BY_SLUG };

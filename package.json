@@ -8,7 +8,7 @@
   },
   "main": "keystone.js",
   "scripts": {
-    "start": "nodemon --config nodemon.json keystone.js",
+    "start": "nodemon --config nodemon.json --exec babel-node keystone.js",
     "dev": "NODE_ENV=development npm start",
     "prod": "NODE_ENV=production npm run vendors && NODE_ENV=production npm run build",
     "vendors": "NODE_ENV=development webpack --config=webpack/vendors.js",
@@ -27,7 +27,7 @@
     "react-document-meta": "^2.0.3",
     "react-dom": "^15.3.1",
     "react-redux": "^4.4.5",
-    "react-router": "^4.0.0-alpha.3",
+    "react-router": "^3.0.0",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
     "underscore": "^1.8.3"

@@ -1,4 +1,4 @@
-import { SET_ACTIVE_TAG } from 'app/constants';
+import { SET_ACTIVE_TAG } from '../constants';
 
 export function setActiveTag(tag) {
   return {

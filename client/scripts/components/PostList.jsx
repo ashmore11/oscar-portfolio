@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 
-import PostThumbnail from 'components/PostThumbnail';
+import PostThumbnail from './PostThumbnail';
 
 function PostList({ posts }) {
   return (

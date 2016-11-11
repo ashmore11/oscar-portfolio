@@ -1,20 +1,33 @@
-require('babel-register');
-require('babel-polyfill');
-require('dotenv').load();
+import 'babel-register';
 
-const path = require('path');
-const keystone = require('keystone');
-const body = require('body-parser');
-const cookieParser = require('cookie-parser');
-const multer = require('multer');
-const webpack = require('webpack');
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
-const config = require('./webpack/config.js');
-const express = require('express');
-const compression = require('compression');
-const morgan = require('morgan');
-const handleRender = require('./server/redux');
+import _ from './env.js';
+
+import path from 'path';
+import keystone from 'keystone';
+import body from 'body-parser';
+import cookieParser from 'cookie-parser';
+import multer from 'multer';
+import webpack from 'webpack';
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
+import config from './webpack/config.js';
+import express from 'express';
+import compression from 'compression';
+import morgan from 'morgan';
+// import handleRender from './server/redux';
+
+import React from 'react';
+import { renderToString } from 'react-dom/server';
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
+import thunkMiddleware from 'redux-thunk';
+import { Provider } from 'react-redux';
+import { createMemoryHistory, match, RouterContext } from 'react-router';
+import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
+
+import posts from './client/scripts/reducers/posts';
+import tags from './client/scripts/reducers/tags';
+import navigation from './client/scripts/reducers/navigation';
+import routes from './client/scripts/routes';
 
 const app = express();
 const compiler = webpack(config);
@@ -82,7 +95,88 @@ app.use(require('connect-flash')());
 app.use(morgan('tiny'));
 app.use('/admin', keystone.Admin.Server.createDynamicRouter(keystone));
 
-app.use(handleRender);
+function configureStore(memoryHistory, initialState = {}) {
+  const reducer = combineReducers({
+    posts,
+    tags,
+    navigation,
+    routing: routerReducer,
+  });
+
+  const store = createStore(
+    reducer,
+    initialState,
+    compose(
+      applyMiddleware(thunkMiddleware, routerMiddleware(memoryHistory))
+    )
+  );
+  return store;
+}
+
+async function fetchData() {
+  const Post = keystone.list('Post');
+  const Tags = keystone.list('Tags');
+
+  return {
+    posts: await Post.model.find({ state: 'published' }).exec(),
+    tags: await Tags.model.find().exec(),
+  };
+}
+
+const Html = ({ content, store }) => (
+  <html>
+    <head>
+      <title>Oscar Portfolio</title>
+    </head>
+    <body>
+      <div id="root"
+        dangerouslySetInnerHTML={
+          { __html: content }
+        }
+      />
+      <script
+        dangerouslySetInnerHTML={
+          { __html: `window.__initialState__=${JSON.stringify(store.getState())};` }
+        }
+      />
+      <script src="/scripts/vendors.js"></script>
+      <script src="/scripts/bundle.js"></script>
+    </body>
+  </html>
+);
+
+app.use((req, res) => {
+  const memoryHistory = createMemoryHistory(req.path);
+  let store = configureStore(memoryHistory);
+  const history = syncHistoryWithStore(memoryHistory, store);
+
+  match(
+    { history, routes, location: req.url },
+    (error, redirectLocation, renderProps) => {
+      if (error) {
+        res.status(500).send(error.message);
+      } else if (redirectLocation) {
+        res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+      } else if (renderProps) {
+        fetchData().then((data) => {
+          store = configureStore(memoryHistory, data);
+          const content = renderToString(
+            <Provider store={store}>
+              <RouterContext {...renderProps} />
+            </Provider>
+          );
+
+          res.send(`
+            <!doctype html>
+            ${renderToString(<Html content={content} store={store} />)}
+          `);
+        });
+      }
+    }
+  );
+});
+
+// app.use(handleRender);
 
 keystone.openDatabaseConnection(() => {
   const server = app.listen(process.env.PORT || 3002, () => {

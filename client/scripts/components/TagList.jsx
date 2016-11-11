@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 
-import { setActiveTag } from 'actions/navigation';
+import { setActiveTag } from '../actions/navigation';
 
 const mapStateToProps = (state) => ({
   activeTag: state.navigation.activeTag,
