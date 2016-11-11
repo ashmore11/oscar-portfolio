@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 
-export default function Post({ post }) {
+function Post({ post }) {
   return (
     <div className="Post">
       <div className="Post-video">
@@ -18,3 +19,9 @@ export default function Post({ post }) {
 Post.propTypes = {
   post: PropTypes.object.isRequired,
 };
+
+const mapStateToProps = (state, props) => ({
+  post: state.posts.find(post => post.slug === props.params.postId),
+});
+
+export default connect(mapStateToProps)(Post);

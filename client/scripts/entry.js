@@ -4,8 +4,8 @@ import { AppContainer } from 'react-hot-loader';
 import { Router, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
-import thunk from 'redux-thunk';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
+import thunk from 'redux-thunk';
 
 import routes from './routes';
 import posts from './reducers/posts';
@@ -33,7 +33,7 @@ const history = syncHistoryWithStore(browserHistory, store);
 
 render(
   <AppContainer>
-    <Provider store={store}>
+    <Provider store={store} key="provider">
       <Router history={history} routes={routes} />
     </Provider>
   </AppContainer>,
@@ -45,7 +45,7 @@ if (module.hot) {
     const NextRouter = require('./routes').default;
     render(
       <AppContainer>
-        <Provider store={store}>
+        <Provider store={store} key="provider">
           <NextRouter history={history} routes={routes} />
         </Provider>
       </AppContainer>,
