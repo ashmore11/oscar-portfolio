@@ -12,7 +12,7 @@ import config from './webpack/config.js';
 import express from 'express';
 import compression from 'compression';
 import morgan from 'morgan';
-import handleRender from './server/handleRender';
+import handleRender from './src/scripts/handleRender';
 
 const app = express();
 const compiler = webpack(config);
@@ -39,7 +39,7 @@ keystone.init({
   static: 'dist',
   favicon: 'dist/favicon.ico',
 
-  updates: 'server/updates',
+  updates: 'src/scripts/updates',
   'auto update': true,
   mongo: process.env.MONGO_URI || 'mongodb://localhost/27017',
   session: true,
@@ -49,7 +49,7 @@ keystone.init({
   'admin path': 'admin',
 });
 
-keystone.import('./server/models');
+keystone.import('./src/scripts/models');
 
 keystone.set('locals', {
   _: require('underscore'),

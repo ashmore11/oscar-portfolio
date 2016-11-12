@@ -3,33 +3,18 @@ import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Router, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
-import thunk from 'redux-thunk';
+import { syncHistoryWithStore } from 'react-router-redux';
 
+import getStore from './store';
 import routes from './routes';
-import posts from './reducers/posts';
-import tags from './reducers/tags';
-import navigation from './reducers/navigation';
 
 import '../styles/main';
 
-const reducer = combineReducers({
-  posts,
-  tags,
-  navigation,
-  routing: routerReducer,
-});
-
 const initialState = window.__initialState__;
-
-const store = createStore(
-  reducer,
-  initialState,
-  applyMiddleware(thunk)
-);
-
+const store = getStore(initialState, browserHistory);
 const history = syncHistoryWithStore(browserHistory, store);
+
+window.store = store;
 
 render(
   <AppContainer>

@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 
 const PATHS = {
-  src: path.resolve(process.env.PWD, 'client'),
+  src: path.resolve(process.env.PWD, 'src'),
   dist: path.resolve(process.env.PWD, 'dist'),
 };
 
@@ -12,6 +12,7 @@ const plugins = [
   new webpack.DefinePlugin({
     'process.env': {
       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+      CLIENT: true,
     },
   }),
   new webpack.DllReferencePlugin({

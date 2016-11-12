@@ -2,7 +2,7 @@
   "ignore": [
     "node_modules",
     "dist",
-    "src",
-    "webpack"
+    "webpack",
+    "dump"
   ]
 }

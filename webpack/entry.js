@@ -1,11 +1,11 @@
 const path = require('path');
 const querystring = require('querystring');
 
-const src = path.resolve(process.env.PWD, 'client');
+const src = path.resolve(process.env.PWD, 'src');
 
 const entry = [
   'babel-polyfill',
-  `${src}/scripts/entry.js`,
+  `${src}/scripts/client.js`,
 ];
 
 if (process.env.NODE_ENV === 'development') {
