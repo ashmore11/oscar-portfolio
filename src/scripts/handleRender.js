@@ -8,7 +8,6 @@ import { syncHistoryWithStore } from 'react-router-redux';
 
 import getStore from './store';
 import routes from './routes';
-
 import Html from './components/Html';
 
 export default async function handleRender(req, res) {

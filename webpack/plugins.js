@@ -1,6 +1,6 @@
-const path = require('path');
-const webpack = require('webpack');
-const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+import path from 'path';
+import webpack from 'webpack';
+import ProgressBarPlugin from 'progress-bar-webpack-plugin';
 
 const PATHS = {
   src: path.resolve(process.env.PWD, 'src'),
@@ -38,4 +38,4 @@ if (process.env.NODE_ENV === 'production') {
   ]);
 }
 
-module.exports = plugins;
+export default plugins;

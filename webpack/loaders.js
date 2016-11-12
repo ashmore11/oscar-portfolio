@@ -1,4 +1,4 @@
-const path = require('path');
+import path from 'path';
 
 const PATHS = {
   src: path.resolve(process.env.PWD, 'src'),
@@ -40,4 +40,4 @@ const loaders = [{
   query: { name: 'fonts/[name].[ext]' },
 }];
 
-module.exports = loaders;
+export default loaders;

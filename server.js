@@ -8,10 +8,11 @@ import multer from 'multer';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import config from './webpack/config.js';
 import express from 'express';
 import compression from 'compression';
 import morgan from 'morgan';
+
+import config from './webpack/config.js';
 import handleRender from './src/scripts/handleRender';
 
 const app = express();

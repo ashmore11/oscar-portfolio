@@ -6,9 +6,9 @@
     "node": ">=6.6.0",
     "npm": ">=3.10.0"
   },
-  "main": "keystone.js",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon --config nodemon.json --exec babel-node keystone.js",
+    "start": "nodemon --config nodemon.json --exec babel-node server.js",
     "dev": "NODE_ENV=development npm start",
     "prod": "NODE_ENV=production npm run vendors && NODE_ENV=production npm run build",
     "vendors": "NODE_ENV=development webpack --config=webpack/vendors.js",

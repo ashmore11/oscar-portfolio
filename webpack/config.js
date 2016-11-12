@@ -1,11 +1,11 @@
-const path = require('path');
-const autoprefixer = require('autoprefixer');
-const validate = require('webpack-validator');
-const browsers = require('../package.json').config.browsers;
-const entry = require('./entry');
-const loaders = require('./loaders');
-const plugins = require('./plugins');
-const resolve = require('./resolve');
+import path from 'path';
+import autoprefixer from 'autoprefixer';
+import validate from 'webpack-validator';
+import pkg from '../package.json';
+import entry from './entry';
+import loaders from './loaders';
+import plugins from './plugins';
+import resolve from './resolve';
 
 const DEV = process.env.NODE_ENV === 'development';
 const PATHS = {
@@ -25,8 +25,10 @@ const config = {
   },
   plugins,
   module: { loaders },
-  postcss: { defaults: [autoprefixer({ browsers })] },
+  postcss: {
+    defaults: [autoprefixer({ browsers: pkg.config.browsers })],
+  },
   resolve,
 };
 
-module.exports = validate(config);
+export default validate(config);

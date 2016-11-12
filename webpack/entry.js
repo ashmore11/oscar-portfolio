@@ -1,12 +1,8 @@
-const path = require('path');
-const querystring = require('querystring');
+import path from 'path';
+import querystring from 'querystring';
 
 const src = path.resolve(process.env.PWD, 'src');
-
-const entry = [
-  'babel-polyfill',
-  `${src}/scripts/client.js`,
-];
+const entry = [];
 
 if (process.env.NODE_ENV === 'development') {
   const hotQuery = querystring.stringify({
@@ -22,4 +18,9 @@ if (process.env.NODE_ENV === 'development') {
   ]);
 }
 
-module.exports = entry;
+entry.push(...[
+  'babel-polyfill',
+  `${src}/scripts/client.js`,
+]);
+
+export default entry;

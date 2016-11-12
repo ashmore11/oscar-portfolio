@@ -1,5 +1,5 @@
-const path = require('path');
-const webpack = require('webpack');
+import path from 'path';
+import webpack from 'webpack';
 
 const DEV = process.env.NODE_ENV === 'development';
 
@@ -40,4 +40,4 @@ if (process.env.NODE_ENV === 'production') {
   ]);
 }
 
-module.exports = config;
+export default config;

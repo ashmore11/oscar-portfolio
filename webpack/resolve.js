@@ -1,4 +1,4 @@
-const path = require('path');
+import path from 'path';
 
 const src = path.resolve(process.env.PWD, 'src');
 
@@ -23,4 +23,4 @@ const resolve = {
   },
 };
 
-module.exports = resolve;
+export default resolve;
