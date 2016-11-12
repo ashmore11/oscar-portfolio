@@ -13,7 +13,7 @@ import compression from 'compression';
 import morgan from 'morgan';
 
 import config from './webpack/config.js';
-import handleRender from './src/scripts/handleRender';
+import handleRender from './src/scripts/server/handleRender';
 
 const app = express();
 const compiler = webpack(config);

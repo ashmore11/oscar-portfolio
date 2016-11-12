@@ -6,9 +6,9 @@ import { Provider } from 'react-redux';
 import { createMemoryHistory, match, RouterContext } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 
-import getStore from './store';
-import routes from './routes';
-import Html from './components/Html';
+import getStore from '../store';
+import routes from '../routes';
+import Html from '../components/Html';
 
 export default async function handleRender(req, res) {
   const Post = keystone.list('Post');

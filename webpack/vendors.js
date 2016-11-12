@@ -15,6 +15,7 @@ const config = {
       'react-router',
       'redux',
       'redux-thunk',
+      'react-router-redux',
     ],
   },
   output: {
