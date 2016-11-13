@@ -5,6 +5,10 @@ const PATHS = {
   src: path.resolve(process.env.PWD, 'src'),
   dist: path.resolve(process.env.PWD, 'dist'),
 };
+const ENV = {
+  dev: process.env.NODE_ENV === 'development',
+  prod: process.env.NODE_ENV === 'production',
+};
 
 const loaders = [{
   test: /\.jsx?$/,
@@ -18,7 +22,7 @@ const loaders = [{
       'stage-0',
     ],
     plugins: [
-      'react-hot-loader/babel',
+      ENV.dev ? 'react-hot-loader/babel' : '',
       'transform-object-rest-spread',
       'transform-decorators-legacy',
     ],
@@ -37,7 +41,7 @@ const loaders = [{
   query: { name: 'fonts/[name].[ext]' },
 }];
 
-if (process.env.NODE_ENV === 'development') {
+if (ENV.dev) {
   loaders.push(...[{
     test: /\.scss$/,
     loaders: ['style', 'css?sourceMap', 'postcss', 'sass?sourceMap', 'import-glob'],
@@ -45,7 +49,7 @@ if (process.env.NODE_ENV === 'development') {
   }]);
 }
 
-if (process.env.NODE_ENV === 'production') {
+if (ENV.prod) {
   loaders.push(...[{
     test: /\.scss$/,
     loader: ExtractTextPlugin.extract('style', ['css', 'postcss', 'sass', 'import-glob']),

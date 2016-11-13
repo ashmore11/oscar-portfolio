@@ -1,12 +1,15 @@
 import path from 'path';
 import webpack from 'webpack';
 
-const DEV = process.env.NODE_ENV === 'development';
+const ENV = {
+  dev: process.env.NODE_ENV === 'development',
+  prod: process.env.NODE_ENV === 'production',
+};
 
 const config = {
-  debug: DEV,
+  debug: ENV.dev,
   cache: true,
-  devtool: DEV ? 'cheap-module-eval-source-map' : 'cheap-module-source-map',
+  devtool: ENV.dev ? 'cheap-module-eval-source-map' : 'cheap-module-source-map',
   entry: {
     vendors: [
       'react',
@@ -32,7 +35,7 @@ const config = {
   ],
 };
 
-if (process.env.NODE_ENV === 'production') {
+if (ENV.prod) {
   config.plugins.push(...[
     new webpack.optimize.UglifyJsPlugin({
       comments: false,
