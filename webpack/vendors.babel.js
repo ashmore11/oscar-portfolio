@@ -20,6 +20,7 @@ const config = {
       'react-dom',
       'react-redux',
       'react-router',
+      'react-helmet',
       'redux',
       'redux-thunk',
       'react-router-redux',

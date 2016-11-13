@@ -14,8 +14,6 @@ const initialState = window.__initialState__;
 const store = getStore(initialState, browserHistory);
 const history = syncHistoryWithStore(browserHistory, store);
 
-window.store = store;
-
 render(
   <AppContainer>
     <Provider store={store} key="provider">

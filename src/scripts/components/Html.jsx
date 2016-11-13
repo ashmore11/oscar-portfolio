@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-export default function Html({ content, store }) {
+export default function Html({ head, content, store }) {
   const ENV = {
     dev: process.env.NODE_ENV === 'development',
     prod: process.env.NODE_ENV === 'production',
@@ -13,7 +13,7 @@ export default function Html({ content, store }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Oscar Portfolio</title>
+        <title>{head.title.toComponent()}</title>
         {ENV.prod ? styles : null}
       </head>
       <body>
@@ -31,6 +31,7 @@ export default function Html({ content, store }) {
 }
 
 Html.propTypes = {
+  head: PropTypes.object,
   content: PropTypes.string.isRequired,
   store: PropTypes.object.isRequired,
 };

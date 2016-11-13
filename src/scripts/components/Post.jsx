@@ -1,9 +1,11 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
 
 function Post({ post }) {
   return (
     <div className="Post">
+      <Helmet title={`Oscar Granse - ${post.title}`} />
       <div className="Post-video">
         <iframe src={post.video} frameBorder="0" allowFullScreen />
       </div>

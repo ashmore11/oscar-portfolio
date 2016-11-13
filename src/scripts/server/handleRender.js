@@ -5,6 +5,7 @@ import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import { createMemoryHistory, match, RouterContext } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
+import Helmet from 'react-helmet';
 
 import getStore from '../store';
 import routes from '../routes';
@@ -38,10 +39,11 @@ export default async function handleRender(req, res) {
             </Provider>
           </AppContainer>
         );
+        const head = Helmet.rewind();
 
         res.send(`
           <!doctype html>
-          ${renderToString(<Html content={content} store={store} />)}
+          ${renderToString(<Html head={head} content={content} store={store} />)}
         `);
       }
     }

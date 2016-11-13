@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
 
 import TagList from '../components/TagList';
 import PostList from '../components/PostList';
@@ -7,7 +8,7 @@ import PostList from '../components/PostList';
 function App({ tags, children }) {
   return (
     <div className="App">
-      <h1>TEST0</h1>
+      <Helmet title="Oscar Granse - Portfolio" />
       {children}
       <TagList tags={tags} />
       <PostList />
