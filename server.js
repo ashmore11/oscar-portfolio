@@ -12,7 +12,7 @@ import express from 'express';
 import compression from 'compression';
 import morgan from 'morgan';
 
-import config from './webpack/config.js';
+import config from './webpack/config.babel.js';
 import handleRender from './src/scripts/server/handleRender';
 
 const app = express();

@@ -2,6 +2,8 @@ import path from 'path';
 import webpack from 'webpack';
 import ProgressBarPlugin from 'progress-bar-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import cssnano from 'cssnano';
 
 const PATHS = {
   src: path.resolve(process.env.PWD, 'src'),
@@ -10,7 +12,7 @@ const PATHS = {
 
 const plugins = [
   new ProgressBarPlugin({ clear: false }),
-  new ExtractTextPlugin(`${PATHS.dist}/styles/styles.css`),
+  new ExtractTextPlugin('styles/styles.css'),
   new webpack.DefinePlugin({
     'process.env': {
       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
@@ -36,6 +38,12 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.optimize.UglifyJsPlugin({
       comments: false,
       compress: { warnings: false },
+    }),
+    new OptimizeCssAssetsPlugin({
+      assetNameRegExp: /\.optimize\.css$/g,
+      cssProcessor: cssnano,
+      cssProcessorOptions: { discardComments: { removeAll: true } },
+      canPrint: true,
     }),
   ]);
 }
