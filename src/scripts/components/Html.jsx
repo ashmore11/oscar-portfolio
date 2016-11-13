@@ -5,6 +5,7 @@ export default function Html({ content, store }) {
     <html>
       <head>
         <title>Oscar Portfolio</title>
+        <link rel="stylesheet" type="text/css" href="/styles/styles.css" />
       </head>
       <body>
         <div id="root" dangerouslySetInnerHTML={{ __html: content }} />

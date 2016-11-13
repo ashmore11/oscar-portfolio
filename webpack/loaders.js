@@ -1,4 +1,5 @@
 import path from 'path';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const PATHS = {
   src: path.resolve(process.env.PWD, 'src'),
@@ -24,7 +25,7 @@ const loaders = [{
   },
 }, {
   test: /\.scss$/,
-  loaders: ['style', 'css', 'postcss', 'sass', 'import-glob'],
+  loader: ExtractTextPlugin.extract('style', ['css', 'postcss', 'sass', 'import-glob']),
   include: `${PATHS.src}/styles`,
 }, {
   test: /\.(jpg|png|gif|svg)$/i,

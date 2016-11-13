@@ -1,6 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import ProgressBarPlugin from 'progress-bar-webpack-plugin';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const PATHS = {
   src: path.resolve(process.env.PWD, 'src'),
@@ -9,6 +10,7 @@ const PATHS = {
 
 const plugins = [
   new ProgressBarPlugin({ clear: false }),
+  new ExtractTextPlugin(`${PATHS.dist}/styles/styles.css`),
   new webpack.DefinePlugin({
     'process.env': {
       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
