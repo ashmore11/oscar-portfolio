@@ -9,6 +9,10 @@ const PATHS = {
   src: path.resolve(process.env.PWD, 'src'),
   dist: path.resolve(process.env.PWD, 'dist'),
 };
+const ENV = {
+  dev: process.env.NODE_ENV === 'development',
+  prod: process.env.NODE_ENV === 'production',
+};
 
 const plugins = [
   new ProgressBarPlugin({ clear: false }),
@@ -25,7 +29,7 @@ const plugins = [
   }),
 ];
 
-if (process.env.NODE_ENV === 'development') {
+if (ENV.dev) {
   plugins.push(...[
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
@@ -33,7 +37,7 @@ if (process.env.NODE_ENV === 'development') {
   ]);
 }
 
-if (process.env.NODE_ENV === 'production') {
+if (ENV.prod) {
   plugins.push(...[
     new webpack.optimize.UglifyJsPlugin({
       comments: false,

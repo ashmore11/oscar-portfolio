@@ -1,6 +1,7 @@
 import path from 'path';
 import autoprefixer from 'autoprefixer';
 import validate from 'webpack-validator';
+
 import pkg from '../package.json';
 import entry from './entry';
 import loaders from './loaders';
@@ -25,9 +26,7 @@ const config = {
   },
   plugins,
   module: { loaders },
-  postcss: {
-    defaults: [autoprefixer({ browsers: pkg.config.browsers })],
-  },
+  postcss: { defaults: [autoprefixer({ browsers: pkg.config.browsers })] },
   resolve,
 };
 

@@ -1,8 +1,4 @@
-import path from 'path';
-
-const src = path.resolve(process.env.PWD, 'src');
-
-const resolve = {
+export default {
   extensions: [
     '',
     '.js',
@@ -11,16 +7,4 @@ const resolve = {
     '.jpg',
     '.png',
   ],
-  alias: {
-    app: `${src}/scripts`,
-    actions: `${src}/scripts/actions`,
-    components: `${src}/scripts/components`,
-    containers: `${src}/scripts/containers`,
-    reducers: `${src}/scripts/reducers`,
-    utils: `${src}/scripts/utils`,
-    styles: `${src}/styles`,
-    images: `${src}/images`,
-  },
 };
-
-export default resolve;

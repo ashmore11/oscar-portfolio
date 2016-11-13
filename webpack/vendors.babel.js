@@ -1,6 +1,10 @@
 import path from 'path';
 import webpack from 'webpack';
 
+const PATHS = {
+  src: path.resolve(process.env.PWD, 'src'),
+  dist: path.resolve(process.env.PWD, 'dist'),
+};
 const ENV = {
   dev: process.env.NODE_ENV === 'development',
   prod: process.env.NODE_ENV === 'production',
@@ -23,14 +27,14 @@ const config = {
   },
   output: {
     filename: '[name].js',
-    path: path.resolve(process.env.PWD, 'dist/scripts'),
+    path: `${PATHS.dist}/scripts`,
     library: '[name]',
   },
   plugins: [
     new webpack.DllPlugin({
       name: '[name]',
-      path: path.resolve(process.env.PWD, 'dist/scripts', '[name].manifest.json'),
-      context: path.resolve(process.env.PWD, 'src'),
+      path: `${PATHS.dist}/scripts/[name].manifest.json`,
+      context: PATHS.src,
     }),
   ],
 };

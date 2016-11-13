@@ -7,6 +7,7 @@ import PostList from '../components/PostList';
 function App({ tags, children }) {
   return (
     <div className="App">
+      <h1>TEST0</h1>
       {children}
       <TagList tags={tags} />
       <PostList />
