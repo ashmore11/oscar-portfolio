@@ -1,11 +1,15 @@
 import React, { PropTypes } from 'react';
 
 export default function Html({ content, store }) {
+  let styles;
+  if (process.env.NODE_ENV === 'production') {
+    styles = <link rel="stylesheet" type="text/css" href="/styles/styles.css" />;
+  }
   return (
     <html>
       <head>
         <title>Oscar Portfolio</title>
-        <link rel="stylesheet" type="text/css" href="/styles/styles.css" />
+        {styles}
       </head>
       <body>
         <div id="root" dangerouslySetInnerHTML={{ __html: content }} />

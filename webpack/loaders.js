@@ -24,10 +24,6 @@ const loaders = [{
     ],
   },
 }, {
-  test: /\.scss$/,
-  loader: ExtractTextPlugin.extract('style', ['css', 'postcss', 'sass', 'import-glob']),
-  include: `${PATHS.src}/styles`,
-}, {
   test: /\.(jpg|png|gif|svg)$/i,
   loaders: [
     'file?hash=sha512&digest=hex&name=images/[name].[ext]',
@@ -40,5 +36,21 @@ const loaders = [{
   include: `${PATHS.src}/styles/fonts`,
   query: { name: 'fonts/[name].[ext]' },
 }];
+
+if (process.env.NODE_ENV === 'development') {
+  loaders.push(...[{
+    test: /\.scss$/,
+    loaders: ['style', 'css?sourceMap', 'postcss', 'sass?sourceMap', 'import-glob'],
+    include: `${PATHS.src}/styles`,
+  }]);
+}
+
+if (process.env.NODE_ENV === 'production') {
+  loaders.push(...[{
+    test: /\.scss$/,
+    loader: ExtractTextPlugin.extract('style', ['css', 'postcss', 'sass', 'import-glob']),
+    include: `${PATHS.src}/styles`,
+  }]);
+}
 
 export default loaders;
