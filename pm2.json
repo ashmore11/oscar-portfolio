@@ -1,0 +1,16 @@
+{
+  "name": "oscar",
+  "exec_interpreter": "babel-node",
+  "script": "./server.js",
+  "cwd": "./",
+  "watch": true,
+  "log_date_format": "YYYY-MM-DD HH:mm Z",
+  "env": {
+    "PORT": 3000,
+    "NODE_ENV": "development"
+  },
+  "env_production": {
+    "PORT": 3000,
+    "NODE_ENV": "production"
+  }
+}

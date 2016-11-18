@@ -1,6 +1,5 @@
 import './env.js';
 
-import path from 'path';
 import keystone from 'keystone';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';

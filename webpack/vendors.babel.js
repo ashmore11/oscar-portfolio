@@ -16,6 +16,7 @@ const config = {
   devtool: ENV.dev ? 'cheap-module-eval-source-map' : 'cheap-module-source-map',
   entry: {
     vendors: [
+      'gsap',
       'react',
       'react-dom',
       'react-redux',
@@ -32,6 +33,11 @@ const config = {
     library: '[name]',
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+      },
+    }),
     new webpack.DllPlugin({
       name: '[name]',
       path: `${PATHS.dist}/scripts/[name].manifest.json`,

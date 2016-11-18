@@ -22,7 +22,6 @@ const loaders = [{
       'stage-0',
     ],
     plugins: [
-      ENV.dev ? 'react-hot-loader/babel' : '',
       'transform-object-rest-spread',
       'transform-decorators-legacy',
     ],
@@ -42,6 +41,10 @@ const loaders = [{
 }];
 
 if (ENV.dev) {
+  loaders[0].query.plugins.unshift(...[
+    'react-hot-loader/babel',
+  ]);
+
   loaders.push(...[{
     test: /\.scss$/,
     loaders: ['style', 'css?sourceMap', 'postcss', 'sass?sourceMap', 'import-glob'],
