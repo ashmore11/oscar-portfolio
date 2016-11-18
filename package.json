@@ -15,6 +15,7 @@
     "build:dev": "webpack --config=webpack/config.babel.js -d",
     "build:prod": "webpack --config=webpack/config.babel.js -p",
     "stop:server": "pm2 stop oscar",
+    "restart:server": "pm2 restart oscar",
     "dump_db": "mongodump --host localhost:27017 -o dump",
     "restore_db": "mongorestore --db oscar-granse dump/oscar-granse"
   },
@@ -78,6 +79,7 @@
     "webpack": "^1.13.2",
     "webpack-dev-middleware": "^1.8.2",
     "webpack-hot-middleware": "^2.12.2",
+    "webpack-isomorphic-tools": "^2.6.4",
     "webpack-validator": "^2.2.7"
   },
   "babel": {
