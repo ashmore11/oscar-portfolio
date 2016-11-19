@@ -8,7 +8,18 @@ import PostList from '../components/PostList';
 function App({ tags, children }) {
   return (
     <div className="App">
-      <Helmet title="Oscar Granse - Portfolio" />
+      <Helmet
+        title="Portfolio"
+        titleTemplate="Oscar Granse - %s"
+        meta={[
+          { name: 'description', content: 'Helmet application' },
+          { property: 'og:url', content: 'http://www.oscargranse.se/' },
+          { property: 'og:type', content: 'website' },
+          { property: 'og:title', content: 'Oscar Granse - Portfolio' },
+          { property: 'og:description', content: 'The portfolio of Oscar Granse!' },
+          { property: 'og:image', content: 'http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg' },
+        ]}
+      />
       {children}
       <TagList tags={tags} />
       <PostList />

@@ -13,7 +13,8 @@ export default function Html({ head, content, store }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>{head.title.toComponent()}</title>
+        {head.title.toComponent()}
+        {head.meta.toComponent()}
         {ENV.prod ? styles : null}
       </head>
       <body>

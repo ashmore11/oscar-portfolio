@@ -5,7 +5,16 @@ import Helmet from 'react-helmet';
 function Post({ post }) {
   return (
     <div className="Post">
-      <Helmet title={`Oscar Granse - ${post.title}`} />
+      <Helmet
+        title={post.title}
+        meta={[
+          { name: 'description', content: post.description },
+          { property: 'og:url', content: `http://www.oscargranse.se/${post.slug}` },
+          { property: 'og:title', content: `Oscar Granse - ${post.title}` },
+          { property: 'og:description', content: post.description },
+          { property: 'og:image', content: post.image.url },
+        ]}
+      />
       <div className="Post-video">
         <iframe src={post.video} frameBorder="0" allowFullScreen />
       </div>
