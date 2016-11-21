@@ -12,6 +12,8 @@ import routes from '../routes';
 import Html from '../components/Html';
 
 export default async function handleRender(req, res) {
+  if (__DEV__) webpackIsomorphicTools.refresh();
+
   const Post = keystone.list('Post');
   const Tags = keystone.list('Tags');
 

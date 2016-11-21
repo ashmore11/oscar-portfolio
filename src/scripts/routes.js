@@ -6,11 +6,9 @@ import NotFound from './containers/NotFound';
 
 import Post from './components/Post';
 
-const routes = (
+export default (
   <Route path="/" component={App}>
     <Route path="/:postId" component={Post} />
     <Route path="*" component={NotFound} />
   </Route>
 );
-
-export default routes;

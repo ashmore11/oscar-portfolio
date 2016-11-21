@@ -20,6 +20,7 @@ function App({ tags, children }) {
           { property: 'og:image', content: 'http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg' },
         ]}
       />
+      <img className="Logo" src="images/logo.png" alt="" />
       {children}
       <TagList tags={tags} />
       <PostList />

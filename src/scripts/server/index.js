@@ -15,19 +15,9 @@ import { options, nav } from './src/scripts/server/config.keystone';
 const app = express();
 const compiler = webpack(config);
 
-// Compile client & use HMR.
-app.use(webpackDevMiddleware(compiler, {
-  publicPath: config.output.publicPath,
-  contentBase: config.output.path,
-  historyApiFallback: true,
-  noInfo: true,
-  hot: true,
-}));
-app.use(webpackHotMiddleware(compiler));
-
 // Initialise keystone.
 keystone.init(options);
-keystone.import('./src/scripts/models');
+keystone.import('./src/scripts/server/models');
 keystone.set('nav', nav);
 
 // Setup keystone database.
@@ -49,9 +39,20 @@ app.use('/admin', keystone.Admin.Server.createDynamicRouter(keystone));
 // Use React universal rendering.
 app.use(handleRender);
 
+// Compile client & use HMR.
+app.use(webpackDevMiddleware(compiler, {
+  publicPath: config.output.publicPath,
+  contentBase: config.output.path,
+  historyApiFallback: true,
+  noInfo: true,
+  hot: true,
+}));
+
+app.use(webpackHotMiddleware(compiler));
+
 // Open keystone db and run express.
 keystone.openDatabaseConnection(() => {
   const server = app.listen(process.env.PORT || 3000, () => {
-    console.log(`\n\n Express server ready on port ${server.address().port} \n`);
+    console.log(`Express server ready on port ${server.address().port}`);
   });
 });
