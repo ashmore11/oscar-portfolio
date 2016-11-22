@@ -1,13 +1,7 @@
 import React, { PropTypes } from 'react';
+import serialize from 'serialize-javascript';
 
-export default function Html({ head, content, store }) {
-  const ENV = {
-    dev: process.env.NODE_ENV === 'development',
-    prod: process.env.NODE_ENV === 'production',
-  };
-  const styles = <link rel="stylesheet" type="text/css" href="/styles/styles.css" />;
-  const initialState = JSON.stringify(store.getState());
-
+export default function Html({ head, assets, content, store }) {
   return (
     <html>
       <head>
@@ -15,13 +9,27 @@ export default function Html({ head, content, store }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {head.title.toComponent()}
         {head.meta.toComponent()}
-        {ENV.prod ? styles : null}
+        {/* styles (will be present only in production with webpack extract text plugin) */}
+        {Object.keys(assets.styles).map((style, i) =>
+          <link
+            key={i}
+            rel="stylesheet"
+            type="text/css"
+            href={assets.styles[style]}
+          />
+        )}
+
+        {/* resolves the initial style flash (flicker) on page load in development mode */}
+        {Object.keys(assets.styles).length === 0 ?
+          <style dangerouslySetInnerHTML={{ __html: require('../../styles/main.scss')._style }} /> :
+          null
+        }
       </head>
       <body>
         <div id="root" dangerouslySetInnerHTML={{ __html: content }} />
         <script
           dangerouslySetInnerHTML={
-            { __html: `window.__initialState__ = ${initialState};` }
+            { __html: `window.__initialState__ = ${serialize(store.getState())};` }
           }
         />
         <script src="/scripts/vendors.js"></script>
@@ -33,6 +41,7 @@ export default function Html({ head, content, store }) {
 
 Html.propTypes = {
   head: PropTypes.object,
+  assets: PropTypes.object,
   content: PropTypes.string.isRequired,
   store: PropTypes.object.isRequired,
 };

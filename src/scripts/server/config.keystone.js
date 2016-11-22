@@ -6,7 +6,7 @@ export const options = {
   favicon: 'dist/favicon.ico',
 
   mongo: process.env.MONGO_URI || 'mongodb://localhost/27017',
-  updates: 'src/scripts/server/updates',
+  updates: 'updates',
   'auto update': true,
   session: true,
   auth: true,

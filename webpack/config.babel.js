@@ -8,11 +8,15 @@ import loaders from './loaders';
 import plugins from './plugins';
 import resolve from './resolve';
 
+import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
+
 const DEV = process.env.NODE_ENV === 'development';
 const PATHS = {
   src: path.resolve(process.env.PWD, 'src'),
   dist: path.resolve(process.env.PWD, 'dist'),
 };
+
+const WITPlugin = new WebpackIsomorphicToolsPlugin(require('./config.WIT')).development(DEV);
 
 const config = {
   debug: DEV,
@@ -24,8 +28,8 @@ const config = {
     filename: 'scripts/bundle.js',
     publicPath: '/',
   },
-  plugins,
-  module: { loaders },
+  plugins: plugins(WITPlugin),
+  module: { loaders: loaders(WITPlugin) },
   postcss: { defaults: [autoprefixer({ browsers: pkg.config.browsers })] },
   resolve,
 };

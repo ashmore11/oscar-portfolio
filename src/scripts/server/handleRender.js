@@ -45,7 +45,14 @@ export default async function handleRender(req, res) {
 
         res.send(`
           <!doctype html>
-          ${renderToString(<Html head={head} content={content} store={store} />)}
+          ${renderToString(
+            <Html
+              head={head}
+              assets={webpackIsomorphicTools.assets()}
+              content={content}
+              store={store}
+            />
+          )}
         `);
       }
     }

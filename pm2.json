@@ -6,11 +6,11 @@
   "watch": true,
   "log_date_format": "YYYY-MM-DD HH:mm Z",
   "env": {
-    "PORT": 3000,
+    "PORT": 3002,
     "NODE_ENV": "development"
   },
   "env_production": {
-    "PORT": 3000,
+    "PORT": 3002,
     "NODE_ENV": "production"
   }
 }

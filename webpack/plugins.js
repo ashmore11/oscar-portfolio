@@ -14,41 +14,44 @@ const ENV = {
   prod: process.env.NODE_ENV === 'production',
 };
 
-const plugins = [
-  new ProgressBarPlugin({ clear: false }),
-  new ExtractTextPlugin('styles/styles.css'),
-  new webpack.DefinePlugin({
-    'process.env': {
-      NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-    },
-  }),
-  new webpack.DllReferencePlugin({
-    context: PATHS.src,
-    manifest: require(`${PATHS.dist}/scripts/vendors.manifest.json`),
-  }),
-];
-
-if (ENV.dev) {
-  plugins.push(...[
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-  ]);
-}
-
-if (ENV.prod) {
-  plugins.push(...[
-    new webpack.optimize.UglifyJsPlugin({
-      comments: false,
-      compress: { warnings: false },
+export default function (WITPlugin) {
+  const plugins = [
+    new ProgressBarPlugin({ clear: false }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+      },
     }),
-    new OptimizeCssAssetsPlugin({
-      assetNameRegExp: /\.optimize\.css$/g,
-      cssProcessor: cssnano,
-      cssProcessorOptions: { discardComments: { removeAll: true } },
-      canPrint: true,
+    new webpack.DllReferencePlugin({
+      context: PATHS.src,
+      manifest: require(`${PATHS.dist}/scripts/vendors.manifest.json`),
     }),
-  ]);
-}
+    WITPlugin.development(ENV.dev),
+  ];
 
-export default plugins;
+  if (ENV.dev) {
+    plugins.push(...[
+      new webpack.optimize.OccurenceOrderPlugin(),
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NoErrorsPlugin(),
+    ]);
+  }
+
+  if (ENV.prod) {
+    plugins.push(...[
+      new ExtractTextPlugin('styles/styles.css'),
+      new webpack.optimize.UglifyJsPlugin({
+        comments: false,
+        compress: { warnings: false },
+      }),
+      new OptimizeCssAssetsPlugin({
+        assetNameRegExp: /\.optimize\.css$/g,
+        cssProcessor: cssnano,
+        cssProcessorOptions: { discardComments: { removeAll: true } },
+        canPrint: true,
+      }),
+    ]);
+  }
+
+  return plugins;
+}
