@@ -29,10 +29,13 @@ export default function (WITPlugin) {
     },
   }, {
     test: WITPlugin.regular_expression('images'),
-    loader: 'url-loader?limit=10240',
+    loaders: [
+      'file?hash=sha512&digest=hex&name=images/[name].[ext]',
+      'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false',
+    ],
     include: `${PATHS.src}/images`,
   }, {
-    test: WITPlugin.regular_expression('fonts'),
+    test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
     loader: 'file',
     include: `${PATHS.src}/styles/fonts`,
     query: { name: 'fonts/[name].[ext]' },
