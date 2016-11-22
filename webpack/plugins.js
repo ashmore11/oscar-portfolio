@@ -1,6 +1,5 @@
 import path from 'path';
 import webpack from 'webpack';
-import ProgressBarPlugin from 'progress-bar-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import cssnano from 'cssnano';
@@ -16,7 +15,6 @@ const ENV = {
 
 export default function (WITPlugin) {
   const plugins = [
-    new ProgressBarPlugin({ clear: false }),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),

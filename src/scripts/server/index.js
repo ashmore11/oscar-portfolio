@@ -1,17 +1,12 @@
 import keystone from 'keystone';
-import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
 import express from 'express';
 import compression from 'compression';
 import morgan from 'morgan';
 
-import config from '../../../webpack/config.babel.js';
 import handleRender from './handleRender';
 import { options, nav } from './config.keystone';
 
 const app = express();
-const compiler = webpack(config);
 
 // Initialise keystone.
 keystone.init(options);
@@ -33,19 +28,6 @@ app.use(require('connect-flash')());
 
 app.use(morgan('tiny'));
 app.use('/admin', keystone.Admin.Server.createDynamicRouter(keystone));
-
-if (__DEV__) {
-  // Compile client & use HMR.
-  app.use(webpackDevMiddleware(compiler, {
-    publicPath: config.output.publicPath,
-    contentBase: config.output.path,
-    historyApiFallback: true,
-    noInfo: true,
-    hot: true,
-  }));
-
-  app.use(webpackHotMiddleware(compiler));
-}
 
 // Use React universal rendering.
 app.use(handleRender);
