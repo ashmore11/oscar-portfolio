@@ -7,6 +7,7 @@ import handleRender from './handleRender';
 import { options, nav } from './config.keystone';
 
 const app = express();
+const port = process.env.PORT || 3000;
 
 // Initialise keystone.
 keystone.init(options);
@@ -34,7 +35,7 @@ app.use(handleRender);
 
 // Open keystone db and run express.
 keystone.openDatabaseConnection(() => {
-  const server = app.listen(process.env.PORT || 3000, () => {
-    console.log(`Express server ready on port ${server.address().port}`);
+  app.listen(port, () => {
+    console.log(`Express server ready on port ${port}`);
   });
 });

@@ -21,7 +21,7 @@ export default function Html({ head, assets, content, store }) {
 
         {/* resolves the initial style flash (flicker) on page load in development mode */}
         {Object.keys(assets.styles).length === 0 ?
-          <style dangerouslySetInnerHTML={{ __html: require('../../styles/main.scss')._style }} /> :
+          <style dangerouslySetInnerHTML={{ __html: require('../../styles/main.scss') }} /> :
           null
         }
       </head>

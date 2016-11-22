@@ -23,6 +23,7 @@ app.use(webpackDevMiddleware(compiler, {
   hot: true,
   inline: true,
   lazy: false,
+  headers: { 'Access-Control-Allow-Origin': '*' },
   stats: { colors: true },
 }));
 

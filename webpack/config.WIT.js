@@ -19,6 +19,7 @@ module.exports = {
       // which `module`s to parse CSS style class name maps from:
       filter(module, regex, options, log) {
         if (options.development) {
+          console.log('HOLY FUCK BALLS!!!!');
           // In development mode there's Webpack "style-loader",
           // which outputs `module`s with `module.name == asset_path`,
           // but those `module`s do not contain CSS text.
