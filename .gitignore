@@ -3,4 +3,5 @@ node_modules
 .env
 .DS_Store
 dist
-
+webpack/webpack-stats.json
+webpack/webpack-assets.json

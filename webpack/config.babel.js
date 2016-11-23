@@ -1,14 +1,13 @@
 import path from 'path';
 import autoprefixer from 'autoprefixer';
 import validate from 'webpack-validator';
+import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
 
 import pkg from '../package.json';
 import entry from './entry';
 import loaders from './loaders';
 import plugins from './plugins';
 import resolve from './resolve';
-
-import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
 
 const DEV = process.env.NODE_ENV === 'development';
 const PATHS = {

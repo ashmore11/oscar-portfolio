@@ -1,8 +1,3 @@
-global.__CLIENT__ = true;
-global.__SERVER__ = false;
-global.__DEV__ = process.env.NODE_ENV === 'development';
-global.__PROD__ = process.env.NODE_ENV === 'production';
-
 import express from 'express';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
@@ -15,14 +10,13 @@ const compiler = webpack(config);
 const port = (Number(process.env.PORT) + 1) || 3001;
 
 app.use(webpackDevMiddleware(compiler, {
-  publicPath: config.output.publicPath,
-  contentBase: config.output.path,
-  historyApiFallback: true,
+  contentBase: `http://localhost:${port}`,
   quiet: true,
   noInfo: true,
   hot: true,
   inline: true,
   lazy: false,
+  publicPath: config.output.publicPath,
   headers: { 'Access-Control-Allow-Origin': '*' },
   stats: { colors: true },
 }));

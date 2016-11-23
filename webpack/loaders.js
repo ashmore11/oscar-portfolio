@@ -35,7 +35,7 @@ export default function (WITPlugin) {
     ],
     include: `${PATHS.src}/images`,
   }, {
-    test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+    test: WITPlugin.regular_expression('fonts'),
     loader: 'file',
     include: `${PATHS.src}/styles/fonts`,
     query: { name: 'fonts/[name].[ext]' },
@@ -47,7 +47,7 @@ export default function (WITPlugin) {
     ]);
 
     loaders.push(...[{
-      test: /\.scss$/,
+      test: WITPlugin.regular_expression('styles'),
       loaders: ['style', 'css?sourceMap', 'postcss', 'sass?sourceMap', 'import-glob'],
       include: `${PATHS.src}/styles`,
     }]);

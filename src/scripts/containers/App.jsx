@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import TagList from '../components/TagList';
 import PostList from '../components/PostList';
 
-import logo from '../../images/logo.png';
+import logo from '../../images/logo';
 
 import '../../styles/main';
 
