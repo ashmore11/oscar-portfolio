@@ -21,6 +21,7 @@ const config = {
   debug: DEV,
   cache: true,
   devtool: DEV ? 'cheap-module-eval-source-map' : 'cheap-module-source-map',
+  context: process.env.PWD,
   entry,
   output: {
     path: PATHS.dist,

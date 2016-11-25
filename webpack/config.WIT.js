@@ -4,7 +4,6 @@ module.exports = {
   debug: process.env.NODE_ENV === 'development',
   webpack_assets_file_path: 'webpack/webpack-assets.json',
   webpack_stats_file_path: 'webpack/webpack-stats.json',
-  verbosity: 'no webpack stats',
   assets: {
     images: {
       extensions: ['png', 'jpg', 'jpeg', 'gif'],

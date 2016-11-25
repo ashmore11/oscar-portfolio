@@ -1,7 +1,6 @@
 import keystone from 'keystone';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import { createMemoryHistory, match, RouterContext } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
@@ -35,11 +34,9 @@ export default async function handleRender(req, res) {
         res.redirect(302, redirectLocation.pathname + redirectLocation.search);
       } else if (renderProps) {
         const content = renderToString(
-          <AppContainer>
-            <Provider store={store} key="provider">
-              <RouterContext {...renderProps} />
-            </Provider>
-          </AppContainer>
+          <Provider store={store} key="provider">
+            <RouterContext {...renderProps} />
+          </Provider>
         );
         const head = Helmet.rewind();
 

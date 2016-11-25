@@ -5,9 +5,7 @@ import Helmet from 'react-helmet';
 import TagList from '../components/TagList';
 import PostList from '../components/PostList';
 
-import logo from '../../images/logo';
-
-import '../../styles/main';
+require('../../styles/main');
 
 function App({ tags, children }) {
   return (
@@ -24,7 +22,7 @@ function App({ tags, children }) {
           { property: 'og:image', content: 'http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg' },
         ]}
       />
-      <img className="Logo" src={logo} alt="" />
+      <img className="Logo" src={require('../../images/logo')} alt="" />
       {children}
       <TagList tags={tags} />
       <PostList />

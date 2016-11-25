@@ -1,28 +1,32 @@
-import express from 'express';
-import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
+const express = require('express');
+const webpack = require('webpack');
 
-import config from './config.babel.js';
+const webpackConfig = require('./config.babel').default;
+const compiler = webpack(webpackConfig);
 
-const app = express();
-const compiler = webpack(config);
-const port = (Number(process.env.PORT) + 1) || 3001;
-
-app.use(webpackDevMiddleware(compiler, {
-  contentBase: `http://localhost:${port}`,
+const host = 'localhost';
+const port = 3001;
+const serverOptions = {
+  contentBase: `http://${host}${port}`,
   quiet: true,
   noInfo: true,
   hot: true,
   inline: true,
   lazy: false,
-  publicPath: config.output.publicPath,
+  publicPath: webpackConfig.output.publicPath,
   headers: { 'Access-Control-Allow-Origin': '*' },
   stats: { colors: true },
-}));
+};
 
-app.use(webpackHotMiddleware(compiler));
+const app = express();
 
-app.listen(port, () => {
-  console.log(`==>  🚧  Webpack development server listening on port ${port}`);
+app.use(require('webpack-dev-middleware')(compiler, serverOptions));
+app.use(require('webpack-hot-middleware')(compiler));
+
+app.listen(port, (err) => {
+  if (err) {
+    console.error(err);
+  } else {
+    console.info('==> 🚧  Webpack development server listening on port %s', port);
+  }
 });
