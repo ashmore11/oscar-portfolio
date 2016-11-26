@@ -33,7 +33,7 @@ export default function Html({ head, assets, content, store }) {
           }
         />
         <script src="/scripts/vendors.js"></script>
-        <script src={assets.javascript.main} />
+        <script src={assets.javascript.main}></script>
       </body>
     </html>
   );

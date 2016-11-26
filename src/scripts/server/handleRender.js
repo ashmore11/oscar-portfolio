@@ -8,7 +8,7 @@ import Helmet from 'react-helmet';
 
 import getStore from '../store';
 import routes from '../routes';
-import Html from '../components/Html';
+import Html from '../containers/Html';
 
 export default async function handleRender(req, res) {
   if (__DEV__) webpackIsomorphicTools.refresh();

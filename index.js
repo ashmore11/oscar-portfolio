@@ -9,8 +9,7 @@ global.__PROD__ = process.env.NODE_ENV === 'production';
 const WebpackIsomorphicTools = require('webpack-isomorphic-tools');
 
 // This should be the same with webpack context
-const dirRoot = require('path').join(process.cwd());
-
+const dirRoot = process.env.PWD;
 // Settings of webpack-isomorphic-tools
 global.webpackIsomorphicTools = new WebpackIsomorphicTools(require('./webpack/config.WIT'))
   .server(dirRoot, () => {

@@ -24,13 +24,14 @@ export default function (WITPlugin) {
       context: PATHS.src,
       manifest: require(`${PATHS.dist}/scripts/vendors.manifest.json`),
     }),
-    WITPlugin.development(ENV.dev),
+    WITPlugin,
   ];
 
   if (ENV.dev) {
     plugins.push(...[
       new webpack.optimize.OccurenceOrderPlugin(),
       new webpack.HotModuleReplacementPlugin(),
+      new webpack.IgnorePlugin(/webpack-stats\.json$/),
       new webpack.NoErrorsPlugin(),
     ]);
   }

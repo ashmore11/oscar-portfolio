@@ -7,11 +7,11 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import hpp from 'hpp';
 
-import handleRender from './handleRender';
-import { options, nav } from './config.keystone';
+import handleRender from './server/handleRender';
+import { options, nav } from './server/config.keystone';
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3000;
 
 // Using helmet to secure Express with various HTTP headers
 app.use(helmet());
@@ -22,25 +22,11 @@ app.use(compression());
 
 app.use(morgan('dev', { skip: (req, res) => res.statusCode < 400 }));
 app.use(favicon(path.resolve(process.env.PWD, 'dist/favicon.ico')));
-app.use(express.static(path.resolve(process.env.PWD, 'dist')));
-
-// if (__DEV__) {
-//   const webpack = require('webpack');
-//   const config = require('../../../webpack/config.babel.js').default;
-//   const compiler = webpack(config);
-
-//   app.use(require('webpack-dev-middleware')(compiler, {
-//     publicPath: config.output.publicPath,
-//     noInfo: true,
-//     stats: { colors: true },
-//   }));
-
-//   app.use(require('webpack-hot-middleware')(compiler));
-// }
+app.use(express.static(path.resolve(process.env.PWD, 'dist'), { maxage: 0 }));
 
 // Initialise keystone.
 keystone.init(options);
-keystone.import('./models');
+keystone.import('./server/models');
 keystone.set('nav', nav);
 
 // Setup keystone database.

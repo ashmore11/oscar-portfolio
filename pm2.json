@@ -3,7 +3,7 @@
   "exec_interpreter": "babel-node",
   "script": "index.js",
   "cwd": "./",
-  "watch": true,
+  "watch": ["index", "src/scripts/server.js", "src/scripts/server/"],
   "log_date_format": "YYYY-MM-DD HH:mm Z",
   "env": {
     "PORT": 3000,

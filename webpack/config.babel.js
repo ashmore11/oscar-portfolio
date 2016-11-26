@@ -15,6 +15,9 @@ const PATHS = {
   dist: path.resolve(process.env.PWD, 'dist'),
 };
 
+const host = 'localhost';
+const port = 3001;
+
 const WITPlugin = new WebpackIsomorphicToolsPlugin(require('./config.WIT')).development(DEV);
 
 const config = {
@@ -26,7 +29,7 @@ const config = {
   output: {
     path: PATHS.dist,
     filename: 'scripts/bundle.js',
-    publicPath: '/',
+    publicPath: 'http://' + host + ':' + port + '/'
   },
   plugins: plugins(WITPlugin),
   module: { loaders: loaders(WITPlugin) },
