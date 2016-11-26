@@ -10,13 +10,7 @@ import plugins from './plugins';
 import resolve from './resolve';
 
 const DEV = process.env.NODE_ENV === 'development';
-const PATHS = {
-  src: path.resolve(process.env.PWD, 'src'),
-  dist: path.resolve(process.env.PWD, 'dist'),
-};
-
-const host = 'localhost';
-const port = 3001;
+const PORT = process.env.PORT || 3001;
 
 const WITPlugin = new WebpackIsomorphicToolsPlugin(require('./config.WIT')).development(DEV);
 
@@ -27,9 +21,9 @@ const config = {
   context: process.env.PWD,
   entry,
   output: {
-    path: PATHS.dist,
+    path: path.resolve(process.env.PWD, 'dist'),
     filename: 'scripts/bundle.js',
-    publicPath: 'http://' + host + ':' + port + '/'
+    publicPath: `http://localhost:${PORT}/`,
   },
   plugins: plugins(WITPlugin),
   module: { loaders: loaders(WITPlugin) },

@@ -1,13 +1,15 @@
-const express = require('express');
-const webpack = require('webpack');
+import express from 'express';
+import webpack from 'webpack';
+import devMiddleware from 'webpack-dev-middleware';
+import hotMiddleware from 'webpack-hot-middleware';
+import webpackConfig from './config.babel';
 
-const webpackConfig = require('./config.babel').default;
 const compiler = webpack(webpackConfig);
+const app = express();
+const port = process.env.PORT || 3001;
 
-const host = 'localhost';
-const port = 3001;
-const serverOptions = {
-  contentBase: `http://${host}${port}`,
+app.use(devMiddleware(compiler, {
+  contentBase: `http://localhost:${port}`,
   quiet: true,
   noInfo: true,
   hot: true,
@@ -16,17 +18,10 @@ const serverOptions = {
   publicPath: webpackConfig.output.publicPath,
   headers: { 'Access-Control-Allow-Origin': '*' },
   stats: { colors: true },
-};
+}));
 
-const app = express();
+app.use(hotMiddleware(compiler));
 
-app.use(require('webpack-dev-middleware')(compiler, serverOptions));
-app.use(require('webpack-hot-middleware')(compiler));
-
-app.listen(port, (err) => {
-  if (err) {
-    console.error(err);
-  } else {
-    console.info('==> 🚧  Webpack development server listening on port %s', port);
-  }
+app.listen(port, () => {
+  console.info('==> 🚧  Webpack development server listening on port %s', port);
 });
