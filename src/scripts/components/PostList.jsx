@@ -29,7 +29,7 @@ PostList.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  const activeTag = state.tags.find(tag => tag.slug === state.navigation.activeTag);
+  const activeTag = state.tags.items.find(tag => tag.slug === state.tags.activeTag);
   const filteredPosts = state.posts.filter(post => post.tags.includes(activeTag._id));
 
   return {

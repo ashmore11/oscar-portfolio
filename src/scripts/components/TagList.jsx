@@ -1,11 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 
-import { setActiveTag } from '../actions/navigation';
-
-const mapStateToProps = (state) => ({
-  activeTag: state.navigation.activeTag,
-});
+import { setActiveTag } from '../actions/tags';
 
 const mapDispatchToProps = (dispatch) => ({
   onSetActiveTag(tag) {
@@ -13,12 +9,11 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-@connect(mapStateToProps, mapDispatchToProps)
+@connect(null, mapDispatchToProps)
 
 export default class TagList extends Component {
   static propTypes = {
-    tags: PropTypes.array.isRequired,
-    activeTag: PropTypes.string.isRequired,
+    tags: PropTypes.object.isRequired,
     onSetActiveTag: PropTypes.func.isRequired,
   };
 
@@ -32,7 +27,9 @@ export default class TagList extends Component {
     event.persist();
 
     const selectedTag = event.target.dataset.slug;
-    this.props.onSetActiveTag(selectedTag);
+    const { onSetActiveTag } = this.props;
+
+    onSetActiveTag(selectedTag);
   }
 
   render() {
@@ -40,7 +37,7 @@ export default class TagList extends Component {
 
     return (
       <ul className="TagList">
-        {tags.map((tag) => (
+        {tags.items.map((tag) => (
           <li
             key={tag._id}
             data-slug={tag.slug}

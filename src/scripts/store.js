@@ -4,13 +4,11 @@ import thunk from 'redux-thunk';
 
 import posts from './reducers/posts';
 import tags from './reducers/tags';
-import navigation from './reducers/navigation';
 
 export default function getStore(initialState = {}, history) {
   const reducer = combineReducers({
     posts,
     tags,
-    navigation,
     routing,
   });
 

@@ -32,7 +32,7 @@ function App({ tags, children }) {
 
 App.propTypes = {
   children: PropTypes.element,
-  tags: PropTypes.array.isRequired,
+  tags: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({

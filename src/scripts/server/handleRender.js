@@ -18,7 +18,10 @@ export default async function handleRender(req, res) {
 
   const initialState = {
     posts: await Post.model.find({ state: 'published' }).exec(),
-    tags: await Tags.model.find().exec(),
+    tags: {
+      items: await Tags.model.find().exec(),
+      activeTag: 'all',
+    },
   };
 
   const memoryHistory = createMemoryHistory(req.path);

@@ -1,12 +1,22 @@
-import { GET_TAG_BY_SLUG } from '../constants';
+import { SET_ACTIVE_TAG, GET_TAG_BY_SLUG } from '../constants';
 
-const posts = (state = {}, action) => {
+const initialState = {
+  items: [],
+  activeTag: 'all',
+};
+
+const tags = (state = initialState, action) => {
   switch (action.type) {
     case GET_TAG_BY_SLUG:
-      return state.find(tag => action.id === tag.id);
+      return state.items.find(tag => action.id === tag.id);
+    case SET_ACTIVE_TAG:
+      return {
+        ...state,
+        activeTag: action.payload,
+      };
     default:
       return state;
   }
 };
 
-export default posts;
+export default tags;
