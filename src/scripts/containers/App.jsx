@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import Helmet from 'react-helmet';
 
 import TagList from '../components/TagList';
@@ -22,7 +23,9 @@ function App({ tags, children }) {
           { property: 'og:image', content: 'http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg' },
         ]}
       />
-      <img className="Logo" src={require('../../images/logo')} alt="" />
+      <Link to="/">
+        <img className="Logo" src={require('../../images/logo')} alt="" />
+      </Link>
       {children}
       <TagList tags={tags} />
       <PostList />
