@@ -30,7 +30,7 @@ keystone.import('./server/models');
 keystone.set('nav', nav);
 
 // Setup keystone database.
-keystone.initDatabaseConfig();
+// keystone.initDatabaseConfig();
 keystone.initExpressSession();
 
 app.use('/admin', keystone.Admin.Server.createStaticRouter(keystone));
