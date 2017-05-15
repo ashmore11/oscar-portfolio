@@ -17,7 +17,7 @@ export default async function handleRender(req, res) {
   const Tags = keystone.list('Tags');
 
   const initialState = {
-    posts: await Post.model.find({ state: 'published' }).sort('-sortOrder').exec(),
+    posts: await Post.model.find({ state: 'published' }).sort('-createdAt').exec(),
     tags: {
       items: await Tags.model.find().exec(),
       activeTag: 'all',
