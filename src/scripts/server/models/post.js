@@ -12,7 +12,7 @@ const post = new keystone.List('Post', {
     unique: true,
   },
   sortable: true,
-  defaultSort: '-createdAt',
+  defaultSort: '-createdOn',
 });
 
 post.add({
