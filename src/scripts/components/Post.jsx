@@ -9,7 +9,7 @@ function Post({ post }) {
         title={post.title}
         meta={[
           { name: 'description', content: post.description },
-          { property: 'og:url', content: `http://www.oscargranse.se/${post.slug}` },
+          { property: 'og:url', content: `http://www.oscargran.se/${post.slug}` },
           { property: 'og:title', content: `Oscar Granse - ${post.title}` },
           { property: 'og:description', content: post.description },
           { property: 'og:image', content: post.image.url },

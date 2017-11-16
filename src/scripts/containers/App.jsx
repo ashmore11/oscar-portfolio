@@ -16,7 +16,7 @@ function App({ tags, children }) {
         titleTemplate="Oscar Granse - %s"
         meta={[
           { name: 'description', content: 'Helmet application' },
-          { property: 'og:url', content: 'http://www.oscargranse.se/' },
+          { property: 'og:url', content: 'http://www.oscargran.se/' },
           { property: 'og:type', content: 'website' },
           { property: 'og:title', content: 'Oscar Granse - Portfolio' },
           { property: 'og:description', content: 'The portfolio of Oscar Granse!' },

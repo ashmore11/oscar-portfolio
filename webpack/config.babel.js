@@ -23,7 +23,7 @@ const config = {
   output: {
     path: path.resolve(process.env.PWD, 'dist'),
     filename: 'scripts/bundle.js',
-    publicPath: DEV ? `http://localhost:${PORT}/` : 'http://oscargranse.se/',
+    publicPath: DEV ? `http://localhost:${PORT}/` : 'http://oscargran.se/',
   },
   plugins: plugins(WITPlugin),
   module: { loaders: loaders(WITPlugin) },
